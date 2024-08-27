@@ -1,11 +1,11 @@
 import { ThemedText, ThemedView } from "@/components/ThemedComponents";
 
-const HomePage = () => {
+const LeaderboardPage = () => {
   return (
     <ThemedView>
-      <ThemedText>HomePage</ThemedText>
+      <ThemedText>LeaderboardPage</ThemedText>
     </ThemedView>
   );
 };
 
-export default HomePage;
+export default LeaderboardPage;
