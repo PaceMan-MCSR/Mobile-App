@@ -23,11 +23,16 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      [
+        "expo-router",
+        {
+          "origin": "https://localhost:8081/"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
