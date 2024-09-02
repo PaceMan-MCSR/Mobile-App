@@ -2,6 +2,7 @@ import { ThemedText, ThemedView } from "@/components/ThemedComponents";
 import liveruns from "@/data/liveruns.json";
 import { useQuery } from "@tanstack/react-query";
 import { FlatList } from "react-native";
+import PaceCard from "@/components/PaceCard";
 
 const HomePage = () => {
   // const { data: liveruns, isLoading } = useQuery({
@@ -12,11 +13,24 @@ const HomePage = () => {
   // if (isLoading) return <ThemedText>Loading...</ThemedText>;
 
   return (
-    <ThemedView style={{ alignItems: "center", width: "100%", flex: 1 }}>
+    <ThemedView style={{ flex: 1 }}>
       <FlatList
+        contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 8 }}
         data={liveruns}
         keyExtractor={(item: any) => item.worldId}
-        renderItem={({ item }) => <ThemedText>{item.nickname}</ThemedText>}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <PaceCard
+            user={item.user}
+            worldId={item.worldId}
+            eventList={item.eventList}
+            contextEventList={item.contextEventList}
+            isCheated={item.isCheated}
+            isHidden={item.isHidden}
+            lastUpdated={item.lastUpdated}
+            nickname={item.nickname}
+          />
+        )}
       />
     </ThemedView>
   );
