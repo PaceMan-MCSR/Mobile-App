@@ -3,6 +3,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
+import "@/global.css";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();

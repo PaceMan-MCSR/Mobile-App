@@ -1,7 +1,7 @@
 import { ThemedText, ThemedView } from "@/components/ThemedComponents";
 import liveruns from "@/data/liveruns.json";
 import { useQuery } from "@tanstack/react-query";
-import { FlatList } from "react-native";
+import { FlatList, Text } from "react-native";
 import PaceCard from "@/components/PaceCard";
 
 const HomePage = () => {
@@ -14,6 +14,7 @@ const HomePage = () => {
 
   return (
     <ThemedView style={{ flex: 1 }}>
+      <Text className="color-red-300">Hello</Text>
       <FlatList
         contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 8 }}
         data={liveruns}
