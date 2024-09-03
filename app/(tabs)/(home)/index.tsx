@@ -1,7 +1,6 @@
-import { ThemedText, ThemedView } from "@/components/ThemedComponents";
 import liveruns from "@/data/liveruns.json";
 import { useQuery } from "@tanstack/react-query";
-import { FlatList, Text } from "react-native";
+import { FlatList, View } from "react-native";
 import PaceCard from "@/components/PaceCard";
 
 const HomePage = () => {
@@ -13,10 +12,9 @@ const HomePage = () => {
   // if (isLoading) return <ThemedText>Loading...</ThemedText>;
 
   return (
-    <ThemedView style={{ flex: 1 }}>
-      <Text className="color-red-300">Hello</Text>
+    <View className="bg-white dark:bg-black">
       <FlatList
-        contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 8 }}
+        contentContainerClassName="px-4 py-3"
         data={liveruns}
         keyExtractor={(item: any) => item.worldId}
         showsVerticalScrollIndicator={false}
@@ -33,7 +31,7 @@ const HomePage = () => {
           />
         )}
       />
-    </ThemedView>
+    </View>
   );
 };
 

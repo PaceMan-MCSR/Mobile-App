@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { EVENT_ID_NAME, msToTime } from "@/lib/utils/frontendConverters";
 
 const PaceCard = (props: Pace) => {
@@ -18,49 +18,28 @@ const PaceCard = (props: Pace) => {
   const currentEvent = EVENT_ID_NAME[props.eventList.length - 1];
 
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.75} onPress={handlePress} onLongPress={handleLongPress}>
+    <TouchableOpacity
+      className="w-full h-28 rounded-2xl border border-red-500 flex-row items-center px-4 gap-4 my-2"
+      activeOpacity={0.75}
+      onPress={handlePress}
+      onLongPress={handleLongPress}
+    >
       {/* MINECRAFT SKIN AVATAR */}
       <View>
-        <Image source={`https://mc-heads.net/avatar/${props.user.uuid}`} style={styles.image} />
+        <Image
+          className="w-12 h-12"
+          source={`https://mc-heads.net/avatar/${props.user.uuid}`}
+          style={{ height: 50, width: 50 }}
+        />
       </View>
       {/* USERNAME + CURRENT SPLIT */}
-      <View style={styles.eventContainer}>
-        <Text style={styles.nicknameText}>{props.nickname}</Text>
-        <Text>{currentEvent}</Text>
+      <View className="flex flex-1">
+        <Text className="text-black dark:text-white font-bold text-2xl">{props.nickname}</Text>
+        <Text className="text-black dark:text-white">{currentEvent}</Text>
       </View>
       {/* LAST UPDATED */}
-      <Text style={styles.timeText}>{splitTime}</Text>
+      <Text className="text-black dark:text-white text-4xl font-bold">{splitTime}</Text>
     </TouchableOpacity>
   );
 };
 export default PaceCard;
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: 110,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#FF0000",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    gap: 16,
-    marginVertical: 8,
-  },
-  image: {
-    height: 50,
-    width: 50,
-  },
-  eventContainer: {
-    flex: 1,
-  },
-  nicknameText: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  timeText: {
-    fontSize: 32,
-    fontWeight: "bold",
-  },
-});
