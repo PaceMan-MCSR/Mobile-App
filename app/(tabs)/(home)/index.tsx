@@ -8,6 +8,7 @@ const HomePage = () => {
     queryFn: () => fetch("/api/liveruns").then((res) => res.json()),
     refetchInterval: 1000,
   });
+
   if (isLoading) return <Text className="text-black dark:text-white">Loading...</Text>;
 
   return (

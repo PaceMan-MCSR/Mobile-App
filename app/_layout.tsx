@@ -24,10 +24,10 @@ export default function RootLayout() {
             }}
           />
           <Stack.Screen
-            name="pace/[id]"
+            name="pace"
             options={{
-              headerTitle: `PaceMan peepoPauseMan`,
               presentation: "modal",
+              headerShown: false,
             }}
           />
           <Stack.Screen name="+not-found" />

@@ -7,15 +7,22 @@ import { EVENT_ID_NAME, msToTime } from "@/lib/utils/frontendConverters";
 
 const PaceCard = (props: Pace) => {
   const router = useRouter();
+  const splitTime = msToTime(props.lastUpdated);
+  const currentEvent = EVENT_ID_NAME[props.eventList.length - 1];
   const handlePress = () => {
-    router.push(`/pace/${props.worldId}`);
+    router.push({
+      pathname: `/pace/[id]`,
+      params: {
+        id: props.worldId,
+        eventList: JSON.stringify(props.eventList),
+        nickname: props.nickname,
+        lastUpdated: props.lastUpdated,
+      },
+    });
   };
   const handleLongPress = () => {
     console.log("peepoPauseMan");
   };
-
-  const splitTime = msToTime(props.lastUpdated);
-  const currentEvent = EVENT_ID_NAME[props.eventList.length - 1];
 
   return (
     <TouchableOpacity

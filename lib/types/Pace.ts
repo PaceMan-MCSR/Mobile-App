@@ -4,12 +4,13 @@ export interface Event {
 }
 
 export interface Pace {
+  worldId: string;
   nickname: string;
   split?: number;
   splitName: string;
-  eventList: Event[];
+  eventList: (string | number)[];
   time: number;
-  uuid: string;
+  user: { uuid: string };
   twitch: string | null;
   lastUpdated: number;
   isHighQuality: boolean;
