@@ -14,10 +14,12 @@ export default function TabLayout() {
       }}
     >
       {/* HOME SCREEN - Paces */}
+
       <Tabs.Screen
-        name="(home)"
+        name="index"
         options={{
-          headerShown: false,
+          headerTitle: "PaceMan.gg",
+          headerShadowVisible: false,
           tabBarLabel: "PaceMan",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "stopwatch" : "stopwatch-outline"} color={color} />
@@ -30,7 +32,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="leaderboard"
         options={{
-          headerShown: false,
+          headerTitle: "Leaderboard",
+          headerShadowVisible: false,
           tabBarLabel: "Leaderboard",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "stats-chart" : "stats-chart-outline"} color={color} />
@@ -43,7 +46,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="events"
         options={{
-          headerShown: false,
+          headerTitle: "Events",
+          headerShadowVisible: false,
           tabBarLabel: "Events",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "calendar" : "calendar-outline"} color={color} />
