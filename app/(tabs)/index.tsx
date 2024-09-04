@@ -2,9 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { FlatList, Text, View } from "react-native";
 import PaceCard from "@/components/PaceCard";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const HomePage = () => {
-  const { data: liveruns } = useLiverunsData();
+  const { data: liveruns, isLoading } = useLiverunsData();
+
+  if (isLoading) return <LoadingScreen />;
 
   return (
     <View className="bg-white dark:bg-black">
