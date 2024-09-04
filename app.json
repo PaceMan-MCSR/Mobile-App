@@ -32,7 +32,8 @@
         {
           "origin": "https://localhost:8081/"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
