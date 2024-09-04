@@ -1,21 +1,15 @@
 import { View, Text } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useLocalSearchParams } from "expo-router";
 import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
 import { EVENT_ID_NAME, msToTime } from "@/lib/utils/frontendConverters";
-import { useQuery } from "@tanstack/react-query";
+import { useLiverunsData } from "@/hooks/useLiverunsData";
 
 const PacePage = () => {
   const { id } = useLocalSearchParams();
-  const { data: liveruns } = useQuery({
-    queryKey: ["liveruns"],
-    queryFn: () => fetch("/api/liveruns").then((res) => res.json()),
-  });
-
+  const { data: liveruns } = useLiverunsData();
   const fetchedPace = liveruns.find((pace: Pace) => pace.worldId === id);
-  useEffect(() => console.log(fetchedPace), [fetchedPace]);
   return (
     <View>
       {fetchedPace.user.liveAccount && (
