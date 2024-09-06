@@ -1,7 +1,7 @@
 export async function GET(request: Request) {
   // const response = await fetch("https://paceman.gg/api/ars/liveruns");
   // const res = await response.json();
-  return Response.json(res);
+  return Response.json(res.filter((run) => !run.isHidden && !run.isCheated));
 }
 
 const res = [

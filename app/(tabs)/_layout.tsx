@@ -30,7 +30,7 @@ export default function TabLayout() {
       {/* LEADERBOARD SCREEN */}
 
       <Tabs.Screen
-        name="leaderboard"
+        name="lb"
         options={{
           headerTitle: "Leaderboard",
           headerShadowVisible: false,
