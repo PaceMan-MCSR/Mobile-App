@@ -1,11 +1,19 @@
-import { ScrollView, Text, View } from "react-native";
+import { FlatList, ScrollView, Text, View } from "react-native";
+import { useEventListData } from "@/hooks/useEventListData";
+import LoadingScreen from "@/components/LoadingScreen";
+import test from "@/app/api/test.json";
 
 const EventsPage = () => {
+  const { data: eventlist, isLoading } = useEventListData();
+  if (isLoading) return <LoadingScreen />;
+
   return (
-    <View className="flex flex-1 bg-white dark:bg-black items-center justify-center">
-      <ScrollView className="flex flex-1 w-full" contentInsetAdjustmentBehavior="automatic">
-        <Text className="text-black dark:text-white">EventsPage</Text>
-      </ScrollView>
+    <View className="bg-white dark:bg-black">
+      <FlatList
+        data={eventlist}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => <Text className="text-black dark:text-white">{item.name}</Text>}
+      />
     </View>
   );
 };
