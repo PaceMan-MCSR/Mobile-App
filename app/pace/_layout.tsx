@@ -1,17 +1,20 @@
+import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
-import { EVENT_ID_NAME, msToTime } from "@/lib/utils/frontendConverters";
+import { useColorScheme } from "react-native";
 export default function RootLayout() {
-  const { id, eventList, nickname, lastUpdated } = useLocalSearchParams();
-  const parsedEventList = JSON.parse(Array.isArray(eventList) ? eventList[0] : eventList);
-  const currentEvent = EVENT_ID_NAME[parsedEventList.length - 1];
+  const colorScheme = useColorScheme();
+  const { nickname, liveAccount } = useLocalSearchParams();
   return (
     <Stack>
       <Stack.Screen
         name="[id]"
         options={{
-          headerTitle: `${nickname} - ${currentEvent} [${msToTime(parseInt(lastUpdated.toString()))}]`,
+          headerTitle: `${liveAccount ? "[LIVE] " : ""}${nickname}`,
           headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+          },
         }}
       />
     </Stack>

@@ -10,14 +10,16 @@ const HomePage = () => {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <View className="bg-white dark:bg-black">
+    <View className="flex flex-1 bg-white dark:bg-[#111827]">
       <FlatList
-        contentContainerClassName="px-4 py-3"
+        contentContainerClassName="flex flex-1 px-4 py-3"
         data={liveruns}
         keyExtractor={(item: any) => item.worldId}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <PaceCard
+            index={index}
+            key={item.worldId}
             user={item.user}
             worldId={item.worldId}
             eventList={item.eventList}

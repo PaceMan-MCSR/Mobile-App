@@ -22,7 +22,7 @@ const LeaderboardPage = () => {
   const { data: leaderboard, isLoading } = useLeaderboardData(leaderboardAPIParams);
   if (isLoading) return <LoadingScreen />;
   return (
-    <View className="bg-white dark:bg-black">
+    <View className="bg-white dark:bg-[#111827]">
       <FlatList
         data={leaderboard}
         showsVerticalScrollIndicator={false}

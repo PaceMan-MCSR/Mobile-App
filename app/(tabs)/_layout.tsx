@@ -11,6 +11,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarStyle: {
+          backgroundColor: Colors[colorScheme ?? "light"].background,
+        },
       }}
     >
       {/* HOME SCREEN - Paces */}
@@ -20,6 +23,9 @@ export default function TabLayout() {
         options={{
           headerTitle: "PaceMan.gg",
           headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+          },
           tabBarLabel: "PaceMan",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "stopwatch" : "stopwatch-outline"} color={color} />
@@ -34,6 +40,9 @@ export default function TabLayout() {
         options={{
           headerTitle: "Leaderboard",
           headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+          },
           tabBarLabel: "Leaderboard",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "stats-chart" : "stats-chart-outline"} color={color} />
@@ -48,6 +57,9 @@ export default function TabLayout() {
         options={{
           headerTitle: "Events",
           headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+          },
           tabBarLabel: "Events",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "calendar" : "calendar-outline"} color={color} />

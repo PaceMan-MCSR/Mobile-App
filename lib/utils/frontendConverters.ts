@@ -25,23 +25,23 @@ export const msToDate = (ms: number) => dayjs(ms * 1000).format("MM/DD/YYYY");
 export const splitToIcon = (splitId: number) => {
   switch (splitId) {
     case 0:
-      return "../images/nether.png";
+      return require("@/assets/images/nether.png");
     case 1:
-      return "../images/bastion.png";
+      return require("@/assets/images/bastion.png");
     case 2:
-      return "../images/fortress.png";
+      return require("@/assets/images/fortress.png");
     case 3:
-      return "../images/portal.png";
+      return require("@/assets/images/portal.png");
     case 4:
-      return "../images/portal.png";
+      return require("@/assets/images/portal.png");
     case 5:
-      return "../images/sh.png";
+      return require("@/assets/images/sh.png");
     case 6:
-      return "../images/end.png";
+      return require("@/assets/images/end.png");
     case 7:
-      return "../images/credits.png";
+      return require("@/assets/images/credits.png");
     default:
-      return "../images/nether.png";
+      return require("@/assets/images/nether.png");
   }
 };
 
