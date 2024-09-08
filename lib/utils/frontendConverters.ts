@@ -1,3 +1,5 @@
+// Shamelessly taken from https://github.com/Specnr/PaceMan.gg/ :P
+
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -99,3 +101,5 @@ export const createDateFromInput = (date: dayjs.Dayjs) => {
 
   return newDate.valueOf();
 };
+
+export const isUserLive = (liveAccount: string | null) => liveAccount !== null;

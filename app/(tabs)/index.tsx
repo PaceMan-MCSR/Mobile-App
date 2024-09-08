@@ -1,33 +1,43 @@
-import { useQuery } from "@tanstack/react-query";
-import { FlatList, Text, View } from "react-native";
 import PaceCard from "@/components/PaceCard";
-import { useLiverunsData } from "@/hooks/useLiverunsData";
 import LoadingScreen from "@/components/LoadingScreen";
+import { Pace } from "@/lib/types/Pace";
+import { FlatList, Text, View } from "react-native";
+import { useLiverunsData } from "@/hooks/useLiverunsData";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const { data: liveruns, isLoading } = useLiverunsData();
 
   if (isLoading) return <LoadingScreen />;
 
+  if (!liveruns.length)
+    return (
+      <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
+        <Text className="text-black dark:text-white text-lg">No one is currently on pace...</Text>
+      </View>
+    );
+
   return (
     <View className="flex flex-1 bg-white dark:bg-[#111827]">
       <FlatList
-        contentContainerClassName="flex flex-1 px-4 py-3"
+        contentContainerClassName="px-4 py-3"
         data={liveruns}
-        keyExtractor={(item: any) => item.worldId}
+        keyExtractor={(item: Pace) => item.worldId}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
+          // FIXME: Aintnoway I need to pass all the data 😭 fix the props of <PaceCard />
           <PaceCard
-            index={index}
+            gameVersion={item.gameVersion}
+            itemData={item.itemData}
             key={item.worldId}
             user={item.user}
             worldId={item.worldId}
             eventList={item.eventList}
             contextEventList={item.contextEventList}
             isCheated={item.isCheated}
+            nickname={item.nickname}
             isHidden={item.isHidden}
             lastUpdated={item.lastUpdated}
-            nickname={item.nickname}
           />
         )}
       />

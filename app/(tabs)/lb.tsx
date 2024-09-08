@@ -1,7 +1,7 @@
-import { View, Text, FlatList } from "react-native";
+import LoadingScreen from "@/components/LoadingScreen";
 import React, { useState } from "react";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
-import LoadingScreen from "@/components/LoadingScreen";
+import { View, Text, FlatList } from "react-native";
 
 interface LeaderboardParams {
   filter: number;
@@ -10,19 +10,20 @@ interface LeaderboardParams {
 }
 
 const LeaderboardPage = () => {
-  const filterTypes = new Set(["daily", "weekly", "monthly", "all", "trophy"]);
-  const trophyOptions = ["current", "season 1"];
-  const filters = ["daily", "weekly", "monthly", "all", "trophy"];
-  const [Enable, setEnable] = useState("courses");
-  const [leaderboardAPIParams, setLeaderboardAPIParams] = useState<LeaderboardParams>({
+  // const filterTypes = new Set(["daily", "weekly", "monthly", "all", "trophy"]);
+  // const trophyOptions = ["current", "season 1"];
+  // const filters = ["daily", "weekly", "monthly", "all", "trophy"];
+  const [params, setParams] = useState<LeaderboardParams>({
     filter: 3,
     removeDuplicates: true,
     date: Date.now(),
   });
-  const { data: leaderboard, isLoading } = useLeaderboardData(leaderboardAPIParams);
+  const { data: leaderboard, isLoading } = useLeaderboardData(params);
+
   if (isLoading) return <LoadingScreen />;
+
   return (
-    <View className="bg-white dark:bg-[#111827]">
+    <View className="flex flex-1 bg-white dark:bg-[#111827]">
       <FlatList
         data={leaderboard}
         showsVerticalScrollIndicator={false}

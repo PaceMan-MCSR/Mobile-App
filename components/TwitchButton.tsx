@@ -18,7 +18,7 @@ const TwitchButton = ({ href }: TwitchButtonProps) => {
       className={`flex flex-row items-center p-3 gap-2 rounded-xl ${href !== null ? `bg-[#9146FF]` : `bg-gray-500`}`}
     >
       {href !== null && <FontAwesome5 name="twitch" size={24} color="white" />}
-      <Text className="text-white font-bold text-lg">{href || "Offline Run"}</Text>
+      <Text className="text-white text-lg font-bold">{href || "Offline Run"}</Text>
     </TouchableOpacity>
   );
 };

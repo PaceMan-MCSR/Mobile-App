@@ -1,13 +1,13 @@
-import { FlatList, ScrollView, Text, View } from "react-native";
-import { useEventListData } from "@/hooks/useEventListData";
 import LoadingScreen from "@/components/LoadingScreen";
+import { useEventListData } from "@/hooks/useEventListData";
+import { FlatList, Text, View } from "react-native";
 
 const EventsPage = () => {
   const { data: eventlist, isLoading } = useEventListData();
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <View className="bg-white dark:bg-[#111827]">
+    <View className="flex flex-1 bg-white dark:bg-[#111827]">
       <FlatList
         data={eventlist}
         showsVerticalScrollIndicator={false}

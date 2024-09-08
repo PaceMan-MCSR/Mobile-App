@@ -1,10 +1,12 @@
-const tintColorLight = "#0a7ea4";
+// TODO: Move this out of here into tailwind.config.js and add functionality for more themes.
+
+const tintColorLight = "#000";
 const tintColorDark = "#fff";
 
 export const Colors = {
   light: {
     text: "#11181C",
-    background: "#1f2937",
+    background: "#FFFFFF",
     tint: tintColorLight,
     icon: "#687076",
     tabIconDefault: "#687076",

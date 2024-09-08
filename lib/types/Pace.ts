@@ -1,18 +1,37 @@
-export interface Event {
-  name: string;
-  time: number;
-}
-
 export interface Pace {
   worldId: string;
-  nickname: string;
-  split?: number;
-  splitName: string;
-  eventList: (string | number)[];
-  time: number;
-  user: { uuid: string };
-  twitch: string | null;
+  gameVersion: string;
+  eventList: EventList[];
+  contextEventList: EventList[];
+  user: {
+    uuid: string;
+    liveAccount: null | string;
+  };
+  isCheated: boolean;
+  isHidden: boolean;
   lastUpdated: number;
-  isHighQuality: boolean;
-  itemEstimates?: any;
+  nickname: string;
+  itemData?: ItemData;
+}
+
+export interface PaceCardProps {
+  pace: Pace;
+  index: number;
+}
+
+export interface ItemData {
+  estimatedCounts: {
+    "minecraft:ender_pearl"?: number;
+    "minecraft:blaze_rod"?: number;
+    "minecraft:obsidian"?: number;
+  };
+  usages: {
+    "minecraft:ender_pearl"?: number;
+    "minecraft:obsidian"?: number;
+  };
+}
+export interface EventList {
+  eventId: string;
+  rta: number;
+  igt: number;
 }
