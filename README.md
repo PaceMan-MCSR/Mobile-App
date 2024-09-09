@@ -61,8 +61,11 @@ Either scan the QR code using Expo Go on your device, or use an Android/IOS emul
 - Configure Leaderboard Page
 - Configure Events Page
 - Configure Stats Page
-- `/lb/[id]` File-based routing tweaks to support deep-linking.
 - Add support for more color themes (look into `tw-colors`)
 - Animations for FlatList (identify how to manage prev vs curr data in Query)
 - Android bugs (tab bar icons disappearing, etc.)
 - Look into Push Notifications (will need to find a way to configure without spamming the API in the background)
+
+## Done
+
+✅ ~~`/lb/[id]` File-based routing tweaks to support deep-linking.~~

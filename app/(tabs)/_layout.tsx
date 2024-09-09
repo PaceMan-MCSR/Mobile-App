@@ -38,11 +38,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="lb"
         options={{
-          headerTitle: "Leaderboard",
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: Colors[colorScheme ?? "light"].background,
-          },
+          headerShown: false,
           tabBarLabel: "Leaderboard",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "stats-chart" : "stats-chart-outline"} color={color} />
