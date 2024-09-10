@@ -1,12 +1,12 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useGlobalSearchParams } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { TabBarIcon } from "@/components/TabBarIcon";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
+  const { id } = useGlobalSearchParams<{ id?: string }>();
   return (
     <Tabs
       screenOptions={{
@@ -36,9 +36,13 @@ export default function TabLayout() {
       {/* LEADERBOARD SCREEN */}
 
       <Tabs.Screen
-        name="lb"
+        name="lb/[id]"
         options={{
-          headerShown: false,
+          headerTitle: `Leaderboard - ${id ? id.charAt(0).toUpperCase() + id.slice(1).toLowerCase() : "All"}`,
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+          },
           tabBarLabel: "Leaderboard",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "stats-chart" : "stats-chart-outline"} color={color} />
