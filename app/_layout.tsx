@@ -27,6 +27,7 @@ export default function RootLayout() {
             options={{
               headerShown: false,
             }}
+            initialParams={{ lbType: "monthly" }}
           />
           <Stack.Screen
             name="pace"

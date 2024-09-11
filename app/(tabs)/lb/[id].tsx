@@ -1,8 +1,10 @@
 import LoadingScreen from "@/components/LoadingScreen";
+import RankCard from "@/components/RankCard";
 import React, { useEffect, useState } from "react";
+import { FlashList } from "@shopify/flash-list";
+import { View, Button } from "react-native";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
-import { View, Text, FlatList, Button } from "react-native";
-import { useGlobalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 interface LeaderboardParams {
   filter: number;
@@ -12,20 +14,23 @@ interface LeaderboardParams {
 
 const LeaderboardPage = () => {
   const filters = ["daily", "weekly", "monthly", "all", "trophy"];
-  const { id } = useGlobalSearchParams<{ id?: string }>();
+  const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const [params, setParams] = useState<LeaderboardParams>({
-    filter: 3,
+    filter: filters.indexOf(id) !== -1 ? filters.indexOf(id) : 3,
     removeDuplicates: true,
     date: Date.now(),
   });
   const { data: leaderboard, isLoading } = useLeaderboardData(params);
+
   useEffect(() => {
-    const filterIndex = filters.indexOf(id ?? "all");
-    setParams((prevParams) => ({
-      ...prevParams,
-      filter: filterIndex,
-    }));
+    const filterIndex = filters.indexOf(id);
+    if (filterIndex !== -1) {
+      setParams((prevParams) => ({
+        ...prevParams,
+        filter: filterIndex,
+      }));
+    }
   }, [id]);
 
   if (isLoading) return <LoadingScreen />;
@@ -40,10 +45,15 @@ const LeaderboardPage = () => {
         {/* <Button title="trophy" onPress={() => router.setParams({ id: "trophy" })} /> */}
         {/* TODO: Fix Trophy API */}
       </View>
-      <FlatList
+      <FlashList
+        contentContainerClassName="p-2"
         data={leaderboard}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <Text className="text-black dark:text-white">{item.nickname}</Text>}
+        // FIXME: Type Definitions
+        renderItem={({ item, index }: { item: { uuid: string; nickname: string; time: number }; index: any }) => (
+          <RankCard index={index} uuid={item.uuid} nickname={item.nickname} score={item.time} />
+        )}
+        estimatedItemSize={100}
       />
     </View>
   );

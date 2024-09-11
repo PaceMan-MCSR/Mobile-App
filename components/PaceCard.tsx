@@ -35,7 +35,7 @@ const PaceCard = ({ eventList, worldId, nickname, user }: Pace) => {
       {/* USERNAME + CURRENT SPLIT */}
       <View className="flex flex-1">
         <View className="flex flex-row items-center gap-2">
-          <Text className="text-black dark:text-white text-2xl font-bold">{nickname}</Text>
+          <Text className="text-black dark:text-white text-2xl font-bold max-w-full truncate">{nickname}</Text>
           {isUserLive(user.liveAccount) && <FontAwesome5 name="twitch" size={16} color="white" />}
         </View>
         <View className="flex flex-row items-start gap-1">
