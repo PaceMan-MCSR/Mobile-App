@@ -1,10 +1,9 @@
 import React from "react";
-import { Text, Touchable, TouchableOpacity, Linking } from "react-native";
+import { Text, TouchableOpacity, Linking } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Link } from "expo-router";
 
 interface TwitchButtonProps {
-  href: string;
+  href: string | null;
 }
 
 const TwitchButton = ({ href }: TwitchButtonProps) => {
