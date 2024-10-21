@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PaceManApp",
-    "slug": "PaceManApp",
+    "name": "PaceMan.gg",
+    "slug": "PaceManGG",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
