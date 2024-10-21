@@ -48,7 +48,9 @@
     "tailwindcss": "^3.4.10",
     "tw-colors": "^3.3.2",
     "zeego": "^2.0.1",
-    "@shopify/react-native-skia": "1.2.3"
+    "@shopify/react-native-skia": "1.2.3",
+    "expo-dev-client": "~4.0.28",
+    "expo-build-properties": "~0.12.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -33,10 +33,16 @@
           "origin": "https://localhost:8081/"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a486e969-0d5d-4d6c-9b52-cb68339cdf41"
+      }
     }
   }
 }
