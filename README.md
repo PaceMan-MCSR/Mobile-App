@@ -19,10 +19,15 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 - `react-native-reanimated` App Animations
 - `react-native-gesture-handler` Gesture Handling
 - `@tanstack/react-query` Managing fetched data from API Endpoints
+- `zeego` - Native Dropdown and Context Menus
+- `react-native-mmkv` - Key-Value Storage for User Preferences
+- `@gorhom/bottom-sheet` - Bottom Sheet component
 
 # Run Locally
 
-### Pre-requisites
+The app requires an Expo Development Build to be able to run on Android or iOS, due to the dependencies it is using. This section of the README will be updated with steps on how to create and install the development build for yourself.
+
+<!-- ### Pre-requisites
 
 - Node.js
 - Expo CLI
@@ -54,9 +59,9 @@ npm install
 npx expo start
 ```
 
-Either scan the QR code using Expo Go on your device, or use an Android/IOS emulator with Expo Go.
+Either scan the QR code using Expo Go on your device, or use an Android/IOS emulator with Expo Go. -->
 
-# To-do (way too much)
+<!-- # To-do (way too much)
 
 - Configure Leaderboard Page
 - Configure Events Page
@@ -68,4 +73,4 @@ Either scan the QR code using Expo Go on your device, or use an Android/IOS emul
 
 ## Done
 
-✅ ~~`/lb/[id]` File-based routing tweaks to support deep-linking.~~
+✅ ~~`/lb/[id]` File-based routing tweaks to support deep-linking.~~ -->
