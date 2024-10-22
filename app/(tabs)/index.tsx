@@ -43,7 +43,7 @@ const HomePage = () => {
           )}
         />
       </View>
-      <PaceBottomSheet />
+      {/* <PaceBottomSheet /> */}
     </>
   );
 };

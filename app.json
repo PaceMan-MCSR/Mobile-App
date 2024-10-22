@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PaceManApp",
-    "slug": "PaceManApp",
+    "name": "PaceMan.gg",
+    "slug": "PaceManGG",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,13 +13,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.chitrakshtarun.pacemangg"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.chitrakshtarun.pacemangg"
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +35,16 @@
           "origin": "https://localhost:8081/"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a486e969-0d5d-4d6c-9b52-cb68339cdf41"
+      }
     }
   }
 }
