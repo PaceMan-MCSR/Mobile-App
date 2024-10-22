@@ -37,7 +37,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="lb/[id]"
         options={{
-          headerTitle: `Leaderboard`,
           headerShadowVisible: false,
           headerStyle: {
             backgroundColor: Colors[colorScheme ?? "light"].background,
