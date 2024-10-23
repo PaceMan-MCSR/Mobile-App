@@ -5,22 +5,84 @@ import { FlatList, Text, View } from "react-native";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
 import { useState } from "react";
+import HomeRightComponent from "@/components/HomeRightComponent";
+import { Tabs } from "expo-router";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 
 const HomePage = () => {
-  const { data: liveruns, isLoading } = useLiverunsData();
+  const { showActionSheetWithOptions } = useActionSheet();
+  const [params, setParams] = useState({
+    gameVersion: "1.16.1",
+    liveOnly: false,
+  });
+
+  const { data: liveruns, isLoading } = useLiverunsData(params);
   const [selectedPace, setSelectedPace] = useState<Pace | null>(null);
+
+  const handleLiveOnlyToggle = () => {
+    setParams((prevParams) => ({
+      ...prevParams,
+      liveOnly: !prevParams.liveOnly,
+    }));
+  };
+
+  const handleGameVersionSelect = () => {
+    showActionSheetWithOptions(
+      {
+        options: ["1.16.1", "1.15.2", "1.7.10", "1.8.9", "1.14.4", "1.12.2", "1.16.5", "1.17.1", "Cancel"],
+        cancelButtonIndex: 9,
+        title: "Select a Minecraft version",
+      },
+      (buttonIndex) => {
+        if (buttonIndex !== 5) {
+          const selectedVersion = ["1.16.1", "1.15.2", "1.7.10", "1.8.9", "1.14.4", "1.12.2", "1.16.5", "1.17.1"][
+            buttonIndex!
+          ];
+          setParams((prevParams) => ({
+            ...prevParams,
+            gameVersion: selectedVersion,
+          }));
+        }
+      }
+    );
+  };
 
   if (isLoading) return <LoadingScreen />;
 
   if (!liveruns.length)
     return (
-      <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
-        <Text className="text-black dark:text-white text-lg">No one is currently on pace...</Text>
-      </View>
+      <>
+        <Tabs.Screen
+          options={{
+            headerRight: () => (
+              <HomeRightComponent
+                liveOnly={params.liveOnly}
+                onGameVersionSelect={handleGameVersionSelect}
+                onLiveOnlyToggle={handleLiveOnlyToggle}
+              />
+            ),
+          }}
+        />
+        <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
+          <Text className="text-black dark:text-white text-lg">No one is currently on pace...</Text>
+        </View>
+      </>
     );
 
   return (
     <>
+      <Tabs.Screen
+        options={{
+          headerRight: () => (
+            <HomeRightComponent
+              liveOnly={params.liveOnly}
+              onGameVersionSelect={handleGameVersionSelect}
+              onLiveOnlyToggle={handleLiveOnlyToggle}
+            />
+          ),
+        }}
+      />
+
       <View className="flex flex-1 bg-white dark:bg-[#111827]">
         <FlatList
           contentContainerClassName="px-4 py-3"
@@ -28,7 +90,6 @@ const HomePage = () => {
           keyExtractor={(item: Pace) => item.worldId}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            // FIXME: Aintnoway I need to pass all the data 😭 fix the props of <PaceCard />
             <PaceCard
               onPress={() => setSelectedPace(item)}
               gameVersion={item.gameVersion}

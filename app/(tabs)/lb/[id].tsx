@@ -13,7 +13,7 @@ import { FlashList } from "@shopify/flash-list";
 import { View } from "react-native";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
-import DropdownMenu from "@/components/DropDownMenu";
+import LBRightComponent from "@/components/LBRightComponent";
 
 interface LeaderboardParams {
   filter: number;
@@ -63,7 +63,7 @@ const LeaderboardPage = () => {
       <>
         <Tabs.Screen
           options={{
-            headerRight: () => <DropdownMenu onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
+            headerRight: () => <LBRightComponent onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
           }}
         />
 
@@ -75,7 +75,7 @@ const LeaderboardPage = () => {
     <>
       <Tabs.Screen
         options={{
-          headerRight: () => <DropdownMenu onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
+          headerRight: () => <LBRightComponent onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
         }}
       />
 

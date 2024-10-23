@@ -2,7 +2,6 @@
 TODO: 
 - Refactor code to make it cleaner.
 - Add Android icons.
-- Make icon update upon click instead of updating when the content loads.
 */
 
 import { View } from "react-native";
@@ -15,7 +14,7 @@ interface DropDownMenuProps {
   onSelect: (key: string) => void;
 }
 
-const DropDownMenu = ({ selectedKey, onSelect }: DropDownMenuProps) => {
+const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -86,4 +85,4 @@ const DropDownMenu = ({ selectedKey, onSelect }: DropDownMenuProps) => {
   );
 };
 
-export default DropDownMenu;
+export default LBRightComponent;
