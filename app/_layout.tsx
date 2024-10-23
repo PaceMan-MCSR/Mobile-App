@@ -31,13 +31,6 @@ export default function RootLayout() {
               }}
               initialParams={{ lbType: "monthly" }}
             />
-            <Stack.Screen
-              name="pace"
-              options={{
-                presentation: "modal",
-                headerShown: false,
-              }}
-            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </ThemeProvider>

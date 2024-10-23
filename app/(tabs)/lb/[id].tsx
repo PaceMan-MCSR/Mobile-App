@@ -1,3 +1,10 @@
+/**
+TODO: 
+- Refactor code to make it cleaner.
+- Add Android icons.
+- Make icon update upon click instead of updating when the content loads.
+*/
+
 import LoadingScreen from "@/components/LoadingScreen";
 import RankCard from "@/components/RankCard";
 import React, { useEffect, useState } from "react";
@@ -54,12 +61,6 @@ const LeaderboardPage = () => {
 
   return (
     <>
-      <Tabs.Screen
-        options={{
-          headerTitle: `Leaderboard - ${id}`,
-          headerRight: () => <LBDropdownMenu onSelect={handleSelect} />,
-        }}
-      />
       <View className="flex flex-1 bg-white dark:bg-[#111827]">
         <FlashList
           contentContainerClassName="p-2"

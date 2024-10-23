@@ -1,22 +1,14 @@
 import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import { EVENT_ID_NAME, msToTime, splitToIcon, isUserLive } from "@/lib/utils/frontendConverters";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const PaceCard = ({ eventList, worldId, nickname, user }: Pace) => {
-  const router = useRouter();
+interface PaceCardProps extends Pace {
+  onPress: () => void;
+}
 
-  const handlePress = () => {
-    router.push({
-      pathname: `/pace/[id]`,
-      params: { id: worldId, nickname: nickname, liveAccount: user.liveAccount },
-    });
-  };
-
-  // TODO: Look into implementing iOS styled Context Menus through Modals.
-  // Zeego's Context Menu exists, but requires creating a development build for iOS.
+const PaceCard = ({ eventList, worldId, nickname, user, onPress }: PaceCardProps) => {
   const handleLongPress = () => {
     console.log("peepoPauseMan");
   };
@@ -25,7 +17,7 @@ const PaceCard = ({ eventList, worldId, nickname, user }: Pace) => {
     <TouchableOpacity
       className="flex flex-row w-full items-center h-28 px-4 my-2 gap-4 rounded-2xl bg-gray-300 dark:bg-[#1f2937]"
       activeOpacity={0.75}
-      onPress={handlePress}
+      onPress={onPress}
       onLongPress={handleLongPress}
     >
       {/* MINECRAFT SKIN AVATAR */}

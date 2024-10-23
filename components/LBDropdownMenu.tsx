@@ -1,13 +1,21 @@
+/**
+TODO: 
+- Refactor code to make it cleaner.
+- Add Android icons.
+- Make icon update upon click instead of updating when the content loads.
+*/
+
 import { View } from "react-native";
 import React from "react";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { Ionicons } from "@expo/vector-icons";
 
 interface LBDropdownMenuProps {
+  selectedKey: string;
   onSelect: (key: string) => void;
 }
 
-const LBDropdownMenu = ({ onSelect }: LBDropdownMenuProps) => {
+const LBDropdownMenu = ({ selectedKey, onSelect }: LBDropdownMenuProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -19,19 +27,59 @@ const LBDropdownMenu = ({ onSelect }: LBDropdownMenuProps) => {
         <DropdownMenu.Group>
           <DropdownMenu.Item key="0" onSelect={() => onSelect("0")}>
             <DropdownMenu.ItemTitle>Daily</DropdownMenu.ItemTitle>
+            {selectedKey === "daily" && (
+              <DropdownMenu.ItemIcon
+                ios={{
+                  name: "checkmark",
+                  pointSize: 16,
+                }}
+              />
+            )}
           </DropdownMenu.Item>
-          <DropdownMenu.Item key="1" onSelect={() => onSelect("1")}>
+          <DropdownMenu.Item key="weekly" onSelect={() => onSelect("1")}>
             <DropdownMenu.ItemTitle>Weekly</DropdownMenu.ItemTitle>
+            {selectedKey === "weekly" && (
+              <DropdownMenu.ItemIcon
+                ios={{
+                  name: "checkmark",
+                  pointSize: 16,
+                }}
+              />
+            )}
           </DropdownMenu.Item>
-          <DropdownMenu.Item key="2" onSelect={() => onSelect("2")}>
+          <DropdownMenu.Item key="monthly" onSelect={() => onSelect("2")}>
             <DropdownMenu.ItemTitle>Monthly</DropdownMenu.ItemTitle>
+            {selectedKey === "monthly" && (
+              <DropdownMenu.ItemIcon
+                ios={{
+                  name: "checkmark",
+                  pointSize: 16,
+                }}
+              />
+            )}
           </DropdownMenu.Item>
-          <DropdownMenu.Item key="3" onSelect={() => onSelect("3")}>
+          <DropdownMenu.Item key="all" onSelect={() => onSelect("3")}>
             <DropdownMenu.ItemTitle>All</DropdownMenu.ItemTitle>
+            {selectedKey === "all" && (
+              <DropdownMenu.ItemIcon
+                ios={{
+                  name: "checkmark",
+                  pointSize: 16,
+                }}
+              />
+            )}
           </DropdownMenu.Item>
         </DropdownMenu.Group>
-        <DropdownMenu.Item key="4" onSelect={() => onSelect("4")}>
+        <DropdownMenu.Item key="trophy" onSelect={() => onSelect("4")}>
           <DropdownMenu.ItemTitle>Trophy</DropdownMenu.ItemTitle>
+          {selectedKey === "trophy" && (
+            <DropdownMenu.ItemIcon
+              ios={{
+                name: "checkmark",
+                pointSize: 16,
+              }}
+            />
+          )}
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

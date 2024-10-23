@@ -31,7 +31,7 @@ const RankCard = ({ index, uuid, nickname, score }: RankCardProps) => {
     <AnimatedPressable
       entering={FadeInDown.delay(10 * index).springify()}
       className="flex flex-row w-full items-center px-4 py-4 gap-3"
-      onPress={handlePress}
+      onPress={() => {}}
     >
       <View className="min-w-10 flex">
         <Text className="text-xl font-bold text-black dark:text-white">{index + 1}</Text>

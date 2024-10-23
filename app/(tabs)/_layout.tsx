@@ -3,6 +3,7 @@ import { Tabs, useGlobalSearchParams } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { TabBarIcon } from "@/components/TabBarIcon";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import LBDropdownMenu from "@/components/LBDropdownMenu";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -37,6 +38,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="lb/[id]"
         options={{
+          headerTitle: "Leaderboard",
+          headerRight: () => <LBDropdownMenu onSelect={() => console.log("Hey")} selectedKey={lbType} />,
           headerShadowVisible: false,
           headerStyle: {
             backgroundColor: Colors[colorScheme ?? "light"].background,
@@ -62,6 +65,8 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      {/* STATS SCREEN */}
       <Tabs.Screen
         name="stats"
         options={{

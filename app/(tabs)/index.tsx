@@ -4,9 +4,11 @@ import { Pace } from "@/lib/types/Pace";
 import { FlatList, Text, View } from "react-native";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
+import { useState } from "react";
 
 const HomePage = () => {
   const { data: liveruns, isLoading } = useLiverunsData();
+  const [selectedPace, setSelectedPace] = useState<Pace | null>(null);
 
   if (isLoading) return <LoadingScreen />;
 
@@ -28,6 +30,7 @@ const HomePage = () => {
           renderItem={({ item }) => (
             // FIXME: Aintnoway I need to pass all the data 😭 fix the props of <PaceCard />
             <PaceCard
+              onPress={() => setSelectedPace(item)}
               gameVersion={item.gameVersion}
               itemData={item.itemData}
               key={item.worldId}
@@ -43,7 +46,7 @@ const HomePage = () => {
           )}
         />
       </View>
-      {/* <PaceBottomSheet /> */}
+      <PaceBottomSheet selectedPace={selectedPace} onBackdropPress={() => setSelectedPace(null)} />
     </>
   );
 };
