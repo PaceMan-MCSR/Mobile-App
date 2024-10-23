@@ -19,7 +19,7 @@ const LBDropdownMenu = ({ selectedKey, onSelect }: LBDropdownMenuProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <View className="mr-4">
+        <View className="mr-3">
           <Ionicons name="menu-outline" size={28} color={"white"} />
         </View>
       </DropdownMenu.Trigger>

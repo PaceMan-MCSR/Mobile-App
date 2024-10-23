@@ -67,12 +67,6 @@ export const ordinalSuffix = (i: number): string => {
   return i + "th";
 };
 
-export const placeToColor = (place: number) => {
-  if (place === 1) return "goldenrod";
-  if (place === 2) return "#929292";
-  if (place === 3) return "#cd7f32";
-};
-
 export const EVENT_ID_NAME = [
   "Enter Nether",
   "Enter Bastion",

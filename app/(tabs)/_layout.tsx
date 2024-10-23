@@ -7,7 +7,6 @@ import LBDropdownMenu from "@/components/LBDropdownMenu";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const { lbType = "all" } = useGlobalSearchParams<{ lbType: string }>();
 
   return (
     <Tabs
@@ -39,7 +38,6 @@ export default function TabLayout() {
         name="lb/[id]"
         options={{
           headerTitle: "Leaderboard",
-          headerRight: () => <LBDropdownMenu onSelect={() => console.log("Hey")} selectedKey={lbType} />,
           headerShadowVisible: false,
           headerStyle: {
             backgroundColor: Colors[colorScheme ?? "light"].background,
@@ -47,7 +45,6 @@ export default function TabLayout() {
           tabBarLabel: "Leaderboard",
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "podium" : "podium-outline"} color={color} />,
         }}
-        initialParams={{ id: lbType }}
       />
 
       {/* EVENTS SCREEN */}

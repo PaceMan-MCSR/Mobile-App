@@ -3,15 +3,16 @@ TODO:
 - Refactor code to make it cleaner.
 - Add Android icons.
 - Make icon update upon click instead of updating when the content loads.
+- Figure out if there's a way to have the dropdown menu not be required to be declared twice. It's not the end of the world but eh. Could use a ternary but neh.
 */
 
 import LoadingScreen from "@/components/LoadingScreen";
 import RankCard from "@/components/RankCard";
 import React, { useEffect, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
-import { View } from "react-native";
+import { RefreshControl, View } from "react-native";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
-import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
+import { Tabs, useGlobalSearchParams, useLocalSearchParams, useRouter } from "expo-router";
 import LBDropdownMenu from "@/components/LBDropdownMenu";
 
 interface LeaderboardParams {
@@ -21,12 +22,12 @@ interface LeaderboardParams {
 }
 
 const LeaderboardPage = () => {
-  const filters = ["daily", "weekly", "monthly", "all", "trophy"];
   const { id } = useLocalSearchParams<{ id: string }>();
+  const filters = ["daily", "weekly", "monthly", "all", "trophy"];
   const router = useRouter();
 
   const [params, setParams] = useState<LeaderboardParams>({
-    filter: filters.indexOf(id) !== -1 ? filters.indexOf(id) : 3,
+    filter: filters.indexOf(id) !== -1 ? filters.indexOf(id) : 2,
     removeDuplicates: true,
     date: Date.now(),
   });
@@ -57,10 +58,27 @@ const LeaderboardPage = () => {
     }
   }, [id]);
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading)
+    return (
+      <>
+        <Tabs.Screen
+          options={{
+            headerRight: () => <LBDropdownMenu onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
+          }}
+        />
+
+        <LoadingScreen />
+      </>
+    );
 
   return (
     <>
+      <Tabs.Screen
+        options={{
+          headerRight: () => <LBDropdownMenu onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
+        }}
+      />
+
       <View className="flex flex-1 bg-white dark:bg-[#111827]">
         <FlashList
           contentContainerClassName="p-2"
