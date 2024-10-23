@@ -17,7 +17,11 @@ const PaceCard = ({ eventList, nickname, user, onPress }: PaceCardProps) => {
     >
       {/* MINECRAFT SKIN AVATAR */}
       <View>
-        <Image source={`https://mc-heads.net/avatar/${user.uuid}`} style={{ height: 50, width: 50 }} />
+        <Image
+          source={`https://mc-heads.net/avatar/${user.uuid}`}
+          style={{ height: 50, width: 50 }}
+          placeholder={require("@/assets/images/steve.png")}
+        />
       </View>
       {/* USERNAME + CURRENT SPLIT */}
       <View className="flex flex-1">

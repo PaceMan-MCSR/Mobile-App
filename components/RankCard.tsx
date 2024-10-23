@@ -46,7 +46,11 @@ const RankCard = ({ index, uuid, nickname, score }: RankCardProps) => {
         <Text className={`text-xl font-bold ${getRankColor(index)}`}>{index + 1}</Text>
       </View>
 
-      <Image source={`https://mc-heads.net/avatar/${uuid}`} style={{ height: 35, width: 35 }} />
+      <Image
+        source={`https://mc-heads.net/avatar/${uuid}`}
+        style={{ height: 35, width: 35 }}
+        placeholder={require("@/assets/images/steve.png")}
+      />
       <Text className={`flex flex-1 text-xl font-bold ${getRankColor(index)}`}>{nickname}</Text>
       <Text className={`text-xl font-bold ${getRankColor(index)}`}>{msToTime(score)}</Text>
     </AnimatedPressable>
