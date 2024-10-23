@@ -27,44 +27,12 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 
 The app requires an Expo Development Build to be able to run on Android or iOS, due to the dependencies it is using. This section of the README will be updated with steps on how to create and install the development build for yourself.
 
-<!-- ### Pre-requisites
-
-- Node.js
-- Expo CLI
-- Android/iOS Emulator (A Physical Device works as well)
-
-Considering the dependencies being used in this Expo project, you should be able to run the app using Expo Go.
-
-### Installation
-
-1. Clone this Repository, then change directory to the React-Native-Magic-8-Ball directory.
-
-```
-git clone https://github.com/ChitrakshTarun/PaceManApp.git
-```
-
-```
-cd PaceManApp
-```
-
-2. Install Dependencies
-
-```
-npm install
-```
-
-3.
-
-```
-npx expo start
-```
-
-Either scan the QR code using Expo Go on your device, or use an Android/IOS emulator with Expo Go. -->
-
 # To-do
 
+- Implement Settings Page
+- Refactor Version Picker
 - Implement `Events` and `Stats` pages
-- Implement User Preferences
+- Make /lb/ page more performant [Lag spikes on Android]
 - Add support for more color themes (look into `tw-colors`)
 - Animations for FlatList/FlashList (identify how to manage prev vs curr data in Query)
 - Look into Push Notifications (will need to find a way to configure without spamming the API in the background, such as webhooks)
