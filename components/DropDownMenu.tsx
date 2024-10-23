@@ -10,12 +10,12 @@ import React from "react";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { Ionicons } from "@expo/vector-icons";
 
-interface LBDropdownMenuProps {
+interface DropDownMenuProps {
   selectedKey: string;
   onSelect: (key: string) => void;
 }
 
-const LBDropdownMenu = ({ selectedKey, onSelect }: LBDropdownMenuProps) => {
+const DropDownMenu = ({ selectedKey, onSelect }: DropDownMenuProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -86,4 +86,4 @@ const LBDropdownMenu = ({ selectedKey, onSelect }: LBDropdownMenuProps) => {
   );
 };
 
-export default LBDropdownMenu;
+export default DropDownMenu;

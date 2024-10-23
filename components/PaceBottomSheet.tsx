@@ -44,6 +44,7 @@ const PaceBottomSheet = ({ selectedPace, onBackdropPress }: PaceBottomSheetProps
       handleComponent={null}
       index={selectedPace ? 0 : -1}
       enablePanDownToClose
+      enableContentPanningGesture={false}
       ref={bottomSheetRef}
       backdropComponent={renderBackdrop}
       onChange={handleSheetChanges}

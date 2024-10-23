@@ -10,10 +10,10 @@ import LoadingScreen from "@/components/LoadingScreen";
 import RankCard from "@/components/RankCard";
 import React, { useEffect, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
-import { RefreshControl, View } from "react-native";
+import { View } from "react-native";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
-import { Tabs, useGlobalSearchParams, useLocalSearchParams, useRouter } from "expo-router";
-import LBDropdownMenu from "@/components/LBDropdownMenu";
+import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
+import DropdownMenu from "@/components/DropDownMenu";
 
 interface LeaderboardParams {
   filter: number;
@@ -63,7 +63,7 @@ const LeaderboardPage = () => {
       <>
         <Tabs.Screen
           options={{
-            headerRight: () => <LBDropdownMenu onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
+            headerRight: () => <DropdownMenu onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
           }}
         />
 
@@ -75,7 +75,7 @@ const LeaderboardPage = () => {
     <>
       <Tabs.Screen
         options={{
-          headerRight: () => <LBDropdownMenu onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
+          headerRight: () => <DropdownMenu onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
         }}
       />
 

@@ -3,7 +3,6 @@ import { Tabs, useGlobalSearchParams } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { TabBarIcon } from "@/components/TabBarIcon";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import LBDropdownMenu from "@/components/LBDropdownMenu";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
