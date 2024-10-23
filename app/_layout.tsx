@@ -22,17 +22,21 @@ export default function RootLayout() {
           <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
             <Stack>
               <Stack.Screen
-                name="index"
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
                 name="(tabs)"
                 options={{
                   headerShown: false,
                 }}
                 initialParams={{ lbType: "monthly" }}
+              />
+              <Stack.Screen
+                name="settings"
+                options={{
+                  headerTitle: "Settings",
+                  headerStyle: {
+                    backgroundColor: Colors[colorScheme ?? "light"].background,
+                  },
+                  presentation: "modal",
+                }}
               />
               <Stack.Screen name="+not-found" />
             </Stack>
