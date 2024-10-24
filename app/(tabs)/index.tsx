@@ -26,10 +26,10 @@ const HomePage = () => {
   const { data: liveruns, isLoading } = useLiverunsData(params);
   const [selectedPace, setSelectedPace] = useState<Pace | null>(null);
 
-  const handleLiveOnlyToggle = (next: boolean) => {
+  const handleLiveOnlyToggle = () => {
     setParams((prevParams) => ({
       ...prevParams,
-      liveOnly: next,
+      liveOnly: !prevParams.liveOnly,
     }));
   };
 

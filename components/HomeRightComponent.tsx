@@ -7,12 +7,11 @@ import { useRouter } from "expo-router";
 interface HomeRightComponentProps {
   liveOnly: boolean;
   onGameVersionSelect: () => void;
-  onLiveOnlyToggle: (next: boolean) => void;
+  onLiveOnlyToggle: () => void;
 }
 
 const HomeRightComponent = ({ liveOnly, onGameVersionSelect, onLiveOnlyToggle }: HomeRightComponentProps) => {
   const router = useRouter();
-
   return (
     <View className="flex flex-row-reverse items-center">
       <DropdownMenu.Root>
@@ -25,14 +24,17 @@ const HomeRightComponent = ({ liveOnly, onGameVersionSelect, onLiveOnlyToggle }:
           <DropdownMenu.Item key="version" onSelect={onGameVersionSelect}>
             <DropdownMenu.ItemTitle>Select Version</DropdownMenu.ItemTitle>
           </DropdownMenu.Item>
-          <DropdownMenu.CheckboxItem
-            value={liveOnly}
-            key="fernando"
-            onValueChange={(next, previous) => onLiveOnlyToggle(next)}
-          >
+          <DropdownMenu.Item key="liveOnly" onSelect={onLiveOnlyToggle}>
             <DropdownMenu.ItemTitle>Live Only</DropdownMenu.ItemTitle>
-            <DropdownMenu.ItemIndicator />
-          </DropdownMenu.CheckboxItem>
+            {liveOnly && (
+              <DropdownMenu.ItemIcon
+                ios={{
+                  name: "checkmark",
+                  pointSize: 16,
+                }}
+              />
+            )}
+          </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 
