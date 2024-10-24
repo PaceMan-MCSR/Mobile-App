@@ -44,6 +44,7 @@ export default function TabLayout() {
           tabBarLabel: "Leaderboard",
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "podium" : "podium-outline"} color={color} />,
         }}
+        initialParams={{ id: "monthly" }}
       />
 
       {/* EVENTS SCREEN */}
