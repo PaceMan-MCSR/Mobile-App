@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Easing } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";

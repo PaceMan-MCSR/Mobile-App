@@ -1,4 +1,3 @@
-// components/HomeRightComponent.tsx
 import { Pressable, View } from "react-native";
 import React from "react";
 import * as DropdownMenu from "zeego/dropdown-menu";
@@ -8,11 +7,12 @@ import { useRouter } from "expo-router";
 interface HomeRightComponentProps {
   liveOnly: boolean;
   onGameVersionSelect: () => void;
-  onLiveOnlyToggle: () => void;
+  onLiveOnlyToggle: (next: boolean) => void;
 }
 
 const HomeRightComponent = ({ liveOnly, onGameVersionSelect, onLiveOnlyToggle }: HomeRightComponentProps) => {
   const router = useRouter();
+
   return (
     <View className="flex flex-row-reverse items-center">
       <DropdownMenu.Root>
@@ -25,17 +25,14 @@ const HomeRightComponent = ({ liveOnly, onGameVersionSelect, onLiveOnlyToggle }:
           <DropdownMenu.Item key="version" onSelect={onGameVersionSelect}>
             <DropdownMenu.ItemTitle>Select Version</DropdownMenu.ItemTitle>
           </DropdownMenu.Item>
-          <DropdownMenu.Item key="liveOnly" onSelect={onLiveOnlyToggle}>
+          <DropdownMenu.CheckboxItem
+            value={liveOnly}
+            key="fernando"
+            onValueChange={(next, previous) => onLiveOnlyToggle(next)}
+          >
             <DropdownMenu.ItemTitle>Live Only</DropdownMenu.ItemTitle>
-            {liveOnly && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
-          </DropdownMenu.Item>
+            <DropdownMenu.ItemIndicator />
+          </DropdownMenu.CheckboxItem>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 

@@ -11,7 +11,7 @@ interface PaceCardProps extends Pace {
 const PaceCard = ({ eventList, nickname, user, onPress }: PaceCardProps) => {
   return (
     <TouchableOpacity
-      className="flex flex-row w-full items-center h-28 px-4 my-2 gap-4 rounded-2xl bg-gray-300 dark:bg-[#1f2937]"
+      className="flex flex-row w-full items-center h-28 px-4 my-2 gap-4 rounded-xl bg-gray-300 dark:bg-[#1f2937]"
       activeOpacity={0.75}
       onPress={onPress}
     >

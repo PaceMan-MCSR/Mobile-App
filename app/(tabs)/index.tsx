@@ -1,3 +1,10 @@
+/* 
+TODO: 
+- Fix redundancy of props
+- Fix redundancy of same component being called thrice. 
+- Code Cleanup
+*/
+
 import PaceCard from "@/components/PaceCard";
 import LoadingScreen from "@/components/LoadingScreen";
 import { Pace } from "@/lib/types/Pace";
@@ -19,35 +26,49 @@ const HomePage = () => {
   const { data: liveruns, isLoading } = useLiverunsData(params);
   const [selectedPace, setSelectedPace] = useState<Pace | null>(null);
 
-  const handleLiveOnlyToggle = () => {
+  const handleLiveOnlyToggle = (next: boolean) => {
     setParams((prevParams) => ({
       ...prevParams,
-      liveOnly: !prevParams.liveOnly,
+      liveOnly: next,
     }));
   };
 
   const handleGameVersionSelect = () => {
+    const versions = ["1.16.1", "1.15.2", "1.7.10", "1.8.9", "1.14.4", "1.12.2", "1.16.5", "1.17.1"];
     showActionSheetWithOptions(
       {
-        options: ["1.16.1", "1.15.2", "1.7.10", "1.8.9", "1.14.4", "1.12.2", "1.16.5", "1.17.1", "Cancel"],
-        cancelButtonIndex: 9,
+        options: [...versions, "Cancel"],
+        cancelButtonIndex: versions.length,
         title: "Select a Minecraft version",
       },
       (buttonIndex) => {
-        if (buttonIndex !== 5) {
-          const selectedVersion = ["1.16.1", "1.15.2", "1.7.10", "1.8.9", "1.14.4", "1.12.2", "1.16.5", "1.17.1"][
-            buttonIndex!
-          ];
+        if (buttonIndex !== undefined && buttonIndex < versions.length) {
           setParams((prevParams) => ({
             ...prevParams,
-            gameVersion: selectedVersion,
+            gameVersion: versions[buttonIndex],
           }));
         }
       }
     );
   };
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading)
+    return (
+      <>
+        <Tabs.Screen
+          options={{
+            headerRight: () => (
+              <HomeRightComponent
+                liveOnly={params.liveOnly}
+                onGameVersionSelect={handleGameVersionSelect}
+                onLiveOnlyToggle={handleLiveOnlyToggle}
+              />
+            ),
+          }}
+        />
+        <LoadingScreen />
+      </>
+    );
 
   if (!liveruns.length)
     return (
