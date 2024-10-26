@@ -1,8 +1,10 @@
 import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { EVENT_ID_NAME, msToTime, splitToIcon, isUserLive } from "@/lib/utils/frontendConverters";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { TouchableOpacity } from "@/components/AnimatedComponents";
+import Animated, { FadeIn, FadeInUp, FadeOut, FadeOutUp, LinearTransition } from "react-native-reanimated";
 
 interface PaceCardProps extends Pace {
   onPress: () => void;
@@ -15,7 +17,6 @@ const PaceCard = ({ eventList, nickname, user, onPress }: PaceCardProps) => {
       activeOpacity={0.75}
       onPress={onPress}
     >
-      {/* MINECRAFT SKIN AVATAR */}
       <View>
         <Image
           source={`https://mc-heads.net/avatar/${user.uuid}`}
@@ -23,7 +24,6 @@ const PaceCard = ({ eventList, nickname, user, onPress }: PaceCardProps) => {
           placeholder={require("@/assets/images/steve.png")}
         />
       </View>
-      {/* USERNAME + CURRENT SPLIT */}
       <View className="flex flex-1">
         <View className="flex flex-row items-center gap-2">
           <Text className="text-black dark:text-white text-2xl font-bold max-w-full truncate">{nickname}</Text>
@@ -34,11 +34,11 @@ const PaceCard = ({ eventList, nickname, user, onPress }: PaceCardProps) => {
           <Text className="text-black dark:text-white">{EVENT_ID_NAME[eventList.length - 1]}</Text>
         </View>
       </View>
-      {/* IN GAME TIME */}
       <Text className="text-black dark:text-white text-4xl font-bold">
         {msToTime(eventList[eventList.length - 1].igt)}
       </Text>
     </TouchableOpacity>
   );
 };
+
 export default PaceCard;

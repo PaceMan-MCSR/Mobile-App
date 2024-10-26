@@ -1,31 +1,27 @@
-/* 
-TODO: 
-- Fix redundancy of props
-- Fix redundancy of same component being called thrice. 
-- Code Cleanup
-*/
-
 import PaceCard from "@/components/PaceCard";
 import LoadingScreen from "@/components/LoadingScreen";
 import { Pace } from "@/lib/types/Pace";
 import { FlatList, Text, View } from "react-native";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
-import { useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import HomeRightComponent from "@/components/HomeRightComponent";
 import { Tabs } from "expo-router";
 import { useActionSheet } from "@expo/react-native-action-sheet";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 
 const HomePage = () => {
-  const { showActionSheetWithOptions } = useActionSheet();
   const [params, setParams] = useState({
     gameVersion: "1.16.1",
     liveOnly: false,
   });
+  const { showActionSheetWithOptions } = useActionSheet();
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
   const { data: liveruns, isLoading } = useLiverunsData(params);
   const [selectedPace, setSelectedPace] = useState<Pace | null>(null);
 
+  // HEADER RIGHT FUNCTIONS
   const handleLiveOnlyToggle = () => {
     setParams((prevParams) => ({
       ...prevParams,
@@ -52,20 +48,47 @@ const HomePage = () => {
     );
   };
 
+  const headerRight = useCallback(
+    () => (
+      <HomeRightComponent
+        liveOnly={params.liveOnly}
+        onGameVersionSelect={handleGameVersionSelect}
+        onLiveOnlyToggle={handleLiveOnlyToggle}
+      />
+    ),
+    [params.liveOnly]
+  );
+
+  // BOTTOM SHEET FUNCTIONS
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+        pressBehavior="close"
+        onPress={() => bottomSheetRef.current?.close()}
+        opacity={0.5}
+      />
+    ),
+    []
+  );
+
+  const handleSheetChanges = useCallback((index: number) => {
+    if (index === -1) {
+      setSelectedPace(null);
+    }
+  }, []);
+
+  const handlePaceCardPress = (item: Pace) => {
+    bottomSheetRef.current?.expand();
+    setSelectedPace(item);
+  };
+
   if (isLoading)
     return (
       <>
-        <Tabs.Screen
-          options={{
-            headerRight: () => (
-              <HomeRightComponent
-                liveOnly={params.liveOnly}
-                onGameVersionSelect={handleGameVersionSelect}
-                onLiveOnlyToggle={handleLiveOnlyToggle}
-              />
-            ),
-          }}
-        />
+        <Tabs.Screen options={{ headerRight }} />
         <LoadingScreen />
       </>
     );
@@ -73,17 +96,7 @@ const HomePage = () => {
   if (!liveruns.length)
     return (
       <>
-        <Tabs.Screen
-          options={{
-            headerRight: () => (
-              <HomeRightComponent
-                liveOnly={params.liveOnly}
-                onGameVersionSelect={handleGameVersionSelect}
-                onLiveOnlyToggle={handleLiveOnlyToggle}
-              />
-            ),
-          }}
-        />
+        <Tabs.Screen options={{ headerRight }} />
         <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
           <Text className="text-black dark:text-white text-lg">No one is currently on pace...</Text>
         </View>
@@ -92,19 +105,9 @@ const HomePage = () => {
 
   return (
     <>
-      <Tabs.Screen
-        options={{
-          headerRight: () => (
-            <HomeRightComponent
-              liveOnly={params.liveOnly}
-              onGameVersionSelect={handleGameVersionSelect}
-              onLiveOnlyToggle={handleLiveOnlyToggle}
-            />
-          ),
-        }}
-      />
-
+      <Tabs.Screen options={{ headerRight }} />
       <View className="flex flex-1 bg-white dark:bg-[#111827]">
+        {/* PACE LIST */}
         <FlatList
           contentContainerClassName="px-4 py-3"
           data={liveruns}
@@ -112,7 +115,10 @@ const HomePage = () => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <PaceCard
-              onPress={() => setSelectedPace(item)}
+              onPress={() => {
+                setSelectedPace(item);
+                bottomSheetRef.current?.expand();
+              }}
               gameVersion={item.gameVersion}
               itemData={item.itemData}
               key={item.worldId}
@@ -128,7 +134,14 @@ const HomePage = () => {
           )}
         />
       </View>
-      <PaceBottomSheet selectedPace={selectedPace} onBackdropPress={() => setSelectedPace(null)} />
+      {/* BOTTOM SHEET */}
+      <PaceBottomSheet
+        ref={bottomSheetRef}
+        selectedPace={selectedPace}
+        onBackdropPress={() => setSelectedPace(null)}
+        renderBackdrop={renderBackdrop}
+        onSheetChanges={handleSheetChanges}
+      />
     </>
   );
 };

@@ -35,7 +35,7 @@ export default function RootLayout() {
                   headerStyle: {
                     backgroundColor: Colors[colorScheme ?? "light"].background,
                   },
-                  presentation: "modal",
+                  headerBackTitle: "Back",
                 }}
               />
               <Stack.Screen name="+not-found" />

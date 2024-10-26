@@ -37,15 +37,11 @@ const LeaderboardPage = () => {
   const handleSelect = (key: string) => {
     const selectedIndex = parseInt(key);
     const selectedFilter = filters[selectedIndex];
-
     setParams((prevParams) => ({
       ...prevParams,
       filter: selectedIndex,
     }));
-
     router.setParams({ id: selectedFilter });
-
-    console.log(`Selected ${selectedFilter} at index ${selectedIndex}`);
   };
 
   useEffect(() => {
