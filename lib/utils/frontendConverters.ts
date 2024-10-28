@@ -97,3 +97,13 @@ export const createDateFromInput = (date: dayjs.Dayjs) => {
 };
 
 export const isUserLive = (liveAccount: string | null) => liveAccount !== null;
+
+export const getRankColor = (index: number) => {
+  return index === 0
+    ? `text-rank-gold italic`
+    : index === 1
+    ? `text-rank-silver italic`
+    : index === 2
+    ? `text-rank-bronze italic`
+    : `text-black dark:text-white`;
+};

@@ -29,8 +29,7 @@ const PaceCard = ({ eventList, nickname, user, onPress }: PaceCardProps) => {
           <Text className="text-black dark:text-white text-2xl font-bold max-w-full truncate">{nickname}</Text>
           {isUserLive(user.liveAccount) && <FontAwesome5 name="twitch" size={16} color="white" />}
         </View>
-        <View className="flex flex-row items-start gap-1">
-          <Image source={splitToIcon(eventList.length - 1)} style={{ width: 15, height: 15 }} />
+        <View>
           <Text className="text-black dark:text-white">{EVENT_ID_NAME[eventList.length - 1]}</Text>
         </View>
       </View>

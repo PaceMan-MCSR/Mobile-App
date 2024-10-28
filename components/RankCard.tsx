@@ -4,7 +4,7 @@ import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { useRouter } from "expo-router";
 import Animated, { FadeInDown } from "react-native-reanimated";
-
+import { getRankColor } from "@/lib/utils/frontendConverters";
 interface RankCardProps {
   index: number;
   uuid: string;
@@ -16,15 +16,15 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const RankCard = ({ index, uuid, nickname, score }: RankCardProps) => {
   // This did not work for some reason when defining it in "@/lib/utils/frontendConverters". Not the end of the world but silly.
-  const getRankColor = (index: number) => {
-    return index === 0
-      ? `text-rank-gold`
-      : index === 1
-      ? `text-rank-silver`
-      : index === 2
-      ? `text-rank-bronze`
-      : `text-black dark:text-white`;
-  };
+  // const getRankColor = (index: number) => {
+  //   return index === 0
+  //     ? `text-rank-gold`
+  //     : index === 1
+  //     ? `text-rank-silver`
+  //     : index === 2
+  //     ? `text-rank-bronze`
+  //     : `text-black dark:text-white`;
+  // };
 
   const router = useRouter();
   const handlePress = () => {
