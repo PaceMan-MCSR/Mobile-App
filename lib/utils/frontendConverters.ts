@@ -107,3 +107,22 @@ export const getRankColor = (index: number) => {
     ? `text-rank-bronze italic`
     : `text-black dark:text-white`;
 };
+
+export const eventIdToName = new Map<string, string>([
+  ["rsg.enter_nether", "Enter Nether"],
+  ["rsg.enter_bastion", "Enter Bastion"],
+  ["rsg.enter_fortress", "Enter Fortress"],
+  ["rsg.first_portal", "First Portal"],
+  ["rsg.second_portal", "Second Portal"],
+  ["rsg.enter_stronghold", "Enter Stronghold"],
+  ["rsg.enter_end", "Enter End"],
+  ["rsg.credits", "Finish"],
+]);
+
+export const getMostRecentSplit = (eventList: { eventId: string; igt: number }[]) => {
+  const mostRecentEvent = eventList[eventList.length - 1];
+  return {
+    eventName: eventIdToName.get(mostRecentEvent.eventId) || "Unknown Event",
+    igt: msToTime(mostRecentEvent.igt),
+  };
+};

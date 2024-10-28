@@ -117,6 +117,7 @@ const HomePage = () => {
             <PaceCard
               onPress={() => {
                 setSelectedPace(item);
+                console.log(item);
                 bottomSheetRef.current?.expand();
               }}
               gameVersion={item.gameVersion}

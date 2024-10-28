@@ -35,6 +35,7 @@ export default function RootLayout() {
                   headerStyle: {
                     backgroundColor: Colors[colorScheme ?? "light"].background,
                   },
+                  headerTintColor: Colors[colorScheme ?? "light"].text,
                   headerBackTitle: "Back",
                 }}
               />

@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const StatsPlayerPage = () => {
+const StatsRunPage = () => {
   return (
     <View>
-      <Text>StatsPlayerPage</Text>
+      <Text>StatsRunPage</Text>
     </View>
   );
 };
 
-export default StatsPlayerPage;
+export default StatsRunPage;

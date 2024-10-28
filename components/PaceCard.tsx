@@ -1,7 +1,14 @@
 import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
 import { Text, View } from "react-native";
-import { EVENT_ID_NAME, msToTime, splitToIcon, isUserLive } from "@/lib/utils/frontendConverters";
+import {
+  EVENT_ID_NAME,
+  msToTime,
+  splitToIcon,
+  isUserLive,
+  eventIdToName,
+  getMostRecentSplit,
+} from "@/lib/utils/frontendConverters";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { TouchableOpacity } from "@/components/AnimatedComponents";
 import Animated, { FadeIn, FadeInUp, FadeOut, FadeOutUp, LinearTransition } from "react-native-reanimated";
@@ -29,13 +36,9 @@ const PaceCard = ({ eventList, nickname, user, onPress }: PaceCardProps) => {
           <Text className="text-black dark:text-white text-2xl font-bold max-w-full truncate">{nickname}</Text>
           {isUserLive(user.liveAccount) && <FontAwesome5 name="twitch" size={16} color="white" />}
         </View>
-        <View>
-          <Text className="text-black dark:text-white">{EVENT_ID_NAME[eventList.length - 1]}</Text>
-        </View>
+        <Text className="text-black dark:text-white">{getMostRecentSplit(eventList).eventName}</Text>
       </View>
-      <Text className="text-black dark:text-white text-4xl font-bold">
-        {msToTime(eventList[eventList.length - 1].igt)}
-      </Text>
+      <Text className="text-black dark:text-white text-4xl font-bold">{getMostRecentSplit(eventList).igt}</Text>
     </TouchableOpacity>
   );
 };
