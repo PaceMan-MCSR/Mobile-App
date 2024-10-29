@@ -37,7 +37,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
-    "nativewind": "next",
+    "nativewind": "^4.1.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
@@ -51,7 +51,10 @@
     "react-native-web": "~0.19.10",
     "tailwindcss": "^3.4.10",
     "tw-colors": "^3.3.2",
-    "zeego": "^2.0.3"
+    "zeego": "^2.0.3",
+    "@react-native-segmented-control/segmented-control": "2.5.2",
+    "@react-native-community/slider": "4.5.2",
+    "@react-native-picker/picker": "2.7.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
