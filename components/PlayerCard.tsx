@@ -4,28 +4,20 @@ import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { useRouter } from "expo-router";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { getRankColor } from "@/lib/utils/frontendConverters";
-interface RankCardProps {
+
+// Need to fix this, make the types more dynamic to take in info based on if it's leaderboard, player or trophy.
+interface PlayerCardProps {
+  type: "leaderboard" | "trophy" | "player";
   index: number;
   uuid: string;
   nickname: string;
-  score: number;
+  score?: number;
+  time: number;
 }
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-const RankCard = ({ index, uuid, nickname, score }: RankCardProps) => {
-  // This did not work for some reason when defining it in "@/lib/utils/frontendConverters". Not the end of the world but silly.
-  // const getRankColor = (index: number) => {
-  //   return index === 0
-  //     ? `text-rank-gold`
-  //     : index === 1
-  //     ? `text-rank-silver`
-  //     : index === 2
-  //     ? `text-rank-bronze`
-  //     : `text-black dark:text-white`;
-  // };
-
+const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }: PlayerCardProps) => {
   const router = useRouter();
   const handlePress = () => {
     router.push({
@@ -35,26 +27,41 @@ const RankCard = ({ index, uuid, nickname, score }: RankCardProps) => {
       },
     });
   };
-
+  const getRankColor = (index: number) => {
+    return index === 0
+      ? `text-rank-gold italic`
+      : index === 1
+      ? `text-rank-silver italic`
+      : index === 2
+      ? `text-rank-bronze italic`
+      : `text-black dark:text-white`;
+  };
   return (
     <AnimatedPressable
       entering={FadeInDown.delay(10 * index).springify()}
       className="flex flex-row w-full items-center px-4 py-4 gap-3"
       onPress={handlePress}
     >
+      {/* RANK || POINTS  */}
       <View className="min-w-10 flex">
-        <Text className={`text-xl font-bold ${getRankColor(index)}`}>{index + 1}</Text>
+        <Text className={`text-xl font-bold ${getRankColor(index)}`}>
+          {(type === "leaderboard" || type === "player") && index + 1}
+          {type === "trophy" && score}
+        </Text>
       </View>
 
+      {/* PLAYER AVATAR */}
       <Image
         source={`https://mc-heads.net/avatar/${uuid}`}
         style={{ height: 35, width: 35 }}
         placeholder={require("@/assets/images/steve.png")}
       />
+      {/* PLAYER NAME */}
       <Text className={`flex flex-1 text-xl font-bold ${getRankColor(index)}`}>{nickname}</Text>
-      <Text className={`text-xl font-bold ${getRankColor(index)}`}>{msToTime(score)}</Text>
+      {/* TIMESTAMP (PB | SPLIT TIME) */}
+      <Text className={`text-xl font-bold ${getRankColor(index)}`}>{msToTime(time)}</Text>
     </AnimatedPressable>
   );
 };
 
-export default RankCard;
+export default PlayerCard;

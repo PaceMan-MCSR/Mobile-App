@@ -98,16 +98,6 @@ export const createDateFromInput = (date: dayjs.Dayjs) => {
 
 export const isUserLive = (liveAccount: string | null) => liveAccount !== null;
 
-export const getRankColor = (index: number) => {
-  return index === 0
-    ? `text-rank-gold italic`
-    : index === 1
-    ? `text-rank-silver italic`
-    : index === 2
-    ? `text-rank-bronze italic`
-    : `text-black dark:text-white`;
-};
-
 export const eventIdToName = new Map<string, string>([
   ["rsg.enter_nether", "Enter Nether"],
   ["rsg.enter_bastion", "Enter Bastion"],

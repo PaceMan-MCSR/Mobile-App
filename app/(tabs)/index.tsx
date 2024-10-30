@@ -66,7 +66,6 @@ const HomePage = () => {
         {...props}
         disappearsOnIndex={-1}
         appearsOnIndex={0}
-        pressBehavior="close"
         onPress={() => bottomSheetRef.current?.close()}
         opacity={0.5}
       />
@@ -117,7 +116,6 @@ const HomePage = () => {
             <PaceCard
               onPress={() => {
                 setSelectedPace(item);
-                console.log(item);
                 bottomSheetRef.current?.expand();
               }}
               gameVersion={item.gameVersion}
