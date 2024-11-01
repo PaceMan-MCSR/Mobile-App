@@ -24,29 +24,6 @@ export const msToTime = (ms: number, keepMs = false): string => {
 
 export const msToDate = (ms: number) => dayjs(ms * 1000).format("MM/DD/YYYY");
 
-export const splitToIcon = (splitId: number) => {
-  switch (splitId) {
-    case 0:
-      return require("@/assets/images/nether.png");
-    case 1:
-      return require("@/assets/images/bastion.png");
-    case 2:
-      return require("@/assets/images/fortress.png");
-    case 3:
-      return require("@/assets/images/portal.png");
-    case 4:
-      return require("@/assets/images/portal.png");
-    case 5:
-      return require("@/assets/images/sh.png");
-    case 6:
-      return require("@/assets/images/end.png");
-    case 7:
-      return require("@/assets/images/credits.png");
-    default:
-      return require("@/assets/images/nether.png");
-  }
-};
-
 export const uuidToHead = (uuid: string): string => {
   const endpoint = "https://api.mineatar.io/face/";
   return `${endpoint}${uuid}`;
@@ -97,6 +74,8 @@ export const createDateFromInput = (date: dayjs.Dayjs) => {
 };
 
 export const isUserLive = (liveAccount: string | null) => liveAccount !== null;
+
+export const fracToPerc = (frac: number) => `${Math.round(frac * 10000) / 100}%`;
 
 export const eventIdToName = new Map<string, string>([
   ["rsg.enter_nether", "Enter Nether"],

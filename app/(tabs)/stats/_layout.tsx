@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function RootLayout() {
+export default function StatsLayout() {
   return (
     <Stack>
       <Stack.Screen
@@ -11,6 +11,12 @@ export default function RootLayout() {
       />
       <Stack.Screen
         name="player"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="run"
         options={{
           headerShown: false,
         }}

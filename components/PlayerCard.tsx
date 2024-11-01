@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from "react-native";
-import React from "react";
+import React, { memo, useEffect } from "react";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { useRouter } from "expo-router";
@@ -18,6 +18,10 @@ interface PlayerCardProps {
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }: PlayerCardProps) => {
+  useEffect(() => {
+    console.log(`Component ${index + 1} rendered!`);
+  }, []);
+
   const router = useRouter();
   const handlePress = () => {
     router.push({
@@ -38,7 +42,7 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
   };
   return (
     <AnimatedPressable
-      entering={FadeInDown.delay(10 * index).springify()}
+      // entering={FadeInDown.delay(10 * index).springify()}
       className="flex flex-row w-full items-center px-4 py-4 gap-3"
       onPress={handlePress}
     >
@@ -64,4 +68,4 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
   );
 };
 
-export default PlayerCard;
+export default memo(PlayerCard);

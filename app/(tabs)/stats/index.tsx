@@ -1,12 +1,9 @@
 import { View, Text } from "react-native";
 import React from "react";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const StatsPage = () => {
-  return (
-    <View>
-      <Text>StatsPage</Text>
-    </View>
-  );
+  return <LoadingScreen />;
 };
 
 export default StatsPage;

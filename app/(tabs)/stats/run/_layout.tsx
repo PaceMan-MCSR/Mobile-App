@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function StatsPlayerLayout() {
+export default function StatsRunLayout() {
   return (
     <Stack>
       <Stack.Screen

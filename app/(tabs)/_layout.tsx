@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, useGlobalSearchParams } from "expo-router";
+import { Tabs } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { TabBarIcon } from "@/components/TabBarIcon";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -49,7 +49,7 @@ export default function TabLayout() {
 
       {/* EVENTS SCREEN */}
       <Tabs.Screen
-        name="events"
+        name="events/[id]"
         options={{
           headerTitle: "Events",
           headerShadowVisible: false,
@@ -61,6 +61,7 @@ export default function TabLayout() {
             <TabBarIcon name={focused ? "calendar" : "calendar-outline"} color={color} />
           ),
         }}
+        initialParams={{ id: "latest" }}
       />
 
       {/* STATS SCREEN */}

@@ -5,10 +5,10 @@ export default interface Event {
   ends: number[];
   whitelist: string[];
   vanity: string;
-  points?: Points[];
   host?: string;
+  points?: PointDistribution[];
 }
-interface Points {
+export interface PointDistribution {
   barrier: number;
   points: number;
 }

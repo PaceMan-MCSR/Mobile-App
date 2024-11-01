@@ -118,16 +118,16 @@ const HomePage = () => {
                 setSelectedPace(item);
                 bottomSheetRef.current?.expand();
               }}
-              gameVersion={item.gameVersion}
-              itemData={item.itemData}
-              key={item.worldId}
-              user={item.user}
               worldId={item.worldId}
+              splitName={item.splitName}
+              time={item.time}
+              isHighQuality={item.isHighQuality}
+              split={item.split}
+              gameVersion={item.gameVersion}
+              twitch={item.twitch}
+              uuid={item.uuid}
               eventList={item.eventList}
-              contextEventList={item.contextEventList}
-              isCheated={item.isCheated}
               nickname={item.nickname}
-              isHidden={item.isHidden}
               lastUpdated={item.lastUpdated}
             />
           )}
