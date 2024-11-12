@@ -44,8 +44,7 @@
             "deploymentTarget": "14.0"
           }
         }
-      ],
-      "react-native-bottom-tabs"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
