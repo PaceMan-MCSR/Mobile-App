@@ -7,6 +7,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native
 import * as NavigationBar from "expo-navigation-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import * as SystemUI from "expo-system-ui";
 
 import "@/global.css";
 const queryClient = new QueryClient();
@@ -14,7 +15,7 @@ const queryClient = new QueryClient();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   Platform.OS === "android" && NavigationBar.setBackgroundColorAsync(Colors[colorScheme ?? "light"].background);
-
+  SystemUI.setBackgroundColorAsync(Colors[colorScheme ?? "light"].background);
   return (
     <GestureHandlerRootView>
       <QueryClientProvider client={queryClient}>
