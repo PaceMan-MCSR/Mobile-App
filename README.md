@@ -29,6 +29,7 @@ The app requires an Expo Development Build to be able to run on Android or iOS, 
 
 # To-do
 
+- IMP!!! FIX Tab Bar Lag
 - Implement Settings Page
 - Refactor Version Picker
 - Implement `Events` and `Stats` pages

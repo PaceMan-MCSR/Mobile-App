@@ -12,11 +12,9 @@ export const useLeaderboardData = ({ filter, removeDuplicates, date, season }: L
     queryKey: ["leaderboard", { filter, removeDuplicates, date }],
     queryFn: () =>
       filter === 4
-        ? fetch(`https://paceman.gg/api/us/trophy?season=${season}`).then((res) => res.json())
-        : fetch(
-            `https://paceman.gg/api/cs/leaderboard?filter=${filter}&removeDuplicates=${
-              removeDuplicates ? 1 : 0
-            }&date=${date}`
-          ).then((res) => res.json()),
+        ? fetch(`/api/trophy?season=${season}`).then((res) => res.json())
+        : fetch(`/api/leaderboard?filter=${filter}&removeDuplicates=${removeDuplicates ? 1 : 0}&date=${date}`).then(
+            (res) => res.json()
+          ),
   });
 };
