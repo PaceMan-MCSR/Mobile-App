@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { View, Text } from "react-native";
-import BottomSheet, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
+import BottomSheetModal, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import TwitchButton from "@/components/TwitchButton";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
@@ -14,13 +14,13 @@ interface PaceBottomSheetProps {
   onSheetChanges: (index: number) => void;
 }
 
-const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
+const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
   ({ selectedPace, renderBackdrop, onSheetChanges }, ref) => {
     if (!selectedPace) return null;
     const completedEvents = new Map(selectedPace.eventList.map((event) => [event.name, event.time]));
 
     return (
-      <BottomSheet
+      <BottomSheetModal
         ref={ref}
         handleComponent={null}
         index={0}
@@ -78,7 +78,7 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
             );
           })}
         </BottomSheetView>
-      </BottomSheet>
+      </BottomSheetModal>
     );
   }
 );

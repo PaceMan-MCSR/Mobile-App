@@ -92,7 +92,7 @@ const HomePage = () => {
       </>
     );
 
-  if (!liveruns.length)
+  if (!liveruns!.length)
     return (
       <>
         <Tabs.Screen options={{ headerRight }} />

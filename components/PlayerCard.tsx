@@ -1,9 +1,8 @@
-import { View, Text, Pressable } from "react-native";
-import React, { memo, useEffect } from "react";
+import { memo } from "react";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { useRouter } from "expo-router";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import { View, Text, Pressable } from "react-native";
 
 // Need to fix this, make the types more dynamic to take in info based on if it's leaderboard, player or trophy.
 interface PlayerCardProps {
@@ -15,13 +14,7 @@ interface PlayerCardProps {
   time: number;
 }
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
 const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }: PlayerCardProps) => {
-  useEffect(() => {
-    console.log(`Component ${index + 1} rendered!`);
-  }, []);
-
   const router = useRouter();
   const handlePress = () => {
     router.push({
@@ -41,7 +34,7 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
       : `text-black dark:text-white`;
   };
   return (
-    <AnimatedPressable
+    <Pressable
       // entering={FadeInDown.delay(10 * index).springify()}
       className="flex flex-row w-full items-center px-4 py-4 gap-3"
       onPress={handlePress}
@@ -64,7 +57,7 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
       <Text className={`flex flex-1 text-xl font-bold ${getRankColor(index)}`}>{nickname}</Text>
       {/* TIMESTAMP (PB | SPLIT TIME) */}
       <Text className={`text-xl font-bold ${getRankColor(index)}`}>{msToTime(time)}</Text>
-    </AnimatedPressable>
+    </Pressable>
   );
 };
 

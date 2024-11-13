@@ -86,7 +86,6 @@ const LeaderboardPage = () => {
               <TrophyPicker values={["Current", "Season 1", "Season 2"]} season={0} onChange={() => {}} />
             )
           }
-          contentContainerClassName="p-4"
           data={leaderboard}
           showsVerticalScrollIndicator={false}
           renderItem={
