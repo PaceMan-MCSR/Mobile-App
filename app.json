@@ -50,7 +50,8 @@
             "deploymentTarget": "15.1"
           }
         }
-      ]
+      ],
+      "react-native-bottom-tabs"
     ],
     "experiments": {
       "typedRoutes": true
