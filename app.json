@@ -4,6 +4,7 @@
     "slug": "PaceManGG",
     "version": "1.0.0",
     "orientation": "portrait",
+    "newArchEnabled": true,
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
@@ -14,7 +15,12 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.chitrakshtarun.pacemangg"
+      "bundleIdentifier": "com.chitrakshtarun.pacemangg",
+      "icon": {
+        "light": "./assets/images/icon.png",
+        "dark": "./assets/images/icon-dark.png",
+        "tinted": "./assets/images/icon-tinted.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -41,7 +47,7 @@
         {
           "ios": {
             "useFrameworks": "static",
-            "deploymentTarget": "14.0"
+            "deploymentTarget": "15.1"
           }
         }
       ]
