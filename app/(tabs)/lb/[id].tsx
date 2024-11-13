@@ -9,8 +9,7 @@ TODO:
 import LoadingScreen from "@/components/LoadingScreen";
 import PlayerCard from "@/components/PlayerCard";
 import React, { useEffect, useState } from "react";
-import { FlashList } from "@shopify/flash-list";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
 import LBRightComponent from "@/components/LBRightComponent";
@@ -81,7 +80,7 @@ const LeaderboardPage = () => {
       />
 
       <View className="flex flex-1 bg-white dark:bg-[#111827]">
-        <FlashList
+        <FlatList
           ListHeaderComponent={() =>
             params.filter === 4 && (
               <TrophyPicker values={["Current", "Season 1", "Season 2"]} season={0} onChange={() => {}} />
@@ -112,7 +111,6 @@ const LeaderboardPage = () => {
                   />
                 )
           }
-          estimatedItemSize={100}
         />
       </View>
     </>
