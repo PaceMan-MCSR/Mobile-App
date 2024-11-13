@@ -17,7 +17,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.chitrakshtarun.pacemangg",
       "icon": {
-        "any": "./assets/images/icon.png",
+        "light": "./assets/images/icon.png",
         "dark": "./assets/images/icon-dark.png",
         "tinted": "./assets/images/icon-tinted.png"
       }
