@@ -7,7 +7,6 @@ import PaceBottomSheet from "@/components/PaceBottomSheet";
 import { useRef, useState, useCallback } from "react";
 import HomeRightComponent from "@/components/HomeRightComponent";
 import { Tabs } from "expo-router";
-import { useActionSheet } from "@expo/react-native-action-sheet";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 
 const HomePage = () => {
@@ -15,7 +14,6 @@ const HomePage = () => {
     gameVersion: "1.16.1",
     liveOnly: false,
   });
-  const { showActionSheetWithOptions } = useActionSheet();
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const { data: liveruns, isLoading } = useLiverunsData(params);
