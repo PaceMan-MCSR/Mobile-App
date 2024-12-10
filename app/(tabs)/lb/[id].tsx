@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
 import LBRightComponent from "@/components/LBRightComponent";
 import PlayerCard from "@/components/PlayerCard";
@@ -50,6 +50,21 @@ const LeaderboardPage = () => {
           }}
         />
         <LoadingScreen />
+      </>
+    );
+  }
+
+  if (!leaderboard.length) {
+    return (
+      <>
+        <Tabs.Screen
+          options={{
+            headerRight: () => <LBRightComponent onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
+          }}
+        />
+        <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
+          <Text className="text-black dark:text-white text-lg">There are no completions yet...</Text>
+        </View>
       </>
     );
   }

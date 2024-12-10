@@ -1,11 +1,10 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useMemo } from "react";
 import { View, Text } from "react-native";
 import BottomSheetModal, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import TwitchButton from "@/components/TwitchButton";
 import { Image } from "expo-image";
-import { msToTime } from "@/lib/utils/frontendConverters";
+import { msToTime, getSortedEventsWithTimes } from "@/lib/utils/frontendConverters";
 import { Pace } from "@/lib/types/Pace";
-import { EVENT_ID_NAME } from "@/lib/utils/frontendConverters";
 
 interface PaceBottomSheetProps {
   selectedPace: Pace | null;
@@ -16,8 +15,13 @@ interface PaceBottomSheetProps {
 
 const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
   ({ selectedPace, renderBackdrop, onSheetChanges }, ref) => {
+    const splits = useMemo(() => {
+      if (!selectedPace) return [];
+      const completedEvents = new Map(selectedPace.eventList.map((event) => [event.name, event.time]));
+      return getSortedEventsWithTimes(completedEvents);
+    }, [selectedPace]);
+
     if (!selectedPace) return null;
-    const completedEvents = new Map(selectedPace.eventList.map((event) => [event.name, event.time]));
 
     return (
       <BottomSheetModal
@@ -49,24 +53,9 @@ const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
           </View>
 
           {/* ALL SPLITS */}
-          {EVENT_ID_NAME.map((splitName, index) => {
-            const splitTime = completedEvents.get(splitName);
-            const isCompleted = splitTime !== undefined;
-
-            // Special handling for structure entry (Bastion/Fortress)
-            if (
-              (splitName === "Enter Bastion" || splitName === "Enter Fortress") &&
-              !completedEvents.has("Enter Bastion") &&
-              !completedEvents.has("Enter Fortress")
-            ) {
-              const structureNumber = splitName === "Enter Bastion" ? "1" : "2";
-              return (
-                <View key={index} className="flex flex-row items-center mb-3">
-                  <Text className="flex flex-1 text-gray-500 text-lg">Enter Structure {structureNumber}</Text>
-                  <Text className="text-gray-500 text-lg">--:--</Text>
-                </View>
-              );
-            }
+          {splits.map((event, index) => {
+            const { splitName, splitTime } = event;
+            const isCompleted = splitTime !== "N/A";
 
             return (
               <View key={index} className="flex flex-row items-center mb-3">

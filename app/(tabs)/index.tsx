@@ -29,34 +29,23 @@ const HomePage = () => {
     }));
   };
 
-  const handleGameVersionSelect = () => {
-    const versions = ["1.16.1", "1.15.2", "1.7.10", "1.8.9", "1.14.4", "1.12.2", "1.16.5", "1.17.1"];
-    showActionSheetWithOptions(
-      {
-        options: [...versions, "Cancel"],
-        cancelButtonIndex: versions.length,
-        title: "Select a Minecraft version",
-      },
-      (buttonIndex) => {
-        if (buttonIndex !== undefined && buttonIndex < versions.length) {
-          setParams((prevParams) => ({
-            ...prevParams,
-            gameVersion: versions[buttonIndex],
-          }));
-        }
-      }
-    );
+  const handleGameVersionSelect = (version: string) => {
+    setParams((prevParams) => ({
+      ...prevParams,
+      gameVersion: version,
+    }));
   };
 
   const headerRight = useCallback(
     () => (
       <HomeRightComponent
+        gameVersion={params.gameVersion}
         liveOnly={params.liveOnly}
         onGameVersionSelect={handleGameVersionSelect}
         onLiveOnlyToggle={handleLiveOnlyToggle}
       />
     ),
-    [params.liveOnly]
+    [params.liveOnly, params.gameVersion]
   );
 
   // BOTTOM SHEET FUNCTIONS

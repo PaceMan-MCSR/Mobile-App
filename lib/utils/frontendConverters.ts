@@ -7,6 +7,11 @@ import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+interface EventWithTime {
+  splitName: string;
+  splitTime: number | "N/A";
+}
+
 export const msToTime = (ms: number, keepMs = false): string => {
   let milliseconds = Math.floor((ms % 1000) / 100),
     seconds = Math.floor((ms / 1000) % 60),
@@ -94,4 +99,40 @@ export const getMostRecentSplit = (eventList: { eventId: string; igt: number }[]
     eventName: eventIdToName.get(mostRecentEvent.eventId) || "Unknown Event",
     igt: msToTime(mostRecentEvent.igt),
   };
+};
+
+export const getSortedEventsWithTimes = (completedEvents: Map<string, number>): EventWithTime[] => {
+  const bastionTime = completedEvents.get("Enter Bastion");
+  const fortressTime = completedEvents.get("Enter Fortress");
+
+  let bastionAndFortress: EventWithTime[] = [];
+  if (bastionTime !== undefined) {
+    bastionAndFortress.push({ splitName: "Enter Bastion", splitTime: bastionTime });
+  } else {
+    bastionAndFortress.push({ splitName: "Enter Bastion", splitTime: "N/A" });
+  }
+  if (fortressTime !== undefined) {
+    bastionAndFortress.push({ splitName: "Enter Fortress", splitTime: fortressTime });
+  } else {
+    bastionAndFortress.push({ splitName: "Enter Fortress", splitTime: "N/A" });
+  }
+
+  bastionAndFortress.sort((a, b) => {
+    if (a.splitTime === "N/A") return 1;
+    if (b.splitTime === "N/A") return -1;
+    return (a.splitTime as number) - (b.splitTime as number);
+  });
+
+  const sortedEvents: EventWithTime[] = EVENT_ID_NAME.map((splitName) => {
+    if (splitName === "Enter Bastion" || splitName === "Enter Fortress") {
+      return null;
+    }
+    const splitTime = completedEvents.get(splitName);
+    return { splitName, splitTime: splitTime !== undefined ? splitTime : "N/A" };
+  }).filter((event): event is EventWithTime => event !== null);
+
+  const enterNetherIndex = sortedEvents.findIndex((event) => event.splitName === "Enter Nether");
+  sortedEvents.splice(enterNetherIndex + 1, 0, ...bastionAndFortress);
+
+  return sortedEvents;
 };
