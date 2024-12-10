@@ -1,11 +1,5 @@
-/**
-TODO: 
-- Refactor code to make it cleaner.
-- Add Android icons.
-*/
-
-import { View } from "react-native";
 import React from "react";
+import { View } from "react-native";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -15,6 +9,19 @@ interface DropDownMenuProps {
 }
 
 const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
+  const renderCheckmark = (key: string) => {
+    const isSelected = selectedKey === key;
+
+    return isSelected ? (
+      <DropdownMenu.ItemIcon
+        ios={{
+          name: "checkmark",
+          pointSize: 16,
+        }}
+      />
+    ) : null;
+  };
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -24,62 +31,58 @@ const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Group>
-          <DropdownMenu.Item key="0" onSelect={() => onSelect("0")}>
+          {/* DAILY TRIGGER */}
+          <DropdownMenu.Item key="daily" onSelect={() => onSelect("daily")}>
             <DropdownMenu.ItemTitle>Daily</DropdownMenu.ItemTitle>
-            {selectedKey === "daily" && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
+            {renderCheckmark("daily")}
           </DropdownMenu.Item>
-          <DropdownMenu.Item key="weekly" onSelect={() => onSelect("1")}>
+          {/* WEEKLY TRIGGER */}
+          <DropdownMenu.Item key="weekly" onSelect={() => onSelect("weekly")}>
             <DropdownMenu.ItemTitle>Weekly</DropdownMenu.ItemTitle>
-            {selectedKey === "weekly" && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
+            {renderCheckmark("weekly")}
           </DropdownMenu.Item>
-          <DropdownMenu.Item key="monthly" onSelect={() => onSelect("2")}>
+          {/* MONTHLY TRIGGER */}
+          <DropdownMenu.Item key="monthly" onSelect={() => onSelect("monthly")}>
             <DropdownMenu.ItemTitle>Monthly</DropdownMenu.ItemTitle>
-            {selectedKey === "monthly" && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
+            {renderCheckmark("monthly")}
           </DropdownMenu.Item>
-          <DropdownMenu.Item key="all" onSelect={() => onSelect("3")}>
+          {/* ALL TRIGGER */}
+          <DropdownMenu.Item key="all" onSelect={() => onSelect("all")}>
             <DropdownMenu.ItemTitle>All</DropdownMenu.ItemTitle>
-            {selectedKey === "all" && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
+            {renderCheckmark("all")}
           </DropdownMenu.Item>
         </DropdownMenu.Group>
-        <DropdownMenu.Item key="trophy" onSelect={() => onSelect("4")}>
-          <DropdownMenu.ItemTitle>Trophy</DropdownMenu.ItemTitle>
-          {selectedKey === "trophy" && (
-            <DropdownMenu.ItemIcon
-              ios={{
-                name: "checkmark",
-                pointSize: 16,
-              }}
-            />
-          )}
-        </DropdownMenu.Item>
+        <DropdownMenu.Separator />
+        <DropdownMenu.Sub>
+          {/* TROPHY TRIGGER */}
+          <DropdownMenu.SubTrigger key="trophy">
+            <DropdownMenu.ItemTitle>Trophy</DropdownMenu.ItemTitle>
+          </DropdownMenu.SubTrigger>
+          <DropdownMenu.SubContent>
+            {/* TROPHY-CURRENT TRIGGER */}
+            <DropdownMenu.Item key="trophy-current" onSelect={() => onSelect("trophy-current")}>
+              <DropdownMenu.ItemTitle>Current</DropdownMenu.ItemTitle>
+              {selectedKey === "trophy-current" && (
+                <DropdownMenu.ItemIcon
+                  ios={{
+                    name: "checkmark",
+                    pointSize: 16,
+                  }}
+                />
+              )}
+            </DropdownMenu.Item>
+            {/* TROPHY-SEASON-1 TRIGGER */}
+            <DropdownMenu.Item key="trophy-season-1" onSelect={() => onSelect("trophy-season-1")}>
+              <DropdownMenu.ItemTitle>Season 1</DropdownMenu.ItemTitle>
+              {renderCheckmark("trophy-season-1")}
+            </DropdownMenu.Item>
+            {/* TROPHY-SEASON-2 TRIGGER */}
+            <DropdownMenu.Item key="trophy-season-2" onSelect={() => onSelect("trophy-season-2")}>
+              <DropdownMenu.ItemTitle>Season 2</DropdownMenu.ItemTitle>
+              {renderCheckmark("trophy-season-2")}
+            </DropdownMenu.Item>
+          </DropdownMenu.SubContent>
+        </DropdownMenu.Sub>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );

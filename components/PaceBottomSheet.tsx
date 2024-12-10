@@ -36,7 +36,9 @@ const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
               source={{ uri: `https://mc-heads.net/avatar/${selectedPace.uuid}` }}
               style={{ height: 50, width: 50 }}
             />
-            <Text className="flex flex-1 text-black dark:text-white text-2xl font-bold">{selectedPace.nickname}</Text>
+            <Text numberOfLines={1} className="flex flex-1 text-black dark:text-white text-2xl font-bold">
+              {selectedPace.nickname}
+            </Text>
             <TwitchButton href={selectedPace.twitch} />
           </View>
 

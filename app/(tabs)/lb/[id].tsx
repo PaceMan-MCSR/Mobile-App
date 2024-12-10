@@ -5,7 +5,6 @@ TODO:
 - Make icon update upon click instead of updating when the content loads.
 - Figure out if there's a way to have the dropdown menu not be required to be declared twice. It's not the end of the world but eh. Could use a ternary but neh.
 */
-
 import LoadingScreen from "@/components/LoadingScreen";
 import PlayerCard from "@/components/PlayerCard";
 import React, { useEffect, useState } from "react";
@@ -39,13 +38,17 @@ const LeaderboardPage = () => {
   const { data: leaderboard, isLoading } = useLeaderboardData(params);
 
   const handleSelect = (key: string) => {
-    const selectedIndex = parseInt(key);
-    const selectedFilter = filters[selectedIndex];
+    console.log(key);
+    const isTrophy = key.startsWith("trophy-");
+    const selectedIndex = isTrophy ? 4 : filters.indexOf(key);
+    const season = isTrophy ? key.replace("trophy-", "") : undefined;
+
     setParams((prevParams) => ({
       ...prevParams,
       filter: selectedIndex,
+      season: season ?? "current",
     }));
-    router.setParams({ id: selectedFilter });
+    router.setParams({ id: isTrophy ? "trophy-" : key });
   };
 
   useEffect(() => {
@@ -54,6 +57,7 @@ const LeaderboardPage = () => {
       setParams((prevParams) => ({
         ...prevParams,
         filter: filterIndex,
+        season: id.startsWith("trophy-") ? id.split("-")[1] : "current",
       }));
     }
   }, [id]);
@@ -66,7 +70,6 @@ const LeaderboardPage = () => {
             headerRight: () => <LBRightComponent onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
           }}
         />
-
         <LoadingScreen />
       </>
     );
@@ -78,14 +81,8 @@ const LeaderboardPage = () => {
           headerRight: () => <LBRightComponent onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
         }}
       />
-
       <View className="flex flex-1 bg-white dark:bg-[#111827]">
         <FlatList
-          ListHeaderComponent={() =>
-            params.filter === 4 && (
-              <TrophyPicker values={["Current", "Season 1", "Season 2"]} season={0} onChange={() => {}} />
-            )
-          }
           data={leaderboard}
           showsVerticalScrollIndicator={false}
           renderItem={

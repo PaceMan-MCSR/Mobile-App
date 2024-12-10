@@ -1,7 +1,8 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 interface TrophyPickerProps {
   values: Array<string>;
@@ -10,12 +11,12 @@ interface TrophyPickerProps {
 }
 
 const TrophyPicker = ({ season, onChange }: TrophyPickerProps) => {
+  const colorScheme = useColorScheme();
   return (
-    <View className="px-4 pb-4">
+    <View className="p-4">
       <SegmentedControl
         values={["Current", "Season 1", "Season 2"]}
-        backgroundColor={Colors.dark.background}
-        tintColor="#111827"
+        tintColor={Colors[colorScheme ?? "light"].pickerTint}
         selectedIndex={season}
         onChange={onChange}
       />

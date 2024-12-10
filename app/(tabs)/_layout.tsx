@@ -51,6 +51,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="events/[id]"
         options={{
+          href: null,
           headerTitle: "Events",
           headerShadowVisible: false,
           headerStyle: {
