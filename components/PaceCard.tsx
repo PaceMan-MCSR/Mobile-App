@@ -23,9 +23,11 @@ const PaceCard = ({ splitName, nickname, uuid, twitch, time, onPress }: PaceCard
           placeholder={require("@/assets/images/steve.png")}
         />
       </View>
-      <View className="flex flex-1">
-        <View className="flex flex-row items-center gap-2">
-          <Text className="text-black dark:text-white text-2xl font-bold max-w-full truncate">{nickname}</Text>
+      <View className="flex flex-1 bg">
+        <View className="flex flex-row items-center">
+          <Text numberOfLines={1} className="text-black dark:text-white text-2xl font-bold max-w-full truncate">
+            {nickname}{" "}
+          </Text>
           {twitch && <FontAwesome5 name="twitch" size={16} color="white" />}
         </View>
         <Text className="text-black dark:text-white">{splitName}</Text>
