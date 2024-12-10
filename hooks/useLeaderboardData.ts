@@ -11,7 +11,7 @@ export const useLeaderboardData = ({ filter, removeDuplicates, date, season }: L
   return useQuery({
     queryKey: ["leaderboard", { filter, removeDuplicates, date, season }],
     queryFn: () =>
-      filter === 4
+      filter >= 4
         ? fetch(`/api/trophy?season=${encodeURIComponent((season ?? "current").replace("-", " "))}`).then((res) =>
             res.json()
           )

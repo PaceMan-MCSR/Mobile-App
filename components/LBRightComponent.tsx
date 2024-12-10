@@ -9,8 +9,22 @@ interface DropDownMenuProps {
 }
 
 const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
+  const menuItems = [
+    { key: "daily", label: "Daily" },
+    { key: "weekly", label: "Weekly" },
+    { key: "monthly", label: "Monthly" },
+    { key: "all", label: "All" },
+  ];
+
+  const trophyItems = [
+    { key: "current", label: "Current" },
+    { key: "season-1", label: "Season 1" },
+    { key: "season-2", label: "Season 2" },
+  ];
+  const isTrophySelected = trophyItems.some((item) => item.key === selectedKey);
+
   const renderCheckmark = (key: string) => {
-    const isSelected = selectedKey === key;
+    const isSelected = selectedKey === key || (key === "trophy" && isTrophySelected);
 
     return isSelected ? (
       <DropdownMenu.ItemIcon
@@ -31,56 +45,26 @@ const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Group>
-          {/* DAILY TRIGGER */}
-          <DropdownMenu.Item key="daily" onSelect={() => onSelect("daily")}>
-            <DropdownMenu.ItemTitle>Daily</DropdownMenu.ItemTitle>
-            {renderCheckmark("daily")}
-          </DropdownMenu.Item>
-          {/* WEEKLY TRIGGER */}
-          <DropdownMenu.Item key="weekly" onSelect={() => onSelect("weekly")}>
-            <DropdownMenu.ItemTitle>Weekly</DropdownMenu.ItemTitle>
-            {renderCheckmark("weekly")}
-          </DropdownMenu.Item>
-          {/* MONTHLY TRIGGER */}
-          <DropdownMenu.Item key="monthly" onSelect={() => onSelect("monthly")}>
-            <DropdownMenu.ItemTitle>Monthly</DropdownMenu.ItemTitle>
-            {renderCheckmark("monthly")}
-          </DropdownMenu.Item>
-          {/* ALL TRIGGER */}
-          <DropdownMenu.Item key="all" onSelect={() => onSelect("all")}>
-            <DropdownMenu.ItemTitle>All</DropdownMenu.ItemTitle>
-            {renderCheckmark("all")}
-          </DropdownMenu.Item>
+          {menuItems.map(({ key, label }) => (
+            <DropdownMenu.Item key={key} onSelect={() => onSelect(key)}>
+              <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
+              {renderCheckmark(key)}
+            </DropdownMenu.Item>
+          ))}
         </DropdownMenu.Group>
         <DropdownMenu.Separator />
         <DropdownMenu.Sub>
-          {/* TROPHY TRIGGER */}
           <DropdownMenu.SubTrigger key="trophy">
             <DropdownMenu.ItemTitle>Trophy</DropdownMenu.ItemTitle>
+            {renderCheckmark("trophy")}
           </DropdownMenu.SubTrigger>
           <DropdownMenu.SubContent>
-            {/* TROPHY-CURRENT TRIGGER */}
-            <DropdownMenu.Item key="trophy-current" onSelect={() => onSelect("trophy-current")}>
-              <DropdownMenu.ItemTitle>Current</DropdownMenu.ItemTitle>
-              {selectedKey === "trophy-current" && (
-                <DropdownMenu.ItemIcon
-                  ios={{
-                    name: "checkmark",
-                    pointSize: 16,
-                  }}
-                />
-              )}
-            </DropdownMenu.Item>
-            {/* TROPHY-SEASON-1 TRIGGER */}
-            <DropdownMenu.Item key="trophy-season-1" onSelect={() => onSelect("trophy-season-1")}>
-              <DropdownMenu.ItemTitle>Season 1</DropdownMenu.ItemTitle>
-              {renderCheckmark("trophy-season-1")}
-            </DropdownMenu.Item>
-            {/* TROPHY-SEASON-2 TRIGGER */}
-            <DropdownMenu.Item key="trophy-season-2" onSelect={() => onSelect("trophy-season-2")}>
-              <DropdownMenu.ItemTitle>Season 2</DropdownMenu.ItemTitle>
-              {renderCheckmark("trophy-season-2")}
-            </DropdownMenu.Item>
+            {trophyItems.map(({ key, label }) => (
+              <DropdownMenu.Item key={key} onSelect={() => onSelect(key)}>
+                <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
+                {renderCheckmark(key)}
+              </DropdownMenu.Item>
+            ))}
           </DropdownMenu.SubContent>
         </DropdownMenu.Sub>
       </DropdownMenu.Content>
