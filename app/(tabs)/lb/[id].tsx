@@ -5,10 +5,12 @@ import LBRightComponent from "@/components/LBRightComponent";
 import PlayerCard from "@/components/PlayerCard";
 import LoadingScreen from "@/components/LoadingScreen";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const filters = ["daily", "weekly", "monthly", "all", "current", "season-1", "season-2"];
 
 const LeaderboardPage = () => {
+  const headerHeight = Math.ceil(useHeaderHeight());
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
 
@@ -78,6 +80,7 @@ const LeaderboardPage = () => {
       />
       <View className="flex flex-1 bg-white dark:bg-[#111827]">
         <FlatList
+          style={{ paddingTop: headerHeight }}
           data={leaderboard}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) =>

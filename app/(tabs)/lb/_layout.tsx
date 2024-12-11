@@ -4,25 +4,14 @@ export default function StatsLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="index"
+        name="[id]"
         options={{
-          headerTitle: "Stats",
+          headerTitle: "Leaderboard",
           headerShadowVisible: false,
           headerTransparent: true,
           headerBlurEffect: "systemThinMaterial",
         }}
-      />
-      <Stack.Screen
-        name="player"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="run"
-        options={{
-          headerShown: false,
-        }}
+        initialParams={{ id: "monthly" }}
       />
     </Stack>
   );

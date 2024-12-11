@@ -6,10 +6,13 @@ import { useLiverunsData } from "@/hooks/useLiverunsData";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
 import { useRef, useState, useCallback } from "react";
 import HomeRightComponent from "@/components/HomeRightComponent";
-import { Tabs } from "expo-router";
+import { Stack } from "expo-router";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const HomePage = () => {
+  const headerHeight = Math.ceil(useHeaderHeight());
+
   const [params, setParams] = useState({
     gameVersion: "1.16.1",
     liveOnly: false,
@@ -74,7 +77,7 @@ const HomePage = () => {
   if (isLoading)
     return (
       <>
-        <Tabs.Screen options={{ headerRight }} />
+        <Stack.Screen options={{ headerRight }} />
         <LoadingScreen />
       </>
     );
@@ -82,7 +85,7 @@ const HomePage = () => {
   if (!liveruns!.length)
     return (
       <>
-        <Tabs.Screen options={{ headerRight }} />
+        <Stack.Screen options={{ headerRight }} />
         <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
           <Text className="text-black dark:text-white text-lg">No one is currently on pace...</Text>
         </View>
@@ -91,11 +94,13 @@ const HomePage = () => {
 
   return (
     <>
-      <Tabs.Screen options={{ headerRight }} />
-      <View className="flex flex-1 bg-white dark:bg-[#111827]">
+      <Stack.Screen options={{ headerRight }} />
+
+      <View className={`flex flex-1 bg-white dark:bg-[#111827]`}>
         {/* PACE LIST */}
         <FlatList
-          contentContainerClassName="px-4 py-3"
+          style={{ paddingTop: headerHeight }}
+          contentContainerClassName={`px-4 py-3`}
           data={liveruns}
           keyExtractor={(item: Pace) => item.worldId}
           showsVerticalScrollIndicator={false}
@@ -120,6 +125,7 @@ const HomePage = () => {
           )}
         />
       </View>
+
       {/* BOTTOM SHEET */}
       <PaceBottomSheet
         ref={bottomSheetRef}
