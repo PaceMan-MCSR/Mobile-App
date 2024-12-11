@@ -23,7 +23,9 @@ export const useLiverunsData = ({ gameVersion, liveOnly }: LiverunsDataParams) =
   const { data, refetch, ...rest } = useQuery({
     queryKey: ["liveruns", gameVersion, liveOnly],
     queryFn: async () => {
-      const response = await fetch(`/api/liveruns?gameVersion=${gameVersion}&liveOnly=${liveOnly ? "true" : "false"}`);
+      const response = await fetch(
+        `https://paceman.gg/api/ars/liveruns?gameVersion=${gameVersion}&liveOnly=${liveOnly ? "true" : "false"}`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

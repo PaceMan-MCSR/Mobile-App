@@ -31,16 +31,11 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "server",
+      "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      [
-        "expo-router",
-        {
-          "origin": "https://localhost:8081/"
-        }
-      ],
+      "expo-router",
       "expo-font",
       [
         "expo-build-properties",
