@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { Platform } from "react-native";
+import { Platform, Appearance } from "react-native";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
@@ -10,12 +10,14 @@ import * as SystemUI from "expo-system-ui";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 import "@/global.css";
+import { useEffect } from "react";
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   Platform.OS === "android" && NavigationBar.setBackgroundColorAsync(Colors[colorScheme ?? "light"].background);
   SystemUI.setBackgroundColorAsync(Colors[colorScheme ?? "light"].background);
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>

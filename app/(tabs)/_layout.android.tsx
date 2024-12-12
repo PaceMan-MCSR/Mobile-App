@@ -11,8 +11,10 @@ export default function TabLayout() {
     <Tabs
       ignoresTopSafeArea
       hapticFeedbackEnabled
+      labeled
+      barTintColor={Colors[colorScheme ?? "light"].background}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].pickerTint,
       }}
     >
       {/* HOME SCREEN - Paces */}

@@ -44,7 +44,7 @@ const HomeRightComponent = ({
     <View className="flex flex-row-reverse items-center">
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <View style={{ marginRight: 12 }}>
+          <View className="mr-3">
             <Ionicons name="menu-outline" size={28} color="white" />
           </View>
         </DropdownMenu.Trigger>

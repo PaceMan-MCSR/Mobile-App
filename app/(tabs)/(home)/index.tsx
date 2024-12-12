@@ -1,7 +1,7 @@
 import PaceCard from "@/components/PaceCard";
 import LoadingScreen from "@/components/LoadingScreen";
 import { Pace } from "@/lib/types/Pace";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Platform, Text, View } from "react-native";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
 import { useRef, useState, useCallback } from "react";
@@ -9,6 +9,7 @@ import HomeRightComponent from "@/components/HomeRightComponent";
 import { Stack } from "expo-router";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { useHeaderHeight } from "@react-navigation/elements";
+import React from "react";
 
 const HomePage = () => {
   const headerHeight = Math.ceil(useHeaderHeight());
@@ -99,7 +100,7 @@ const HomePage = () => {
       <View className={`flex flex-1 bg-white dark:bg-[#111827]`}>
         {/* PACE LIST */}
         <FlatList
-          style={{ paddingTop: headerHeight }}
+          contentInsetAdjustmentBehavior="automatic"
           contentContainerClassName={`px-4 py-3`}
           data={liveruns}
           keyExtractor={(item: Pace) => item.worldId}

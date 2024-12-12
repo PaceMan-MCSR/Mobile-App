@@ -1,4 +1,5 @@
 // hooks/useLiverunsData.ts
+import { apiToPace, paceSort } from "@/lib/utils/converters";
 import { useQuery } from "@tanstack/react-query";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useRef, useEffect } from "react";
@@ -29,7 +30,9 @@ export const useLiverunsData = ({ gameVersion, liveOnly }: LiverunsDataParams) =
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      return response.json();
+      const data = await response.json();
+      const res = (await apiToPace(data)).sort(paceSort);
+      return res;
     },
     enabled: true,
     refetchInterval: isFocusedRef.current ? 10000 : false,

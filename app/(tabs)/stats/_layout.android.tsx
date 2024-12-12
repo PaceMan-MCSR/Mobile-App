@@ -1,6 +1,9 @@
 import { Stack } from "expo-router";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function StatsLayout() {
+  const colorScheme = useColorScheme();
   return (
     <Stack>
       <Stack.Screen
@@ -8,8 +11,9 @@ export default function StatsLayout() {
         options={{
           headerTitle: "Stats",
           headerShadowVisible: false,
-          headerTransparent: true,
-          headerBlurEffect: "systemThinMaterial",
+          headerStyle: {
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+          },
           headerSearchBarOptions: {
             placeholder: "Search for Runners",
           },

@@ -5,6 +5,7 @@ import TwitchButton from "@/components/TwitchButton";
 import { Image } from "expo-image";
 import { msToTime, getSortedEventsWithTimes } from "@/lib/utils/frontendConverters";
 import { Pace } from "@/lib/types/Pace";
+import { useBottomTabBarHeight } from "react-native-bottom-tabs";
 
 interface PaceBottomSheetProps {
   selectedPace: Pace | null;
@@ -15,6 +16,7 @@ interface PaceBottomSheetProps {
 
 const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
   ({ selectedPace, renderBackdrop, onSheetChanges }, ref) => {
+    const bottomTabBarHeight = useBottomTabBarHeight();
     const splits = useMemo(() => {
       if (!selectedPace) return [];
       const completedEvents = new Map(selectedPace.eventList.map((event) => [event.name, event.time]));
@@ -32,7 +34,10 @@ const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
         backdropComponent={renderBackdrop}
         onChange={onSheetChanges}
       >
-        <BottomSheetView className="flex flex-1 px-4 bg-white dark:bg-[#1f2937] rounded-t-2xl">
+        <BottomSheetView
+          style={{ paddingBottom: bottomTabBarHeight }}
+          className="flex flex-1 px-4 bg-white dark:bg-[#1f2937] rounded-t-2xl"
+        >
           {/* PLAYER AVATAR + NAME + TWITCH BUTTON */}
           <View className="flex flex-row items-center justify-between pt-8 gap-2">
             <Image

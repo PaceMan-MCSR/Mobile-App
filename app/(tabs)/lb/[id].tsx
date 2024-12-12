@@ -80,7 +80,7 @@ const LeaderboardPage = () => {
       />
       <View className="flex flex-1 bg-white dark:bg-[#111827]">
         <FlatList
-          style={{ paddingTop: headerHeight }}
+          contentInsetAdjustmentBehavior="automatic"
           data={leaderboard}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) =>
