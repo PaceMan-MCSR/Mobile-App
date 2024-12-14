@@ -3,14 +3,15 @@ import { Tabs } from "@/components/NativeBottomTabs";
 import { Colors } from "@/constants/Colors";
 import { TabBarIcon } from "@/components/TabBarIcon";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useMMKVBoolean } from "react-native-mmkv";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
+  const [haptics] = useMMKVBoolean("settings-haptics");
   return (
     <Tabs
       ignoresTopSafeArea
-      hapticFeedbackEnabled
+      hapticFeedbackEnabled={haptics}
       labeled
       barTintColor={Colors[colorScheme ?? "light"].background}
       screenOptions={{

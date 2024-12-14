@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, Linking } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+7;
 
 interface TwitchButtonProps {
   href: string | null;
@@ -17,7 +17,6 @@ const TwitchButton = ({ href }: TwitchButtonProps) => {
       }}
       className={`flex flex-row items-center p-3 gap-2 rounded-xl ${href !== null ? `bg-[#9146FF]` : `bg-gray-500`}`}
     >
-      <FontAwesome5 name="twitch" size={24} color="white" />
       <Text numberOfLines={1} className="text-white text-lg font-bold">
         {href || "Offline Run"}
       </Text>

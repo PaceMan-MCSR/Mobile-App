@@ -12,8 +12,6 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import React from "react";
 
 const HomePage = () => {
-  const headerHeight = Math.ceil(useHeaderHeight());
-
   const [params, setParams] = useState({
     gameVersion: "1.16.1",
     liveOnly: false,
@@ -22,6 +20,7 @@ const HomePage = () => {
 
   const { data: liveruns, isLoading } = useLiverunsData(params);
   const [selectedPace, setSelectedPace] = useState<Pace | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
 
   // HEADER RIGHT FUNCTIONS
   const handleLiveOnlyToggle = () => {
@@ -108,7 +107,7 @@ const HomePage = () => {
           renderItem={({ item }) => (
             <PaceCard
               onPress={() => {
-                setSelectedPace(item);
+                setSelected(item.worldId);
                 bottomSheetRef.current?.expand();
               }}
               worldId={item.worldId}
@@ -130,7 +129,8 @@ const HomePage = () => {
       {/* BOTTOM SHEET */}
       <PaceBottomSheet
         ref={bottomSheetRef}
-        selectedPace={selectedPace}
+        selected={selected}
+        params={params}
         onBackdropPress={() => setSelectedPace(null)}
         renderBackdrop={renderBackdrop}
         onSheetChanges={handleSheetChanges}

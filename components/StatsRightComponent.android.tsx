@@ -32,16 +32,16 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
   ];
 
   const categoryOptions = [
-    { key: "nether", label: "Nether" },
-    { key: "bastion", label: "Bastion" },
-    { key: "fortress", label: "Fortress" },
-    { key: "first_structure", label: "First Structure" },
-    { key: "second_structure", label: "Second Structure" },
+    { key: "nether", label: "Nether Enter" },
+    { key: "bastion", label: "Bastion Enter" },
+    { key: "fortress", label: "Fortress Enter" },
+    { key: "first_structure", label: "Structure 1 Enter" },
+    { key: "second_structure", label: "Structure 2 Enter" },
     { key: "first_portal", label: "First Portal" },
     { key: "second_portal", label: "Second Portal" },
-    { key: "stronghold", label: "Stronghold" },
-    { key: "end", label: "End" },
-    { key: "finish", label: "Finish" },
+    { key: "stronghold", label: "Stronghold Enter" },
+    { key: "end", label: "End Enter" },
+    { key: "finish", label: "Completion" },
   ];
 
   const typeOptions = [
@@ -78,12 +78,6 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
               id: opt.key,
               title: opt.label,
               titleColor: getTextColor(),
-              state: type === opt.key ? "on" : "off",
-              attributes: type === opt.key ? { selected: true } : undefined,
-              image: Platform.select({
-                ios: type === opt.key ? "checkmark" : undefined,
-                android: type === opt.key ? "ic_menu_add" : undefined,
-              }),
             })),
           },
           {
@@ -94,12 +88,6 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
               id: opt.key,
               title: opt.label,
               titleColor: getTextColor(),
-              state: category === opt.key ? "on" : "off",
-              attributes: category === opt.key ? { selected: true } : undefined,
-              image: Platform.select({
-                ios: category === opt.key ? "checkmark" : undefined,
-                android: category === opt.key ? "ic_menu_add" : undefined,
-              }),
             })),
           },
           {
@@ -110,12 +98,6 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
               id: opt.key.toString(),
               title: opt.label,
               titleColor: getTextColor(),
-              state: days === opt.key ? "on" : "off",
-              attributes: days === opt.key ? { selected: true } : undefined,
-              image: Platform.select({
-                ios: days === opt.key ? "checkmark" : undefined,
-                android: days === opt.key ? "ic_menu_add" : undefined,
-              }),
             })),
           },
         ]}

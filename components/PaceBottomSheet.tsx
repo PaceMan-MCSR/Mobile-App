@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from "react";
+import React, { forwardRef, useEffect, useMemo } from "react";
 import { View, Text } from "react-native";
 import BottomSheetModal, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import TwitchButton from "@/components/TwitchButton";
@@ -6,31 +6,44 @@ import { Image } from "expo-image";
 import { msToTime, getSortedEventsWithTimes } from "@/lib/utils/frontendConverters";
 import { Pace } from "@/lib/types/Pace";
 import { useBottomTabBarHeight } from "react-native-bottom-tabs";
+import { useLiverunsData } from "@/hooks/useLiverunsData";
 
 interface PaceBottomSheetProps {
-  selectedPace: Pace | null;
+  selected: string | null;
+  params: any;
+  // selectedPace: Pace | null;
   onBackdropPress: () => void;
   renderBackdrop: (props: BottomSheetBackdropProps) => React.ReactElement;
   onSheetChanges: (index: number) => void;
 }
 
 const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
-  ({ selectedPace, renderBackdrop, onSheetChanges }, ref) => {
+  ({ selected, params, renderBackdrop, onSheetChanges }, ref) => {
     const bottomTabBarHeight = useBottomTabBarHeight();
+    const { data: liveruns, isLoading } = useLiverunsData(params);
+    const selectedPace = liveruns?.find((liveruns) => liveruns.worldId === selected);
     const splits = useMemo(() => {
       if (!selectedPace) return [];
       const completedEvents = new Map(selectedPace.eventList.map((event) => [event.name, event.time]));
       return getSortedEventsWithTimes(completedEvents);
     }, [selectedPace]);
 
+    useEffect(() => {
+      if (!selectedPace && ref && typeof ref !== "function") {
+        ref.current?.close();
+      }
+    }, [selectedPace, ref]);
+
     if (!selectedPace) return null;
 
     return (
       <BottomSheetModal
-        ref={ref}
-        handleComponent={null}
         index={0}
-        enableContentPanningGesture={false}
+        ref={ref}
+        enablePanDownToClose
+        enableHandlePanningGesture
+        handleComponent={null}
+        backgroundComponent={null}
         backdropComponent={renderBackdrop}
         onChange={onSheetChanges}
       >

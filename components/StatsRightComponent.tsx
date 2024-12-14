@@ -28,16 +28,16 @@ const StatsRightComponent = ({
   ];
 
   const categoryOptions = [
-    { key: "nether", label: "Nether" },
-    { key: "bastion", label: "Bastion" },
-    { key: "fortress", label: "Fortress" },
-    { key: "first_structure", label: "First Structure" },
-    { key: "second_structure", label: "Second Structure" },
+    { key: "nether", label: "Nether Enter" },
+    { key: "bastion", label: "Bastion Enter" },
+    { key: "fortress", label: "Fortress Enter" },
+    { key: "first_structure", label: "Structure 1 Enter" },
+    { key: "second_structure", label: "Structure 2 Enter" },
     { key: "first_portal", label: "First Portal" },
     { key: "second_portal", label: "Second Portal" },
-    { key: "stronghold", label: "Stronghold" },
-    { key: "end", label: "End" },
-    { key: "finish", label: "Finish" },
+    { key: "stronghold", label: "Stronghold Enter" },
+    { key: "end", label: "End Enter" },
+    { key: "finish", label: "Completion" },
   ];
 
   const typeOptions = [
@@ -47,21 +47,11 @@ const StatsRightComponent = ({
     { key: "conversion", label: "Conversion" },
   ];
 
-  const renderCheckmark = (currentValue: any, selectedValue: any) =>
-    currentValue === selectedValue ? (
-      <DropdownMenu.ItemIcon
-        ios={{
-          name: "checkmark",
-          pointSize: 16,
-        }}
-      />
-    ) : null;
-
   return (
     <View className="flex flex-row-reverse items-center">
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <View className="mr-3">
+          <View>
             <Ionicons name="menu-outline" size={28} color={"white"} />
           </View>
         </DropdownMenu.Trigger>
@@ -72,10 +62,14 @@ const StatsRightComponent = ({
             </DropdownMenu.SubTrigger>
             <DropdownMenu.SubContent>
               {typeOptions.map(({ key, label }) => (
-                <DropdownMenu.Item key={key} onSelect={() => onTypeSelect(key as typeof type)}>
+                <DropdownMenu.CheckboxItem
+                  key={key}
+                  value={type === key}
+                  onValueChange={(next) => next && onTypeSelect(key as typeof type)}
+                >
                   <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-                  {renderCheckmark(type, key)}
-                </DropdownMenu.Item>
+                  <DropdownMenu.ItemIndicator />
+                </DropdownMenu.CheckboxItem>
               ))}
             </DropdownMenu.SubContent>
           </DropdownMenu.Sub>
@@ -86,10 +80,14 @@ const StatsRightComponent = ({
             </DropdownMenu.SubTrigger>
             <DropdownMenu.SubContent>
               {categoryOptions.map(({ key, label }) => (
-                <DropdownMenu.Item key={key} onSelect={() => onCategorySelect(key)}>
+                <DropdownMenu.CheckboxItem
+                  key={key}
+                  value={category === key}
+                  onValueChange={(next) => next && onCategorySelect(key)}
+                >
                   <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-                  {renderCheckmark(category, key)}
-                </DropdownMenu.Item>
+                  <DropdownMenu.ItemIndicator />
+                </DropdownMenu.CheckboxItem>
               ))}
             </DropdownMenu.SubContent>
           </DropdownMenu.Sub>
@@ -100,10 +98,14 @@ const StatsRightComponent = ({
             </DropdownMenu.SubTrigger>
             <DropdownMenu.SubContent>
               {daysOptions.map(({ key, label }) => (
-                <DropdownMenu.Item key={key.toString()} onSelect={() => onDaysSelect(key)}>
+                <DropdownMenu.CheckboxItem
+                  key={key.toString()}
+                  value={days === key}
+                  onValueChange={(next) => next && onDaysSelect(key)}
+                >
                   <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-                  {renderCheckmark(days, key)}
-                </DropdownMenu.Item>
+                  <DropdownMenu.ItemIndicator />
+                </DropdownMenu.CheckboxItem>
               ))}
             </DropdownMenu.SubContent>
           </DropdownMenu.Sub>

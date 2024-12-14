@@ -29,11 +29,5 @@ The app requires an Expo Development Build to be able to run on Android or iOS, 
 
 # To-do
 
-- IMP!!! FIX Tab Bar Lag
-- Implement Settings Page
-- Refactor Version Picker
-- Implement `Events` and `Stats` pages
-- Make /lb/ page more performant [Lag spikes on Android]
-- Add support for more color themes (look into `tw-colors`)
-- Animations for FlatList/FlashList (identify how to manage prev vs curr data in Query)
-- Look into Push Notifications (will need to find a way to configure without spamming the API in the background, such as webhooks)
+- Implement `stats/player` & `stats/run` Pages.
+- Add Search Bar functionality in Stats Page.

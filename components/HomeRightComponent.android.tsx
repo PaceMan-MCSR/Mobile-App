@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
-import { View, Text, Platform } from "react-native";
+import { View, Text, Platform, Pressable } from "react-native";
 import { MenuView } from "@react-native-menu/menu";
 import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
+import { Link, useRouter } from "expo-router";
 
 interface HomeRightComponentProps {
   liveOnly: boolean;
@@ -19,6 +20,7 @@ const HomeRightComponent: React.FC<HomeRightComponentProps> = ({
 }) => {
   const menuRef = useRef<MenuView>(null);
   const { colorScheme } = useColorScheme();
+  const router = useRouter();
 
   const versions = [
     { key: "1.16.1", label: "1.16.1" },
@@ -57,31 +59,24 @@ const HomeRightComponent: React.FC<HomeRightComponentProps> = ({
               id: version.key,
               title: version.label,
               titleColor: getTextColor(),
-              state: gameVersion === version.key ? "on" : "off",
-              attributes: gameVersion === version.key ? { selected: true } : undefined,
-              image: Platform.select({
-                ios: gameVersion === version.key ? "checkmark" : undefined,
-                android: gameVersion === version.key ? "ic_menu_add" : undefined,
-              }),
             })),
           },
           {
             id: "liveOnly",
             title: "Live Only",
             titleColor: getTextColor(),
-            state: liveOnly ? "on" : "off",
-            attributes: liveOnly ? { selected: true } : undefined,
-            image: Platform.select({
-              ios: liveOnly ? "checkmark" : undefined,
-              android: liveOnly ? "ic_menu_add" : undefined,
-            }),
           },
         ]}
       >
         <View className="mr-3">
-          <Ionicons name="menu-outline" size={28} color={getTextColor()} />
+          <Ionicons name="menu-outline" size={28} color={"#FFFFFF"} />
         </View>
       </MenuView>
+      <Link href={"/settings"} push asChild>
+        <Pressable className="pr-5">
+          <Ionicons name="settings-outline" size={24} color="white" />
+        </Pressable>
+      </Link>
     </View>
   );
 };

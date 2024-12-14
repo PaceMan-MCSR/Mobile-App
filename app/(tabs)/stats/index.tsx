@@ -9,7 +9,7 @@ import StatsRightComponent from "@/components/StatsRightComponent";
 
 const StatsPage = () => {
   const [params, setParams] = useState({
-    days: 7,
+    days: 30,
     category: "nether",
     type: "count" as "count" | "average" | "fastest" | "conversion",
   });
@@ -28,7 +28,26 @@ const StatsPage = () => {
     setParams((prev) => ({ ...prev, type }));
   };
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading)
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            headerRight: () => (
+              <StatsRightComponent
+                days={params.days}
+                category={params.category}
+                type={params.type}
+                onDaysSelect={handleDaysSelect}
+                onCategorySelect={handleCategorySelect}
+                onTypeSelect={handleTypeSelect}
+              />
+            ),
+          }}
+        />
+        <LoadingScreen />
+      </>
+    );
 
   return (
     <>

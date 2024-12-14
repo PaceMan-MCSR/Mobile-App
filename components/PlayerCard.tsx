@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { useRouter } from "expo-router";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 // Need to fix this, make the types more dynamic to take in info based on if it's leaderboard, player or trophy.
 interface PlayerCardProps {
@@ -34,30 +34,30 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
       : `text-black dark:text-white`;
   };
   return (
-    <Pressable
-      // entering={FadeInDown.delay(10 * index).springify()}
+    <TouchableOpacity
+      activeOpacity={0.5}
       className="flex flex-row w-full items-center px-4 py-4 gap-3"
       onPress={handlePress}
     >
       {/* RANK || POINTS  */}
       <View className="min-w-10 flex">
-        <Text className={`text-xl font-bold ${getRankColor(index)}`}>
-          {(type === "leaderboard" || type === "player") && index + 1}
-          {type === "trophy" && score}
-        </Text>
+        <Text className={`text-xl font-bold ${getRankColor(index)}`}>{index + 1}</Text>
       </View>
 
       {/* PLAYER AVATAR */}
       <Image
         source={`https://mc-heads.net/avatar/${uuid}`}
         style={{ height: 35, width: 35 }}
-        placeholder={require("@/assets/images/steve.png")}
+        placeholder={require("@/assets/images/placeholder.png")}
       />
       {/* PLAYER NAME */}
       <Text className={`flex flex-1 text-xl font-bold ${getRankColor(index)}`}>{nickname}</Text>
       {/* TIMESTAMP (PB | SPLIT TIME) */}
-      <Text className={`text-xl font-bold ${getRankColor(index)}`}>{msToTime(time)}</Text>
-    </Pressable>
+      <Text className={`text-xl font-bold ${getRankColor(index)}`}>
+        {type !== "trophy" && msToTime(time)}
+        {type === "trophy" && `${score} pts`}
+      </Text>
+    </TouchableOpacity>
   );
 };
 

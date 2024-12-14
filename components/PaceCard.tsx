@@ -2,7 +2,7 @@ import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
 import { msToTime } from "@/lib/utils/frontendConverters";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 interface PaceCardProps extends Pace {
   onPress: () => void;
@@ -19,15 +19,15 @@ const PaceCard = ({ splitName, nickname, uuid, twitch, time, onPress }: PaceCard
         <Image
           source={`https://mc-heads.net/avatar/${uuid}`}
           style={{ height: 50, width: 50 }}
-          placeholder={require("@/assets/images/steve.png")}
+          placeholder={require("@/assets/images/placeholder.png")}
         />
       </View>
-      <View className="flex flex-1 bg">
+      <View className="flex flex-1 pr-3">
         <View className="flex flex-row items-center">
           <Text numberOfLines={1} className="text-black dark:text-white text-2xl font-bold max-w-full truncate">
             {nickname}{" "}
           </Text>
-          {twitch && <FontAwesome5 name="twitch" size={16} color="white" />}
+          {twitch && <FontAwesome6 name="display" size={16} color="white" />}
         </View>
         <Text className="text-black dark:text-white">{splitName}</Text>
       </View>

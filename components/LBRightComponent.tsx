@@ -14,59 +14,29 @@ const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
     { key: "weekly", label: "Weekly" },
     { key: "monthly", label: "Monthly" },
     { key: "all", label: "All" },
+    { key: "current", label: "Trophy - Current" },
+    { key: "season-1", label: "Trophy - Season 1" },
+    { key: "season-2", label: "Trophy - Season 2" },
   ];
-
-  const trophyItems = [
-    { key: "current", label: "Current" },
-    { key: "season-1", label: "Season 1" },
-    { key: "season-2", label: "Season 2" },
-  ];
-  const isTrophySelected = trophyItems.some((item) => item.key === selectedKey);
-
-  const renderCheckmark = (key: string) => {
-    const isSelected = selectedKey === key || (key === "trophy" && isTrophySelected);
-
-    return isSelected ? (
-      <DropdownMenu.ItemIcon
-        ios={{
-          name: "checkmark",
-          pointSize: 16,
-        }}
-      />
-    ) : null;
-  };
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <View className="mr-3">
+        <View>
           <Ionicons name="menu-outline" size={28} color={"white"} />
         </View>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <DropdownMenu.Group>
-          {menuItems.map(({ key, label }) => (
-            <DropdownMenu.Item key={key} onSelect={() => onSelect(key)}>
-              <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-              {renderCheckmark(key)}
-            </DropdownMenu.Item>
-          ))}
-        </DropdownMenu.Group>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Sub>
-          <DropdownMenu.SubTrigger key="trophy">
-            <DropdownMenu.ItemTitle>Trophy</DropdownMenu.ItemTitle>
-            {renderCheckmark("trophy")}
-          </DropdownMenu.SubTrigger>
-          <DropdownMenu.SubContent>
-            {trophyItems.map(({ key, label }) => (
-              <DropdownMenu.Item key={key} onSelect={() => onSelect(key)}>
-                <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-                {renderCheckmark(key)}
-              </DropdownMenu.Item>
-            ))}
-          </DropdownMenu.SubContent>
-        </DropdownMenu.Sub>
+        {menuItems.map(({ key, label }) => (
+          <DropdownMenu.CheckboxItem
+            key={key}
+            value={selectedKey === key}
+            onValueChange={(next) => next && onSelect(key)}
+          >
+            <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
+            <DropdownMenu.ItemIndicator />
+          </DropdownMenu.CheckboxItem>
+        ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
