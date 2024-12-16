@@ -1,7 +1,6 @@
 import React from "react";
 import { Tabs } from "@/components/NativeBottomTabs";
 import { Colors } from "@/constants/Colors";
-import { TabBarIcon } from "@/components/TabBarIcon";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { useMMKVBoolean } from "react-native-mmkv";
 
@@ -24,7 +23,7 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           tabBarLabel: "PaceMan.gg",
-          tabBarIcon: () => ({ sfSymbol: "speedometer" }),
+          tabBarIcon: () => ({ sfSymbol: "stopwatch.fill" }),
         }}
       />
 
