@@ -1,19 +1,18 @@
 import React from "react";
 import { Tabs } from "@/components/NativeBottomTabs";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { useMMKVBoolean } from "react-native-mmkv";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const [haptics] = useMMKVBoolean("settings-haptics");
+  const { tintColor } = useColorsForUI();
 
   return (
     <Tabs
       ignoresTopSafeArea
       hapticFeedbackEnabled={haptics}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: tintColor,
       }}
     >
       {/* HOME SCREEN - Paces */}

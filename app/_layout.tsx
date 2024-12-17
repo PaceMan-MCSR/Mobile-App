@@ -1,32 +1,37 @@
+import * as SystemUI from "expo-system-ui";
 import { Stack } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { Platform, Appearance } from "react-native";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { storage } from "@/lib/utils/mmkv";
+import { Platform } from "react-native";
+import { useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import { useMMKVString } from "react-native-mmkv";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorScheme } from "nativewind";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import * as NavigationBar from "expo-navigation-bar";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import * as SystemUI from "expo-system-ui";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { useMMKVString } from "react-native-mmkv";
-import { storage } from "@/lib/utils/mmkv";
 
 import "@/global.css";
-import { useEffect } from "react";
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  Platform.OS === "android" && NavigationBar.setBackgroundColorAsync(Colors[colorScheme ?? "light"].background);
-  SystemUI.setBackgroundColorAsync(Colors[colorScheme ?? "light"].background);
+  const { colorScheme, setColorScheme } = useColorScheme();
+  const { tintColor, backgroundColor } = useColorsForUI();
+  SystemUI.setBackgroundColorAsync(backgroundColor);
   const [theme] = useMMKVString("settings-theme");
 
   // Update App Theme
   useEffect(() => {
-    if (theme === "") Appearance.setColorScheme(null);
-    if (theme === "light") Appearance.setColorScheme("light");
-    if (theme === "dark") Appearance.setColorScheme("dark");
+    if (theme === "") setColorScheme("system");
+    if (theme === "light") setColorScheme("light");
+    if (theme === "dark") setColorScheme("dark");
   }, [theme]);
+
+  // useEffect(() => {
+  //   console.log(colorScheme);
+  // }, [colorScheme]);
 
   // Initialise MMKV Storage with User Preferences
   useEffect(() => {
@@ -43,6 +48,7 @@ export default function RootLayout() {
       <BottomSheetModalProvider>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+            <StatusBar style={colorScheme === "light" ? "dark" : colorScheme === "dark" ? "light" : "auto"} />
             <Stack>
               <Stack.Screen
                 name="(tabs)"
@@ -55,14 +61,11 @@ export default function RootLayout() {
                 name="settings"
                 options={{
                   headerTitle: "Settings",
-                  headerTintColor: Colors[colorScheme ?? "light"].text,
                   headerBackTitle: "Back",
-                  headerStyle: {
-                    backgroundColor: Platform.OS === "ios" ? undefined : Colors[colorScheme ?? "light"].background,
-                  },
+                  headerTintColor: tintColor,
                   headerShadowVisible: false,
                   headerTransparent: Platform.OS === "ios" ? true : false,
-                  headerBlurEffect: "systemThinMaterial",
+                  headerBlurEffect: colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark",
                 }}
               />
               <Stack.Screen name="+not-found" />

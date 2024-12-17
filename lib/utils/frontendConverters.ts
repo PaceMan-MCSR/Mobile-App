@@ -3,6 +3,7 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { useColorScheme } from "nativewind";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -37,6 +38,16 @@ export const uuidToHead = (uuid: string): string => {
 export const uuidToSkin = (uuid: string): string => {
   const endpoint = "https://mc-heads.net/body/";
   return `${endpoint}${uuid}`;
+};
+
+export const tintColor = () => {
+  const { colorScheme } = useColorScheme();
+  colorScheme === "dark" ? "white" : "black";
+};
+
+export const backgroundColor = () => {
+  const { colorScheme } = useColorScheme();
+  colorScheme === "dark" ? "#FFFFFF" : "#1f2937";
 };
 
 // https://stackoverflow.com/questions/13627308/add-st-nd-rd-and-th-ordinal-suffix-to-a-number

@@ -78,7 +78,7 @@ const LeaderboardPage = () => {
           headerRight: () => <LBRightComponent onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
         }}
       />
-      <View className="flex flex-1 bg-white dark:bg-[#111827]">
+      <View className="flex flex-1 bg-background-primary">
         <FlatList
           contentInsetAdjustmentBehavior="automatic"
           data={leaderboard}

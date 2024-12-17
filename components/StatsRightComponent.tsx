@@ -3,6 +3,8 @@ import React from "react";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { Ionicons } from "@expo/vector-icons";
 
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
 interface StatsRightComponentProps {
   days: number;
   category: string;
@@ -20,6 +22,8 @@ const StatsRightComponent = ({
   onCategorySelect,
   onTypeSelect,
 }: StatsRightComponentProps) => {
+  const { colorScheme } = useColorScheme();
+  const tint = Colors[colorScheme!].tint;
   const daysOptions = [
     { key: 1, label: "Daily" },
     { key: 7, label: "Weekly" },
@@ -52,7 +56,7 @@ const StatsRightComponent = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <View>
-            <Ionicons name="menu-outline" size={28} color={"white"} />
+            <Ionicons name="menu-outline" size={28} color={tint} />
           </View>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>

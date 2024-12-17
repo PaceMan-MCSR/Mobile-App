@@ -2,6 +2,8 @@ import React from "react";
 import { View } from "react-native";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
 
 interface DropDownMenuProps {
   selectedKey: string;
@@ -9,6 +11,8 @@ interface DropDownMenuProps {
 }
 
 const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
+  const { colorScheme } = useColorScheme();
+  const tint = Colors[colorScheme!].tint;
   const menuItems = [
     { key: "daily", label: "Daily" },
     { key: "weekly", label: "Weekly" },
@@ -23,7 +27,7 @@ const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         <View>
-          <Ionicons name="menu-outline" size={28} color={"white"} />
+          <Ionicons name="menu-outline" size={28} color={tint} />
         </View>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>

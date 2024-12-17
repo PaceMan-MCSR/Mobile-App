@@ -77,10 +77,10 @@ const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
 
             return (
               <View key={index} className="flex flex-row items-center mb-3">
-                <Text className={`flex flex-1 ${isCompleted ? "text-black dark:text-white" : "text-gray-500"} text-lg`}>
+                <Text className={`flex flex-1 ${isCompleted ? "text-text-primary" : "text-text-secondary"} text-lg`}>
                   {splitName}
                 </Text>
-                <Text className={`${isCompleted ? "text-black dark:text-white" : "text-gray-500"} text-lg`}>
+                <Text className={`${isCompleted ? "text-text-primary" : "text-text-secondary"} text-lg`}>
                   {isCompleted ? msToTime(splitTime) : "--:--"}
                 </Text>
               </View>

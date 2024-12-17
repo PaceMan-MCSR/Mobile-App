@@ -96,7 +96,7 @@ const HomePage = () => {
     <>
       <Stack.Screen options={{ headerRight }} />
 
-      <View className={`flex flex-1 bg-white dark:bg-[#111827]`}>
+      <View className={`flex flex-1 bg-background-primary`}>
         {/* PACE LIST */}
         <FlatList
           contentInsetAdjustmentBehavior="automatic"

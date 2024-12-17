@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs } from "@/components/NativeBottomTabs";
 import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { useColorScheme } from "nativewind";
 import { useMMKVBoolean } from "react-native-mmkv";
 
 export default function TabLayout() {

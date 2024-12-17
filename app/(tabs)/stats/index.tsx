@@ -65,7 +65,7 @@ const StatsPage = () => {
           ),
         }}
       />
-      <View className="flex flex-1 bg-white dark:bg-[#111827]">
+      <View className="flex flex-1 bg-background-primary">
         <FlatList
           keyboardDismissMode="on-drag"
           contentInsetAdjustmentBehavior="automatic"

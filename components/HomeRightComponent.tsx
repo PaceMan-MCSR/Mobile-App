@@ -4,7 +4,8 @@ import * as DropdownMenu from "zeego/dropdown-menu";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 import { Link } from "expo-router";
-
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
 interface HomeRightComponentProps {
   liveOnly: boolean;
   gameVersion: string;
@@ -18,6 +19,10 @@ const HomeRightComponent = ({
   onGameVersionSelect,
   onLiveOnlyToggle,
 }: HomeRightComponentProps) => {
+  const { colorScheme } = useColorScheme();
+
+  const tint = Colors[colorScheme!].tint;
+
   const versions = [
     { key: "1.16.1", label: "1.16.1" },
     { key: "1.15.2", label: "1.15.2" },
@@ -34,7 +39,7 @@ const HomeRightComponent = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <View>
-            <Ionicons name="menu-outline" size={28} color="white" />
+            <Ionicons name="menu-outline" size={28} color={tint} />
           </View>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
@@ -65,7 +70,7 @@ const HomeRightComponent = ({
       </DropdownMenu.Root>
       <Link href={"/settings"} push asChild>
         <Pressable className="pr-5">
-          <Ionicons name="settings-outline" size={24} color="white" />
+          <Ionicons name="settings-outline" size={24} color={tint} />
         </Pressable>
       </Link>
     </View>

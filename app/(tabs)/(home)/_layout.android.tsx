@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { useColorScheme } from "nativewind";
 
 export default function StatsLayout() {
   const colorScheme = useColorScheme();
