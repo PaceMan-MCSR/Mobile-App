@@ -28,7 +28,7 @@ export const msToTime = (ms: number, keepMs = false): string => {
   return ret;
 };
 
-export const msToDate = (ms: number) => dayjs(ms * 1000).format("MM/DD/YYYY");
+export const msToDate = (ms: number) => dayjs(ms).format("MM/DD/YYYY");
 
 export const uuidToHead = (uuid: string): string => {
   const endpoint = "https://api.mineatar.io/face/";

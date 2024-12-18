@@ -16,18 +16,6 @@ export default function StatsLayout() {
           },
         }}
       />
-      <Stack.Screen
-        name="player"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="run"
-        options={{
-          headerShown: false,
-        }}
-      />
     </Stack>
   );
 }

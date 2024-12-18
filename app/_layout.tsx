@@ -68,6 +68,16 @@ export default function RootLayout() {
                   headerBlurEffect: colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark",
                 }}
               />
+              <Stack.Screen
+                name="stats/player/[id]"
+                options={{
+                  headerBackTitle: "Back",
+                  headerTintColor: tintColor,
+                  headerShadowVisible: false,
+                  headerTransparent: Platform.OS === "ios" ? true : false,
+                  headerBlurEffect: colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark",
+                }}
+              />
               <Stack.Screen name="+not-found" />
             </Stack>
           </ThemeProvider>
