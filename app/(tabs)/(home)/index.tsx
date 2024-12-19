@@ -1,14 +1,13 @@
 import PaceCard from "@/components/PaceCard";
 import LoadingScreen from "@/components/LoadingScreen";
 import { Pace } from "@/lib/types/Pace";
-import { FlatList, Platform, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import HomeRightComponent from "@/components/HomeRightComponent";
 import { Stack } from "expo-router";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
-import { useHeaderHeight } from "@react-navigation/elements";
 import React from "react";
 
 const HomePage = () => {
@@ -19,11 +18,17 @@ const HomePage = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const { data: liveruns, isLoading } = useLiverunsData(params);
-  const [selectedPace, setSelectedPace] = useState<Pace | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!liveruns?.some((run) => run.worldId === selected)) {
+      bottomSheetRef.current?.close();
+    }
+  }, [selected, liveruns]);
 
   // HEADER RIGHT FUNCTIONS
   const handleLiveOnlyToggle = () => {
+    setSelected(null);
     setParams((prevParams) => ({
       ...prevParams,
       liveOnly: !prevParams.liveOnly,
@@ -65,14 +70,9 @@ const HomePage = () => {
 
   const handleSheetChanges = useCallback((index: number) => {
     if (index === -1) {
-      setSelectedPace(null);
+      setSelected(null);
     }
   }, []);
-
-  const handlePaceCardPress = (item: Pace) => {
-    bottomSheetRef.current?.expand();
-    setSelectedPace(item);
-  };
 
   if (isLoading)
     return (
@@ -131,7 +131,7 @@ const HomePage = () => {
         ref={bottomSheetRef}
         selected={selected}
         params={params}
-        onBackdropPress={() => setSelectedPace(null)}
+        onBackdropPress={() => setSelected(null)}
         renderBackdrop={renderBackdrop}
         onSheetChanges={handleSheetChanges}
       />

@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { View, Platform } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { MenuView } from "@react-native-menu/menu";
 import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
@@ -21,7 +21,6 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
   onCategorySelect,
   onTypeSelect,
 }) => {
-  const menuRef = useRef<typeof MenuView>(null);
   const { colorScheme } = useColorScheme();
 
   const daysOptions = [
@@ -56,7 +55,6 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
   return (
     <View className="flex flex-row-reverse items-center">
       <MenuView
-        ref={menuRef}
         title="Filter Stats"
         onPressAction={({ nativeEvent }) => {
           const actionId = nativeEvent.event;

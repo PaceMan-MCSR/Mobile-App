@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { View, Platform } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { MenuView } from "@react-native-menu/menu";
 import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
@@ -10,7 +10,6 @@ interface DropDownMenuProps {
 }
 
 const LBRightComponent: React.FC<DropDownMenuProps> = ({ selectedKey, onSelect }) => {
-  const menuRef = useRef<typeof MenuView>(null);
   const { colorScheme } = useColorScheme();
 
   const menuItems = [
@@ -23,17 +22,14 @@ const LBRightComponent: React.FC<DropDownMenuProps> = ({ selectedKey, onSelect }
     { key: "season-2", label: "Trophy - Season 2" },
   ];
 
-  // Determine text color based on color scheme
   const getTextColor = () => (colorScheme === "dark" ? "#FFFFFF" : "#000000");
+
   return (
     <View className="flex flex-row-reverse items-center">
       <MenuView
-        ref={menuRef}
         title="Menu"
         onPressAction={({ nativeEvent }) => {
           const actionId = nativeEvent.event;
-
-          // Handle leaderboard items
           if (menuItems.some((item) => item.key === actionId)) {
             onSelect(actionId);
           }

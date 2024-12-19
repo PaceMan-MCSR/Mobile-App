@@ -1,10 +1,11 @@
 import React from "react";
-import { ScrollView, Switch, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import Checkbox from "expo-checkbox";
 import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
 import { storage } from "@/lib/utils/mmkv";
 import { useColorScheme } from "nativewind";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { Linking } from "react-native";
 
 const SettingsPage = () => {
   const { setColorScheme } = useColorScheme();
@@ -64,9 +65,19 @@ const SettingsPage = () => {
         </View>
         <Text className="text-text-primary text-2xl font-bold py-3">About</Text>
         <View className="bg-background-secondary gap-4  p-4 rounded-xl">
-          <Text className="flex flex-1 text-text-primary text-md">
-            Note: PaceMan.gg is a community run real-time speedrun tracker. PaceMan.gg is not affiliated or endorsed by
-            "Minecraft" or "Mojang".
+          <Text className="flex flex-1 text-text-secondary text-md">
+            The PaceMan.gg is a community-driven application to serve as a real-time speedrun pace tracker. This
+            application is not affiliate with or endorsed by Minecraft, Mojang or Microsoft.
+          </Text>
+          <Text className="flex flex-1 text-text-secondary text-md">
+            In accordance with{" "}
+            <Text
+              onPress={() => Linking.openURL(`https://www.minecraft.net/en-us/usage-guidelines`)}
+              className="underline"
+            >
+              Minecraft's Usage Guidelines
+            </Text>
+            .
           </Text>
         </View>
       </ScrollView>

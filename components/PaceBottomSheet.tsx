@@ -12,7 +12,6 @@ import BottomSheet from "@gorhom/bottom-sheet";
 interface PaceBottomSheetProps {
   selected: string | null;
   params: any;
-  // selectedPace: Pace | null;
   onBackdropPress: () => void;
   renderBackdrop: (props: BottomSheetBackdropProps) => React.ReactElement;
   onSheetChanges: (index: number) => void;
@@ -23,17 +22,12 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
     const bottomTabBarHeight = useBottomTabBarHeight();
     const { data: liveruns, isLoading } = useLiverunsData(params);
     const selectedPace = liveruns?.find((liveruns) => liveruns.worldId === selected);
+
     const splits = useMemo(() => {
       if (!selectedPace) return [];
       const completedEvents = new Map(selectedPace.eventList.map((event) => [event.name, event.time]));
       return getSortedEventsWithTimes(completedEvents);
     }, [selectedPace]);
-
-    useEffect(() => {
-      if (!selectedPace && ref && typeof ref !== "function") {
-        ref.current?.close();
-      }
-    }, [selectedPace, ref]);
 
     if (!selectedPace) return null;
 

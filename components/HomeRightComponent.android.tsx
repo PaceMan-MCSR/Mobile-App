@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
-import { View, Text, Platform, Pressable } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { MenuView } from "@react-native-menu/menu";
 import { Ionicons } from "@expo/vector-icons";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { useColorScheme } from "nativewind";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 
 interface HomeRightComponentProps {
   liveOnly: boolean;
@@ -13,13 +13,12 @@ interface HomeRightComponentProps {
   onLiveOnlyToggle: () => void;
 }
 
-const HomeRightComponent: React.FC<HomeRightComponentProps> = ({
+const HomeRightComponent = ({
   liveOnly,
   gameVersion,
   onGameVersionSelect,
   onLiveOnlyToggle,
-}) => {
-  const menuRef = useRef<typeof MenuView>(null);
+}: HomeRightComponentProps) => {
   const { tintColor } = useColorsForUI();
   const { colorScheme } = useColorScheme();
   const router = useRouter();
@@ -41,7 +40,6 @@ const HomeRightComponent: React.FC<HomeRightComponentProps> = ({
   return (
     <View className="flex flex-row-reverse items-center">
       <MenuView
-        ref={menuRef}
         title="Menu"
         onPressAction={({ nativeEvent }) => {
           const actionId = nativeEvent.event;

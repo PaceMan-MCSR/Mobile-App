@@ -22,6 +22,9 @@ export default function StatsLayout() {
               android: backgroundColor,
             }),
           },
+          headerSearchBarOptions: {
+            placeholder: "Search for Runners",
+          },
           headerBlurEffect: colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark",
         }}
       />

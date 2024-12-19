@@ -74,7 +74,13 @@ export default function RootLayout() {
                   headerBackTitle: "Back",
                 }}
               />
-              <Stack.Screen name="+not-found" />
+              <Stack.Screen
+                name="+not-found"
+                options={{
+                  headerTitle: "Page Not Found",
+                  headerBackTitle: "Back",
+                }}
+              />
             </Stack>
           </ThemeProvider>
         </QueryClientProvider>
