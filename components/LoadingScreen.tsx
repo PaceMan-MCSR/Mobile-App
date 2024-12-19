@@ -3,10 +3,18 @@ import React from "react";
 
 const loadingMessagesArray = [
   "Finding 9 9...",
-  "Routing the double bad triple single...",
+  "Looting 3 Bread from the BlackSmith...",
+  "Collecting 3 Iron from the Golem...",
+  "Collecting 3 Emeralds from the Ship...",
+  "Spawning into Basalt...",
+  "Routing the Double Bad Triple Single...",
+  "Getting negative pearl trades...",
   "Piedar-ing into a Treasure...",
   "Leaving on 19 Obby...",
-  "Zero Cycling with 3 beds...",
+  "Spawning in the middle of two strongholds...",
+  "Navigating the 27 room stronghold...",
+  "Entering into a zero eye...",
+  "Zero Cycling with 3 Beds...",
 ];
 
 const LoadingScreen = () => {

@@ -7,6 +7,7 @@ import { msToTime, getSortedEventsWithTimes } from "@/lib/utils/frontendConverte
 import { Pace } from "@/lib/types/Pace";
 import { useBottomTabBarHeight } from "react-native-bottom-tabs";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 interface PaceBottomSheetProps {
   selected: string | null;
@@ -17,7 +18,7 @@ interface PaceBottomSheetProps {
   onSheetChanges: (index: number) => void;
 }
 
-const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
+const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
   ({ selected, params, renderBackdrop, onSheetChanges }, ref) => {
     const bottomTabBarHeight = useBottomTabBarHeight();
     const { data: liveruns, isLoading } = useLiverunsData(params);
@@ -37,7 +38,7 @@ const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
     if (!selectedPace) return null;
 
     return (
-      <BottomSheetModal
+      <BottomSheet
         index={0}
         ref={ref}
         enablePanDownToClose
@@ -87,7 +88,7 @@ const PaceBottomSheet = forwardRef<BottomSheetModal, PaceBottomSheetProps>(
             );
           })}
         </BottomSheetView>
-      </BottomSheetModal>
+      </BottomSheet>
     );
   }
 );

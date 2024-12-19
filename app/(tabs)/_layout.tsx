@@ -1,19 +1,23 @@
 import React from "react";
 import { Tabs } from "@/components/NativeBottomTabs";
-import { useMMKVBoolean } from "react-native-mmkv";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { storage } from "@/lib/utils/mmkv";
+import { Platform } from "react-native";
 
 export default function TabLayout() {
-  const [haptics] = useMMKVBoolean("settings-haptics");
-  const { tintColor } = useColorsForUI();
+  const haptics = storage.getBoolean("settings-haptics");
+  const { tintColor, backgroundColor, tabBarTintColor } = useColorsForUI();
 
   return (
     <Tabs
       ignoresTopSafeArea
       hapticFeedbackEnabled={haptics}
-      screenOptions={{
-        tabBarActiveTintColor: tintColor,
-      }}
+      barTintColor={Platform.select({
+        ios: undefined,
+        android: backgroundColor,
+      })}
+      activeIndicatorColor={tabBarTintColor}
+      tabBarActiveTintColor={tintColor}
     >
       {/* HOME SCREEN - Paces */}
       <Tabs.Screen
@@ -22,8 +26,12 @@ export default function TabLayout() {
           headerShown: false,
           tabBarLabel: "PaceMan.gg",
 
-          tabBarIcon: ({ focused }: { focused: boolean }) =>
-            focused ? { sfSymbol: "stopwatch.fill" } : { sfSymbol: "stopwatch" },
+          tabBarIcon: Platform.select({
+            ios: ({ focused }: { focused: boolean }) =>
+              focused ? { sfSymbol: "stopwatch.fill" } : { sfSymbol: "stopwatch" },
+            android: ({ focused }) =>
+              focused ? require("@/assets/icons/stopwatch.svg") : require("@/assets/icons/stopwatch-outline.svg"),
+          }),
         }}
       />
 
@@ -33,8 +41,11 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           tabBarLabel: "Leaderboard",
-          tabBarIcon: ({ focused }: { focused: boolean }) =>
-            focused ? { sfSymbol: "medal.fill" } : { sfSymbol: "medal" },
+          tabBarIcon: Platform.select({
+            ios: ({ focused }: { focused: boolean }) => (focused ? { sfSymbol: "medal.fill" } : { sfSymbol: "medal" }),
+            android: ({ focused }) =>
+              focused ? require("@/assets/icons/trophy.svg") : require("@/assets/icons/trophy-outline.svg"),
+          }),
         }}
         initialParams={{ id: "monthly" }}
       />
@@ -45,8 +56,12 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           tabBarLabel: "Stats",
-          tabBarIcon: ({ focused }: { focused: boolean }) =>
-            focused ? { sfSymbol: "chart.bar.fill" } : { sfSymbol: "chart.bar" },
+          tabBarIcon: Platform.select({
+            ios: ({ focused }: { focused: boolean }) =>
+              focused ? { sfSymbol: "chart.bar.fill" } : { sfSymbol: "chart.bar" },
+            android: ({ focused }) =>
+              focused ? require("@/assets/icons/stats-chart.svg") : require("@/assets/icons/stats-chart-outline.svg"),
+          }),
         }}
       />
     </Tabs>

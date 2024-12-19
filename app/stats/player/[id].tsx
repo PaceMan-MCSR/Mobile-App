@@ -1,5 +1,5 @@
 import { View, Text, FlatList } from "react-native";
-import { Link, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useUserData } from "@/hooks/useUserData";
@@ -7,7 +7,6 @@ import LoadingScreen from "@/components/LoadingScreen";
 import RunCard from "@/components/RunCard";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
-import { Ionicons } from "@expo/vector-icons";
 
 const StatsPlayerPage = () => {
   const { id: name } = useLocalSearchParams<{ id: string }>();
@@ -57,30 +56,20 @@ const StatsPlayerPage = () => {
                   </Text>
                 </View>
                 {allTime && (
-                  <Link href={`/stats/run/${allTime.uuid}`} push asChild>
-                    <Text className="text-text-primary text-xl font-semibold">
-                      Personal Best: {msToTime(allTime.time)}
-                    </Text>
-                  </Link>
+                  <Text className="text-text-primary text-xl font-semibold">
+                    Personal Best: {msToTime(allTime.time)}
+                  </Text>
                 )}
                 {daily && (
-                  <Link href={`/stats/run/${daily.uuid}`} push asChild>
-                    <Text className="text-text-primary text-md font-semibold">Daily Best: {msToTime(daily.time)}</Text>
-                  </Link>
+                  <Text className="text-text-primary text-md font-semibold">Daily Best: {msToTime(daily.time)}</Text>
                 )}
                 {weekly && (
-                  <Link href={`/stats/run/${weekly.uuid}`} push asChild>
-                    <Text className="text-text-primary text-md font-semibold">
-                      Weekly Best: {msToTime(weekly.time)}
-                    </Text>
-                  </Link>
+                  <Text className="text-text-primary text-md font-semibold">Weekly Best: {msToTime(weekly.time)}</Text>
                 )}
                 {monthly && (
-                  <Link href={`/stats/run/${monthly.uuid}`} push asChild>
-                    <Text className="text-text-primary text-md font-semibold">
-                      Monthly Best: {msToTime(monthly.time)}
-                    </Text>
-                  </Link>
+                  <Text className="text-text-primary text-md font-semibold">
+                    Monthly Best: {msToTime(monthly.time)}
+                  </Text>
                 )}
               </View>
               <Text className="text-text-primary text-2xl font-bold py-3">{name}'s Completions</Text>
@@ -91,9 +80,7 @@ const StatsPlayerPage = () => {
               </View>
             </View>
           )}
-          renderItem={({ item, index }) => (
-            <RunCard index={index} uuid={item.uuid} time={item.time} submitted={item.submitted} />
-          )}
+          renderItem={({ item, index }) => <RunCard index={index} time={item.time} submitted={item.submitted} />}
         />
       </View>
     </>

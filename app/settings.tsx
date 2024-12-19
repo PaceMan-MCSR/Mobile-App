@@ -20,10 +20,10 @@ const SettingsPage = () => {
           <View className="flex flex-row items-center">
             <Text className="flex flex-1 text-text-primary font-semibold text-xl">System</Text>
             <Checkbox
-              value={theme === ""}
+              value={theme === "system"}
               onValueChange={() => {
                 setColorScheme("system");
-                setTheme("");
+                setTheme("system");
               }}
               color={checkboxColor}
             />

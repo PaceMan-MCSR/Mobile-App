@@ -10,7 +10,7 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 
 - React Native
 - Expo
-- JavaScript/TypeScript
+- TypeScript
 
 ### Dependencies
 

@@ -10,7 +10,7 @@ interface DropDownMenuProps {
 }
 
 const LBRightComponent: React.FC<DropDownMenuProps> = ({ selectedKey, onSelect }) => {
-  const menuRef = useRef<MenuView>(null);
+  const menuRef = useRef<typeof MenuView>(null);
   const { colorScheme } = useColorScheme();
 
   const menuItems = [

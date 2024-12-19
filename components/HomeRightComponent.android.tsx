@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { View, Text, Platform, Pressable } from "react-native";
 import { MenuView } from "@react-native-menu/menu";
 import { Ionicons } from "@expo/vector-icons";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { useColorScheme } from "nativewind";
 import { Link, useRouter } from "expo-router";
 
@@ -18,7 +19,8 @@ const HomeRightComponent: React.FC<HomeRightComponentProps> = ({
   onGameVersionSelect,
   onLiveOnlyToggle,
 }) => {
-  const menuRef = useRef<MenuView>(null);
+  const menuRef = useRef<typeof MenuView>(null);
+  const { tintColor } = useColorsForUI();
   const { colorScheme } = useColorScheme();
   const router = useRouter();
 
@@ -34,7 +36,7 @@ const HomeRightComponent: React.FC<HomeRightComponentProps> = ({
   ];
 
   // Determine text color based on color scheme
-  const getTextColor = () => (colorScheme === "dark" ? "#FFFFFF" : "#000000");
+  const getTextColor = () => tintColor;
 
   return (
     <View className="flex flex-row-reverse items-center">
@@ -48,35 +50,37 @@ const HomeRightComponent: React.FC<HomeRightComponentProps> = ({
             onLiveOnlyToggle();
           } else if (versions.some((v) => v.key === actionId)) {
             onGameVersionSelect(actionId);
+          } else if (actionId === "settings") {
+            router.push("/settings");
           }
         }}
         actions={[
           {
             id: "version",
             title: "Select Version",
-            titleColor: getTextColor(),
+            titleColor: tintColor,
             subactions: versions.map((version) => ({
               id: version.key,
               title: version.label,
-              titleColor: getTextColor(),
+              titleColor: tintColor,
             })),
           },
           {
             id: "liveOnly",
             title: "Live Only",
-            titleColor: getTextColor(),
+            titleColor: tintColor,
+          },
+          {
+            id: "settings",
+            title: "Settings",
+            titleColor: tintColor,
           },
         ]}
       >
         <View className="mr-3">
-          <Ionicons name="menu-outline" size={28} color={"#FFFFFF"} />
+          <Ionicons name="menu-outline" size={28} color={tintColor} />
         </View>
       </MenuView>
-      <Link href={"/settings"} push asChild>
-        <Pressable className="pr-5">
-          <Ionicons name="settings-outline" size={24} color="white" />
-        </Pressable>
-      </Link>
     </View>
   );
 };
