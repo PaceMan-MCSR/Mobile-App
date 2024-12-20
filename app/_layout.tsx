@@ -20,19 +20,23 @@ export default function RootLayout() {
   const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
   const { colorScheme, setColorScheme } = useColorScheme();
   const { tintColor, backgroundColor } = useColorsForUI();
+
   // Fixes flicker on Android while switching between screens.
   SystemUI.setBackgroundColorAsync(backgroundColor);
 
-  // Initialise MMKV + Theme on first launch.
+  // Initialise MMKV
   useEffect(() => {
     if (theme === undefined) {
-      setTheme("dark");
-      setColorScheme("dark");
+      console.log("Initialise");
+      setTheme("system");
     }
     if (haptics === undefined) {
       setHaptics(true);
     }
   }, []);
+
+  // Update Theme
+  useEffect(() => setColorScheme(theme as "light" | "dark" | "system"), [theme]);
 
   return (
     <GestureHandlerRootView>
