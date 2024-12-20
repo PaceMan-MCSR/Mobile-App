@@ -13,5 +13,6 @@ export const useStatsData = ({ days, category, type }: StatsProps) => {
       fetch(
         `https://paceman.gg/stats/api/getLeaderboard/?category=${category}&type=${type}&days=${days}&limit=25`
       ).then((res) => res.json()),
+    staleTime: Infinity,
   });
 };

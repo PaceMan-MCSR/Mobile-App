@@ -39,6 +39,8 @@ const LBRightComponent: React.FC<DropDownMenuProps> = ({ selectedKey, onSelect }
             id: item.key,
             title: item.label,
             titleColor: getTextColor(),
+            state: selectedKey === item.key ? "on" : "off",
+            attributes: selectedKey === item.key ? { selected: true } : undefined,
           })),
         ]}
       >

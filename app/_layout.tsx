@@ -16,7 +16,7 @@ const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const theme = storage.getString("settings-theme");
-  const { colorScheme } = useColorScheme();
+  const { colorScheme, setColorScheme } = useColorScheme();
   const { tintColor, backgroundColor } = useColorsForUI();
 
   // Fixes flicker on Android while switching between screens.
@@ -31,6 +31,11 @@ export default function RootLayout() {
       storage.set("settings-theme", Platform.OS === "ios" ? true : false);
     }
   }, []);
+
+  // Set user theme on app launch
+  useEffect(() => {
+    setColorScheme(theme as "light" | "dark" | "system");
+  }, [theme]);
 
   return (
     <GestureHandlerRootView>

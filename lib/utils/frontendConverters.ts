@@ -104,6 +104,43 @@ export const eventIdToName = new Map<string, string>([
   ["rsg.credits", "Finish"],
 ]);
 
+export const lbIdToName = new Map<string, string>([
+  ["daily", "Daily"],
+  ["weekly", "Weekly"],
+  ["monthly", "Monthly"],
+  ["all", "All Time"],
+  ["current", "Trophy - Current"],
+  ["season-1", "Trophy - Season 1"],
+  ["season-2", "Trophy - Season 2"],
+]);
+
+export const statsDaysToName = new Map<number, string>([
+  [1, "Daily"],
+  [7, "Weekly"],
+  [30, "Monthly"],
+  [9999, "All Time"],
+]);
+
+export const statsCategoryToName = new Map<string, string>([
+  ["nether", "Nether Enters"],
+  ["bastion", "Bastion Enters"],
+  ["fortress", "Fortress Enters"],
+  ["first_structure", "Structure 1 Enters"],
+  ["second_structure", "Structure 2 Enters"],
+  ["first_portal", "First Portals"],
+  ["second_portal", "Second Portals"],
+  ["stronghold", "Stronghold Enters"],
+  ["end", "End Enters"],
+  ["finish", "Completions"],
+]);
+
+export const statsTypeToName = new Map<string, string>([
+  ["count", "Count"],
+  ["average", "Average"],
+  ["fastest", "Time"],
+  ["conversion", "Conversions"],
+]);
+
 export const getMostRecentSplit = (eventList: { eventId: string; igt: number }[]) => {
   const mostRecentEvent = eventList[eventList.length - 1];
   return {

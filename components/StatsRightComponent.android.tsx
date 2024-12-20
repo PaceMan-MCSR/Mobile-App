@@ -76,6 +76,7 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
               id: opt.key,
               title: opt.label,
               titleColor: getTextColor(),
+              state: type === opt.key ? "on" : "off",
             })),
           },
           {
@@ -86,6 +87,8 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
               id: opt.key,
               title: opt.label,
               titleColor: getTextColor(),
+              state: category === opt.key ? "on" : "off",
+              attributes: category === opt.key ? { selected: true } : undefined,
             })),
           },
           {
@@ -96,6 +99,7 @@ const StatsRightComponent: React.FC<StatsRightComponentProps> = ({
               id: opt.key.toString(),
               title: opt.label,
               titleColor: getTextColor(),
+              state: days === opt.key ? "on" : "off",
             })),
           },
         ]}

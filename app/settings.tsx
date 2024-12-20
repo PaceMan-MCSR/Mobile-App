@@ -65,11 +65,11 @@ const SettingsPage = () => {
         </View>
         <Text className="text-text-primary text-2xl font-bold py-3">About</Text>
         <View className="bg-background-secondary gap-4  p-4 rounded-xl">
-          <Text className="flex flex-1 text-text-secondary text-md">
+          <Text className="flex flex-1 text-text-primary text-md">
             The PaceMan.gg is a community-driven application to serve as a real-time speedrun pace tracker. This
             application is not affiliate with or endorsed by Minecraft, Mojang or Microsoft.
           </Text>
-          <Text className="flex flex-1 text-text-secondary text-md">
+          <Text className="flex flex-1 text-text-primary text-md">
             In accordance with{" "}
             <Text
               onPress={() => Linking.openURL(`https://www.minecraft.net/en-us/usage-guidelines`)}

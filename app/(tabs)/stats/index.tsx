@@ -6,6 +6,8 @@ import { useStatsData } from "@/hooks/useStatsData";
 import PlayerCard from "@/components/PlayerCard";
 import StatsRightComponent from "@/components/StatsRightComponent";
 import { useAllUsersData } from "@/hooks/useAllUsersData";
+import { statsDaysToName, statsCategoryToName, statsTypeToName } from "@/lib/utils/frontendConverters";
+import ErrorScreen from "@/components/ErrorScreen";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,7 +17,7 @@ const StatsPage = () => {
     type: "count" as "count" | "average" | "fastest" | "conversion",
   });
 
-  const { data: stats, isLoading } = useStatsData(params);
+  const { data: stats, isLoading, isError } = useStatsData(params);
   const { data: users, isLoading: isUsersLoading } = useAllUsersData();
 
   const filteredUsers = useMemo(() => {
@@ -67,6 +69,58 @@ const StatsPage = () => {
     );
   }
 
+  if (isError) {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            headerSearchBarOptions: {
+              placeholder: "Search for Speedrunners",
+              onChangeText: handleSearch,
+            },
+            headerRight: () => (
+              <StatsRightComponent
+                days={params.days}
+                category={params.category}
+                type={params.type}
+                onDaysSelect={handleDaysSelect}
+                onCategorySelect={handleCategorySelect}
+                onTypeSelect={handleTypeSelect}
+              />
+            ),
+          }}
+        />
+        <ErrorScreen />
+      </>
+    );
+  }
+
+  if (!stats.length) {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            headerSearchBarOptions: {
+              placeholder: "Search for Speedrunners",
+              onChangeText: handleSearch,
+            },
+            headerRight: () => (
+              <StatsRightComponent
+                days={params.days}
+                category={params.category}
+                type={params.type}
+                onDaysSelect={handleDaysSelect}
+                onCategorySelect={handleCategorySelect}
+                onTypeSelect={handleTypeSelect}
+              />
+            ),
+          }}
+        />
+        <ErrorScreen message={`No stats available for this category yet...`} />
+      </>
+    );
+  }
+
   return (
     <>
       <Stack.Screen
@@ -95,17 +149,36 @@ const StatsPage = () => {
             showsVerticalScrollIndicator={false}
             data={filteredUsers}
             keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => <PlayerCard uuid={item.id} nickname={item.nick} type="search" />}
+            renderItem={({ item }) => <PlayerCard uuid={item.id} nickname={item.nick} type="search" />}
           />
         ) : (
           <FlatList
+            data={stats}
             keyboardDismissMode="on-drag"
             contentInsetAdjustmentBehavior="automatic"
             showsVerticalScrollIndicator={false}
-            data={stats}
             keyExtractor={(item, index) => `${item.uuid}-${index}`}
+            ListHeaderComponent={() => (
+              <>
+                <Text className="text-2xl p-4 font-bold text-text-primary">{`Stats for ${statsCategoryToName.get(
+                  params.category
+                )} based on ${statsTypeToName.get(params.type)} (${statsDaysToName.get(params.days)})`}</Text>
+                <View className="flex flex-row w-full items-center p-4 gap-3">
+                  <Text className="flex min-w-10 text-text-primary text-xl font-black">#</Text>
+                  <Text className="flex flex-1 text-text-primary text-xl font-black">Player</Text>
+                  <Text className="text-text-primary text-xl font-black">{statsTypeToName.get(params.type)}</Text>
+                </View>
+              </>
+            )}
             renderItem={({ item, index }) => (
-              <PlayerCard uuid={item.uuid} nickname={item.name} index={index} time={item.avg} type="leaderboard" />
+              <PlayerCard
+                uuid={item.uuid}
+                nickname={item.name}
+                index={index}
+                time={item.value}
+                type={params.type}
+                score={item.value}
+              />
             )}
           />
         )}

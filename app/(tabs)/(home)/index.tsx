@@ -9,6 +9,7 @@ import HomeRightComponent from "@/components/HomeRightComponent";
 import { Stack } from "expo-router";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import React from "react";
+import ErrorScreen from "@/components/ErrorScreen";
 
 const HomePage = () => {
   const [params, setParams] = useState({
@@ -17,7 +18,7 @@ const HomePage = () => {
   });
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const { data: liveruns, isLoading } = useLiverunsData(params);
+  const { data: liveruns, isLoading, isError } = useLiverunsData(params);
   const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const HomePage = () => {
   };
 
   const handleGameVersionSelect = (version: string) => {
+    setSelected(null);
     setParams((prevParams) => ({
       ...prevParams,
       gameVersion: version,
@@ -79,6 +81,14 @@ const HomePage = () => {
       <>
         <Stack.Screen options={{ headerRight }} />
         <LoadingScreen />
+      </>
+    );
+
+  if (isError)
+    return (
+      <>
+        <Stack.Screen options={{ headerRight }} />
+        <ErrorScreen />
       </>
     );
 

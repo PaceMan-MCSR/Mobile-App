@@ -61,12 +61,16 @@ const HomeRightComponent = ({
               id: version.key,
               title: version.label,
               titleColor: tintColor,
+              state: gameVersion === version.key ? "on" : "off",
+              attributes: gameVersion === version.key ? { selected: true } : undefined,
             })),
           },
           {
             id: "liveOnly",
             title: "Live Only",
             titleColor: tintColor,
+            state: liveOnly ? "on" : "off",
+            attributes: liveOnly ? { selected: true } : undefined,
           },
           {
             id: "settings",

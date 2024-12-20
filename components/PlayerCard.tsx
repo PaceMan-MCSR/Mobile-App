@@ -5,7 +5,7 @@ import { msToTime } from "@/lib/utils/frontendConverters";
 import { View, Text, TouchableOpacity } from "react-native";
 
 interface PlayerCardProps {
-  type: "leaderboard" | "trophy" | "player" | "search";
+  type: "leaderboard" | "trophy" | "player" | "search" | "count" | "average" | "fastest" | "conversion";
   index?: number;
   uuid: string;
   nickname: string;
@@ -42,12 +42,16 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
           placeholder={require("@/assets/images/placeholder.png")}
         />
         {/* PLAYER NAME */}
-        <Text className={`flex flex-1 text-xl font-bold ${getRankColor(index!)}`}>{nickname}</Text>
+        <Text numberOfLines={1} className={`flex flex-1 text-xl font-bold ${getRankColor(index!)}`}>
+          {nickname}
+        </Text>
         {/* TIMESTAMP (PB | SPLIT TIME) */}
         {type !== "search" && (
           <Text className={`text-xl font-bold ${getRankColor(index!)}`}>
-            {type !== "trophy" && msToTime(time!)}
+            {type === "count" && `${score}`}
             {type === "trophy" && `${score} pts`}
+            {type === "conversion" && `${score?.toPrecision(4)}%`}
+            {(type === "leaderboard" || type === "fastest" || type === "average") && msToTime(time!)}
           </Text>
         )}
       </TouchableOpacity>

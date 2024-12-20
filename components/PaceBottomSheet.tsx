@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useMemo } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import BottomSheetModal, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import TwitchButton from "@/components/TwitchButton";
 import { Image } from "expo-image";
@@ -8,6 +8,9 @@ import { Pace } from "@/lib/types/Pace";
 import { useBottomTabBarHeight } from "react-native-bottom-tabs";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
 import BottomSheet from "@gorhom/bottom-sheet";
+import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
 
 interface PaceBottomSheetProps {
   selected: string | null;
@@ -19,9 +22,11 @@ interface PaceBottomSheetProps {
 
 const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
   ({ selected, params, renderBackdrop, onSheetChanges }, ref) => {
+    const router = useRouter();
     const bottomTabBarHeight = useBottomTabBarHeight();
-    const { data: liveruns, isLoading } = useLiverunsData(params);
+    const { data: liveruns } = useLiverunsData(params);
     const selectedPace = liveruns?.find((liveruns) => liveruns.worldId === selected);
+    const { tintColor } = useColorsForUI();
 
     const splits = useMemo(() => {
       if (!selectedPace) return [];
@@ -48,14 +53,20 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
         >
           {/* PLAYER AVATAR + NAME + TWITCH BUTTON */}
           <View className="flex flex-row items-center justify-between pt-8 gap-2">
-            <Image
-              className="w-12 h-12"
-              source={{ uri: `https://mc-heads.net/avatar/${selectedPace.uuid}` }}
-              style={{ height: 50, width: 50 }}
-            />
-            <Text numberOfLines={1} className="flex flex-1 text-black dark:text-white text-2xl font-bold">
-              {selectedPace.nickname}
-            </Text>
+            <TouchableOpacity
+              className="flex flex-row items-center gap-2"
+              activeOpacity={0.5}
+              onPress={() => router.push(`/stats/player/${selectedPace.nickname}`)}
+            >
+              <Image
+                className="w-12 h-12"
+                source={{ uri: `https://mc-heads.net/avatar/${selectedPace.uuid}` }}
+                style={{ height: 50, width: 50 }}
+              />
+              <Text numberOfLines={1} className="flex text-black dark:text-white text-2xl font-bold">
+                {selectedPace.nickname}
+              </Text>
+            </TouchableOpacity>
             <TwitchButton href={selectedPace.twitch} />
           </View>
 

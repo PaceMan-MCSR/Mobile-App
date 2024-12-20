@@ -1,139 +1,192 @@
 [
   {
-    "nickname": "Statham_J",
-    "worldId": "940b85f54aa069b04a9d2a03f2d9038d9a87f9c83d8aa5db8bc6194e05e96803",
-    "split": 7,
-    "splitName": "Finish",
-    "time": 1656433,
+    "worldId": "892ce888a1993e2b45b1b9fc7eeafaa28d5ea37490c0c3e0106a2228790ff713",
+    "gameVersion": "1.16.1",
     "eventList": [
-      { "name": "Enter Nether", "time": 298784 },
-      { "name": "Enter Bastion", "time": 414336 },
-      { "name": "Enter Fortress", "time": 914436 },
-      { "name": "First Portal", "time": 1228786 },
-      { "name": "Second Portal", "time": 1431188 },
-      { "name": "Enter Stronghold", "time": 1431231 },
-      { "name": "Enter End", "time": 1553433 },
-      { "name": "Finish", "time": 1656433 }
+      { "eventId": "rsg.enter_nether", "rta": 205135, "igt": 201503 },
+      { "eventId": "rsg.enter_bastion", "rta": 261636, "igt": 250954 }
     ],
-    "uuid": "18826dc1-af94-4556-ae60-3c2dcf8157ed",
-    "twitch": null,
-    "lastUpdated": 1730375048896,
-    "isHighQuality": false,
-    "itemEstimates": { "minecraft:ender_pearl": 4, "minecraft:blaze_rod": 7 },
-    "gameVersion": "1.16.1"
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 37593, "igt": 37653 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 70680, "igt": 69153 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 163986, "igt": 160903 },
+      { "eventId": "rsg.distract_piglin", "rta": 284231, "igt": 273554 },
+      { "eventId": "rsg.obtain_crying_obsidian", "rta": 344480, "igt": 332404 },
+      { "eventId": "rsg.obtain_obsidian", "rta": 344480, "igt": 332404 },
+      { "eventId": "rsg.loot_bastion", "rta": 350487, "igt": 338404 }
+    ],
+    "user": { "uuid": "96db86e4-fc4c-46bf-810b-f1a1ccb77264", "liveAccount": null },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654070415,
+    "nickname": "AirOfCan2"
   },
   {
-    "nickname": "CroProYT",
-    "worldId": "e0b09622136c9e16737f39f48c8f2228fa247e84801f9764fb582302693d4341",
-    "split": 1,
-    "splitName": "Enter Bastion",
-    "time": 330722,
+    "worldId": "b678b7e44cf6c522a74b756d87bfa280e466885cfbb392c9eef655b2868d459d",
+    "gameVersion": "1.16.1",
     "eventList": [
-      { "name": "Enter Nether", "time": 239500 },
-      { "name": "Enter Fortress", "time": 258672 },
-      { "name": "Enter Bastion", "time": 330722 }
+      { "eventId": "rsg.enter_nether", "rta": 146359, "igt": 144300 },
+      { "eventId": "rsg.enter_bastion", "rta": 253217, "igt": 231444 }
     ],
-    "uuid": "4129d8d1-aafb-4e73-b97b-9999db248060",
-    "twitch": null,
-    "lastUpdated": 1730374954922,
-    "isHighQuality": false,
-    "itemEstimates": null,
-    "gameVersion": "1.16.1"
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 16781, "igt": 17100 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 48729, "igt": 49050 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 127316, "igt": 126000 },
+      { "eventId": "rsg.distract_piglin", "rta": 287367, "igt": 263744 },
+      { "eventId": "rsg.loot_bastion", "rta": 317982, "igt": 294344 },
+      { "eventId": "rsg.obtain_crying_obsidian", "rta": 323130, "igt": 299494 },
+      { "eventId": "rsg.obtain_obsidian", "rta": 333066, "igt": 309444 }
+    ],
+    "user": { "uuid": "5497fc90-5a48-4098-b9f2-bc4a300bb5c2", "liveAccount": null },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654154950,
+    "nickname": "Kawaus0_run"
   },
   {
-    "nickname": "unleq1t_",
-    "worldId": "579bf00d11548c506f09d0a53de1c786651085188409eebecc428d5ed97c4932",
-    "split": 1,
-    "splitName": "Enter Bastion",
-    "time": 151682,
+    "worldId": "f3d4ed505593156fc2964f91d89ac728e18b6a359bc7bc7663258c68efc0342b",
+    "gameVersion": "1.16.1",
+    "eventList": [{ "eventId": "rsg.enter_nether", "rta": 92398, "igt": 91050 }],
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 12693, "igt": 12700 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 33631, "igt": 32650 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 76432, "igt": 75450 }
+    ],
+    "user": { "uuid": "74ce14cf-794b-431b-b3e1-0d5311d0777f", "liveAccount": "xx4m_" },
+    "isCheated": true,
+    "isHidden": false,
+    "lastUpdated": 1734654109927,
+    "nickname": "Seauu"
+  },
+  {
+    "worldId": "ed720898440dc91fbae62cc937f3acffdfc94df79d346c071cabea58870f08f8",
+    "gameVersion": "1.16.1",
+    "eventList": [{ "eventId": "rsg.enter_nether", "rta": 96364, "igt": 94451 }],
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 17224, "igt": 17401 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 44414, "igt": 42901 },
+      { "eventId": "rsg.obtain_obsidian", "rta": 84721, "igt": 83201 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 137910, "igt": 124930 }
+    ],
+    "user": { "uuid": "954a19c8-e5fa-413c-9958-03e97da8e308", "liveAccount": null },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654117007,
+    "itemData": { "estimatedCounts": {}, "usages": { "minecraft:obsidian": 3 } },
+    "nickname": "GrayYoshi"
+  },
+  {
+    "worldId": "fe66ff03d5e46af1cae817edf2340f2861ee241fbca0a5214cafd829f4431c0d",
+    "gameVersion": "1.16.1",
     "eventList": [
-      { "name": "Enter Nether", "time": 119950 },
-      { "name": "Enter Bastion", "time": 151682 }
+      { "eventId": "rsg.enter_nether", "rta": 94678, "igt": 91889 },
+      { "eventId": "rsg.enter_bastion", "rta": 148031, "igt": 140562 },
+      { "eventId": "rsg.enter_fortress", "rta": 148031, "igt": 140562 }
     ],
-    "uuid": "132807fe-a3a5-4a02-b6b1-ad057430b002",
-    "twitch": null,
-    "lastUpdated": 1730375101854,
-    "isHighQuality": false,
-    "itemEstimates": null,
-    "gameVersion": "1.16.1"
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 13690, "igt": 13689 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 40031, "igt": 37589 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 80131, "igt": 77689 },
+      { "eventId": "rsg.loot_bastion", "rta": 157132, "igt": 149662 },
+      { "eventId": "rsg.obtain_crying_obsidian", "rta": 158232, "igt": 150762 }
+    ],
+    "user": { "uuid": "aa5a894a-4d53-40f4-9683-fdfd1ea9c523", "liveAccount": "skycrab" },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654213882,
+    "nickname": "Pinne"
   },
   {
-    "nickname": "CisGirlForSub10",
-    "worldId": "5ca596d342fdd4c98333c86b1adb19c2f048189ea257cc51c8e351d3c61334e1",
-    "split": 1,
-    "splitName": "Enter Bastion",
-    "time": 186344,
+    "worldId": "9fa9e1566ba9f286f3a12011f9101de180566ba89481cfd224a90bc4411d1b7e",
+    "gameVersion": "1.16.1",
+    "eventList": [{ "eventId": "rsg.enter_nether", "rta": 90881, "igt": 89804 }],
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 15264, "igt": 15354 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 79210, "igt": 78354 }
+    ],
+    "user": { "uuid": "017b4f46-f6b2-417e-aefd-ee1c16048b7b", "liveAccount": "andrew_crow" },
+    "isCheated": false,
+    "isHidden": true,
+    "lastUpdated": 1734654185520,
+    "nickname": "AndrewCrow"
+  },
+  {
+    "worldId": "4759c76c9bc545800f201823bd18f567487cda0c371904d337594e289193cb58",
+    "gameVersion": "1.16.1",
+    "eventList": [{ "eventId": "rsg.enter_nether", "rta": 188653, "igt": 187344 }],
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 25347, "igt": 25352 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 78045, "igt": 76944 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 133343, "igt": 132244 }
+    ],
+    "user": { "uuid": "689af7b5-09f7-48cd-863c-a12cf677585b", "liveAccount": "probablyki" },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654193918,
+    "nickname": "lovelyki"
+  },
+  {
+    "worldId": "facfed07cdfcce936a79988edc5ef00b34c08daf917bb2a15a7953530992e037",
+    "gameVersion": "1.16.1",
     "eventList": [
-      { "name": "Enter Nether", "time": 108252 },
-      { "name": "Enter Bastion", "time": 186344 }
+      { "eventId": "rsg.enter_nether", "rta": 159470, "igt": 157901 },
+      { "eventId": "rsg.enter_bastion", "rta": 185306, "igt": 182575 }
     ],
-    "uuid": "b15395d8-40be-4248-886d-ed3d8a6d5aa7",
-    "twitch": "claraluzi",
-    "lastUpdated": 1730375138017,
-    "isHighQuality": false,
-    "itemEstimates": null,
-    "gameVersion": "1.16.1"
-  },
-  {
-    "nickname": "ChatMessage",
-    "worldId": "98bd643e232213e734e0f352adcb80b92c473198cda55741f7b4d805ee787f53",
-    "split": 1,
-    "splitName": "Enter Bastion",
-    "time": 200104,
-    "eventList": [
-      { "name": "Enter Nether", "time": 152085 },
-      { "name": "Enter Bastion", "time": 200104 }
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 35864, "igt": 36001 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 78402, "igt": 77251 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 135848, "igt": 134701 }
     ],
-    "uuid": "f52934b5-29d5-4350-8801-93420caa2f10",
-    "twitch": null,
-    "lastUpdated": 1730375074573,
-    "isHighQuality": false,
-    "itemEstimates": { "minecraft:obsidian": 1 },
-    "gameVersion": "1.16.1"
+    "user": { "uuid": "5a6272a8-9517-45d7-afd8-7eb0d8fae915", "liveAccount": "rqichu_" },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654227455,
+    "nickname": "rqichu"
   },
   {
-    "nickname": "retropugg",
-    "worldId": "8f7a8aed5decaecfa1e428f40555c7992b9ae909f8e0f849e114f8bf869e115e",
-    "split": 1,
-    "splitName": "Enter Bastion",
-    "time": 201631,
-    "eventList": [
-      { "name": "Enter Nether", "time": 119404 },
-      { "name": "Enter Bastion", "time": 201631 }
+    "worldId": "1ed69a463cebc9f44ff5d820e9f2ba6ed0b0de5b54eba94c3d1299fdab112a66",
+    "gameVersion": "1.16.1",
+    "eventList": [{ "eventId": "rsg.enter_nether", "rta": 105787, "igt": 104500 }],
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 16246, "igt": 15200 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 38940, "igt": 37850 },
+      { "eventId": "rsg.obtain_obsidian", "rta": 79592, "igt": 78550 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 89591, "igt": 88550 }
     ],
-    "uuid": "34c05e44-1156-4d6a-bbb3-ae79f47b176e",
-    "twitch": "mrpogger213",
-    "lastUpdated": 1730375044064,
-    "isHighQuality": false,
-    "itemEstimates": null,
-    "gameVersion": "1.16.1"
+    "user": { "uuid": "6ddcd037-dd40-48e8-804d-0f99fa1cf4c6", "liveAccount": "ale267_" },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654219084,
+    "nickname": "Ale267"
   },
   {
-    "nickname": "Inverted_Mobius",
-    "worldId": "1d80d5821772f9e70f427b34777c13778be4cf84f778bcd437244727fd9d69c7",
-    "split": 0,
-    "splitName": "Enter Nether",
-    "time": 164102,
-    "eventList": [{ "name": "Enter Nether", "time": 164102 }],
-    "uuid": "bc29ecd2-7616-4c06-b31a-6771f4f13eee",
-    "twitch": "mobiusspeedruns",
-    "lastUpdated": 1730375128778,
-    "isHighQuality": false,
-    "itemEstimates": null,
-    "gameVersion": "1.16.1"
+    "worldId": "3154df61237c19f03bfa5050d261731d916e21dbdc9f0c38f0e6aa56dcc91484",
+    "gameVersion": "1.16.1",
+    "eventList": [{ "eventId": "rsg.enter_nether", "rta": 150026, "igt": 147692 }],
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 12538, "igt": 12542 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 64339, "igt": 62242 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 130934, "igt": 128792 }
+    ],
+    "user": { "uuid": "d7bd1a8e-084e-4d31-9c89-a7ff55bffde9", "liveAccount": null },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654231780,
+    "nickname": "Nxjang"
   },
   {
-    "nickname": "ToyoT_T",
-    "worldId": "f32b87d8a28a8ab0507d1bd056430ae4b7586ca51a7a2bb42d03fb33d20ace95",
-    "split": 0,
-    "splitName": "Enter Nether",
-    "time": 164782,
-    "eventList": [{ "name": "Enter Nether", "time": 164782 }],
-    "uuid": "cf4a763e-e791-4210-a221-b221fb586f99",
-    "twitch": "toyot_t",
-    "lastUpdated": 1730374882036,
-    "isHighQuality": false,
-    "itemEstimates": null,
-    "gameVersion": "1.16.1"
+    "worldId": "e0056919995860b83948c0f48302db750ba4b2aa85ee9834c8cbae564375e9b3",
+    "gameVersion": "1.16.1",
+    "eventList": [{ "eventId": "rsg.enter_nether", "rta": 86045, "igt": 85745 }],
+    "contextEventList": [
+      { "eventId": "rsg.obtain_iron_ingot", "rta": 18243, "igt": 18195 },
+      { "eventId": "rsg.obtain_iron_pickaxe", "rta": 43140, "igt": 43095 },
+      { "eventId": "rsg.obtain_lava_bucket", "rta": 72934, "igt": 72895 }
+    ],
+    "user": { "uuid": "e3dd1692-92db-49d4-9fc5-b23c52464bcc", "liveAccount": "redpili" },
+    "isCheated": false,
+    "isHidden": false,
+    "lastUpdated": 1734654236649,
+    "nickname": "AllAdvancements"
   }
 ]

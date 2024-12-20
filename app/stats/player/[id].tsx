@@ -7,10 +7,12 @@ import LoadingScreen from "@/components/LoadingScreen";
 import RunCard from "@/components/RunCard";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
+import ErrorScreen from "@/components/ErrorScreen";
 
 const StatsPlayerPage = () => {
   const { id: name } = useLocalSearchParams<{ id: string }>();
-  const { data, isLoading } = useUserData({ name });
+  const { data, isLoading, isError } = useUserData({ name });
+
   if (isLoading) {
     return (
       <>
@@ -20,6 +22,19 @@ const StatsPlayerPage = () => {
           }}
         />
         <LoadingScreen />
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        <Stack.Screen
+          options={{
+            headerTitle: name,
+          }}
+        />
+        <ErrorScreen />
       </>
     );
   }
@@ -72,12 +87,22 @@ const StatsPlayerPage = () => {
                   </Text>
                 )}
               </View>
-              <Text className="text-text-primary text-2xl font-bold py-3">{name}'s Completions</Text>
-              <View className="flex flex-row w-full items-center">
-                <Text className="flex min-w-10 text-text-primary text-xl font-black">#</Text>
-                <Text className="flex flex-1 text-text-primary text-xl font-black">Time</Text>
-                <Text className="text-text-primary text-xl font-black">Submitted</Text>
-              </View>
+              {completions.length ? (
+                <>
+                  <Text className="text-text-primary text-2xl font-bold py-3">{name}'s Completions</Text>
+                  <View className="flex flex-row w-full items-center">
+                    <Text className="flex min-w-10 text-text-primary text-xl font-black">#</Text>
+                    <Text className="flex flex-1 text-text-primary text-xl font-black">Time</Text>
+                    <Text className="text-text-primary text-xl font-black">Submitted</Text>
+                  </View>
+                </>
+              ) : (
+                <>
+                  <Text className="text-text-primary text-2xl font-bold py-3">
+                    {name} does not have any completions.
+                  </Text>
+                </>
+              )}
             </View>
           )}
           renderItem={({ item, index }) => <RunCard index={index} time={item.time} submitted={item.submitted} />}
