@@ -49,13 +49,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#FFFFFF",
-          "image": "./assets/images/icon-dark.png",
-          "dark": {
-            "image": "./assets/images/icon-dark.png",
-            "backgroundColor": "#1f2937"
-          },
-          "imageWidth": 200
+          "backgroundColor": "#1f2937",
+          "image": "./assets/images/splash.png",
+          "imageWidth": 700
         }
       ],
       "react-native-bottom-tabs",
