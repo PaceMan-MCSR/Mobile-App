@@ -12,30 +12,27 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 
 import "@/global.css";
+import { useMMKVString, useMMKVBoolean } from "react-native-mmkv";
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
-  const theme = storage.getString("settings-theme");
+  const [theme, setTheme] = useMMKVString("settings-theme", storage);
+  const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
   const { colorScheme, setColorScheme } = useColorScheme();
   const { tintColor, backgroundColor } = useColorsForUI();
-
   // Fixes flicker on Android while switching between screens.
   SystemUI.setBackgroundColorAsync(backgroundColor);
 
-  // Initialise MMKV Storage with User Preferences
+  // Initialise MMKV + Theme on first launch.
   useEffect(() => {
-    if (!storage.contains("settings-theme")) {
-      storage.set("settings-theme", "system");
+    if (theme === undefined) {
+      setTheme("system");
+      setColorScheme("system");
     }
-    if (!storage.contains("settings-haptics")) {
-      storage.set("settings-theme", Platform.OS === "ios" ? true : false);
+    if (haptics === undefined) {
+      setHaptics(true);
     }
   }, []);
-
-  // Set user theme on app launch
-  useEffect(() => {
-    setColorScheme(theme as "light" | "dark" | "system");
-  }, [theme]);
 
   return (
     <GestureHandlerRootView>

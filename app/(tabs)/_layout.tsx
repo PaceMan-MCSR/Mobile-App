@@ -3,9 +3,10 @@ import { Tabs } from "@/components/NativeBottomTabs";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { storage } from "@/lib/utils/mmkv";
 import { Platform } from "react-native";
+import { useMMKVBoolean } from "react-native-mmkv";
 
 export default function TabLayout() {
-  const haptics = storage.getBoolean("settings-haptics");
+  const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
   const { tintColor, backgroundColor, tabBarTintColor } = useColorsForUI();
 
   return (
