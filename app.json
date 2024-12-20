@@ -51,7 +51,7 @@
         {
           "backgroundColor": "#1f2937",
           "image": "./assets/images/splash.png",
-          "imageWidth": 700
+          "imageWidth": 300
         }
       ],
       "react-native-bottom-tabs",
