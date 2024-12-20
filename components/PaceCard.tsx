@@ -1,18 +1,18 @@
 import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { msToTime } from "@/lib/utils/frontendConverters";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { TouchableOpacity } from "@/components/AnimatedComponents";
-
+import { FontAwesome6 } from "@expo/vector-icons";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
 interface PaceCardProps extends Pace {
   onPress: () => void;
 }
 
 const PaceCard = ({ splitName, nickname, uuid, twitch, time, onPress }: PaceCardProps) => {
+  const { tintColor } = useColorsForUI();
   return (
     <TouchableOpacity
-      className="flex flex-row w-full items-center h-28 px-4 my-2 gap-4 rounded-xl bg-gray-300 dark:bg-[#1f2937]"
+      className="flex flex-row w-full items-center px-4 py-7 my-2 gap-4 rounded-xl bg-background-secondary"
       activeOpacity={0.75}
       onPress={onPress}
     >
@@ -20,13 +20,15 @@ const PaceCard = ({ splitName, nickname, uuid, twitch, time, onPress }: PaceCard
         <Image
           source={`https://mc-heads.net/avatar/${uuid}`}
           style={{ height: 50, width: 50 }}
-          placeholder={require("@/assets/images/steve.png")}
+          placeholder={require("@/assets/images/placeholder.png")}
         />
       </View>
-      <View className="flex flex-1">
-        <View className="flex flex-row items-center gap-2">
-          <Text className="text-black dark:text-white text-2xl font-bold max-w-full truncate">{nickname}</Text>
-          {twitch && <FontAwesome5 name="twitch" size={16} color="white" />}
+      <View className="flex flex-1 pr-3">
+        <View className="flex flex-row items-center">
+          <Text numberOfLines={1} className="text-black dark:text-white text-2xl font-bold max-w-full truncate">
+            {nickname}{" "}
+          </Text>
+          {twitch && <FontAwesome6 name="display" size={16} color={tintColor} />}
         </View>
         <Text className="text-black dark:text-white">{splitName}</Text>
       </View>

@@ -1,46 +1,78 @@
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-
+import { Pressable } from "react-native";
+import { Link } from "expo-router";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
 interface HomeRightComponentProps {
   liveOnly: boolean;
-  onGameVersionSelect: () => void;
+  gameVersion: string;
+  onGameVersionSelect: (key: string) => void;
   onLiveOnlyToggle: () => void;
 }
 
-const HomeRightComponent = ({ liveOnly, onGameVersionSelect, onLiveOnlyToggle }: HomeRightComponentProps) => {
-  const router = useRouter();
+const HomeRightComponent = ({
+  liveOnly,
+  gameVersion,
+  onGameVersionSelect,
+  onLiveOnlyToggle,
+}: HomeRightComponentProps) => {
+  const { colorScheme } = useColorScheme();
+
+  const tint = Colors[colorScheme!].tint;
+
+  const versions = [
+    { key: "1.16.1", label: "1.16.1" },
+    { key: "1.15.2", label: "1.15.2" },
+    { key: "1.7.10", label: "1.7.10" },
+    { key: "1.8.9", label: "1.8.9" },
+    { key: "1.14.4", label: "1.14.4" },
+    { key: "1.12.2", label: "1.12.2" },
+    { key: "1.16.5", label: "1.16.5" },
+    { key: "1.17.1", label: "1.17.1" },
+  ];
+
   return (
     <View className="flex flex-row-reverse items-center">
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <View style={{ marginRight: 12 }}>
-            <Ionicons name="menu-outline" size={28} color="white" />
+          <View>
+            <Ionicons name="menu-outline" size={28} color={tint} />
           </View>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
-          <DropdownMenu.Item key="version" onSelect={onGameVersionSelect}>
-            <DropdownMenu.ItemTitle>Select Version</DropdownMenu.ItemTitle>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item key="liveOnly" onSelect={onLiveOnlyToggle}>
+          <DropdownMenu.Sub>
+            <DropdownMenu.SubTrigger key="version">
+              <DropdownMenu.ItemTitle>Select Version</DropdownMenu.ItemTitle>
+            </DropdownMenu.SubTrigger>
+            <DropdownMenu.SubContent>
+              {versions.map(({ key, label }) => (
+                <DropdownMenu.CheckboxItem
+                  key={key}
+                  value={gameVersion === key}
+                  onValueChange={(nextValue) => {
+                    if (nextValue) onGameVersionSelect(key);
+                  }}
+                >
+                  <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
+                  <DropdownMenu.ItemIndicator />
+                </DropdownMenu.CheckboxItem>
+              ))}
+            </DropdownMenu.SubContent>
+          </DropdownMenu.Sub>
+          <DropdownMenu.CheckboxItem key="liveOnly" value={liveOnly} onValueChange={onLiveOnlyToggle}>
             <DropdownMenu.ItemTitle>Live Only</DropdownMenu.ItemTitle>
-            {liveOnly && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
-          </DropdownMenu.Item>
+            <DropdownMenu.ItemIndicator />
+          </DropdownMenu.CheckboxItem>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
-
-      <Pressable style={{ marginRight: 12 }} onPress={() => router.push("/settings")}>
-        <Ionicons name="settings-outline" size={24} color="white" />
-      </Pressable>
+      <Link href={"/settings"} push asChild>
+        <Pressable className="pr-5">
+          <Ionicons name="settings-outline" size={24} color={tint} />
+        </Pressable>
+      </Link>
     </View>
   );
 };

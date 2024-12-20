@@ -10,7 +10,7 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 
 - React Native
 - Expo
-- JavaScript/TypeScript
+- TypeScript
 
 ### Dependencies
 
@@ -22,18 +22,3 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 - `@tanstack/react-query` Managing fetched data from API Endpoints
 - `react-native-reanimated` App Animations
 - `react-native-gesture-handler` Gesture Handling
-
-# Run Locally
-
-The app requires an Expo Development Build to be able to run on Android or iOS, due to the dependencies it is using. This section of the README will be updated with steps on how to create and install the development build for yourself.
-
-# To-do
-
-- IMP!!! FIX Tab Bar Lag
-- Implement Settings Page
-- Refactor Version Picker
-- Implement `Events` and `Stats` pages
-- Make /lb/ page more performant [Lag spikes on Android]
-- Add support for more color themes (look into `tw-colors`)
-- Animations for FlatList/FlashList (identify how to manage prev vs curr data in Query)
-- Look into Push Notifications (will need to find a way to configure without spamming the API in the background, such as webhooks)

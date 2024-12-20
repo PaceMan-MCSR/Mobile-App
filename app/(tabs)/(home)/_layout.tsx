@@ -1,7 +1,7 @@
+import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { Platform } from "react-native";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
 
 export default function StatsLayout() {
   const { colorScheme } = useColorScheme();
@@ -11,7 +11,7 @@ export default function StatsLayout() {
       <Stack.Screen
         name="index"
         options={{
-          headerTitle: "Stats",
+          headerTitle: "PaceMan.gg",
           headerShadowVisible: false,
           headerTransparent: Platform.select({
             ios: true,
@@ -21,9 +21,6 @@ export default function StatsLayout() {
             backgroundColor: Platform.select({
               android: backgroundColor,
             }),
-          },
-          headerSearchBarOptions: {
-            placeholder: "Search for Runners",
           },
           headerBlurEffect: colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark",
         }}

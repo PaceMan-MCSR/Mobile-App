@@ -1,7 +1,7 @@
+import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { Platform } from "react-native";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
 
 export default function StatsLayout() {
   const { colorScheme } = useColorScheme();
@@ -9,9 +9,9 @@ export default function StatsLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="index"
+        name="[id]"
         options={{
-          headerTitle: "Stats",
+          headerTitle: "Leaderboard",
           headerShadowVisible: false,
           headerTransparent: Platform.select({
             ios: true,
@@ -22,11 +22,9 @@ export default function StatsLayout() {
               android: backgroundColor,
             }),
           },
-          headerSearchBarOptions: {
-            placeholder: "Search for Runners",
-          },
           headerBlurEffect: colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark",
         }}
+        initialParams={{ id: "monthly" }}
       />
     </Stack>
   );

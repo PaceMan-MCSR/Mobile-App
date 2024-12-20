@@ -9,12 +9,17 @@ interface LeaderboardParams {
 
 export const useLeaderboardData = ({ filter, removeDuplicates, date, season }: LeaderboardParams) => {
   return useQuery({
-    queryKey: ["leaderboard", { filter, removeDuplicates, date }],
+    queryKey: ["leaderboard", { filter, removeDuplicates, date, season }],
     queryFn: () =>
-      filter === 4
-        ? fetch(`/api/trophy?season=${season}`).then((res) => res.json())
-        : fetch(`/api/leaderboard?filter=${filter}&removeDuplicates=${removeDuplicates ? 1 : 0}&date=${date}`).then(
-            (res) => res.json()
-          ),
+      filter >= 4
+        ? fetch(
+            `https://paceman.gg/api/us/trophy?season=${encodeURIComponent((season ?? "current").replace("-", " "))}`
+          ).then((res) => res.json())
+        : fetch(
+            `https://paceman.gg/api/cs/leaderboard?filter=${filter}&removeDuplicates=${
+              removeDuplicates ? 1 : 0
+            }&date=${date}`
+          ).then((res) => res.json()),
+    staleTime: Infinity,
   });
 };

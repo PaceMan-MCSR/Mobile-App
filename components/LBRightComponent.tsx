@@ -1,13 +1,9 @@
-/**
-TODO: 
-- Refactor code to make it cleaner.
-- Add Android icons.
-*/
-
-import { View } from "react-native";
 import React from "react";
+import { View } from "react-native";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
 
 interface DropDownMenuProps {
   selectedKey: string;
@@ -15,71 +11,36 @@ interface DropDownMenuProps {
 }
 
 const LBRightComponent = ({ selectedKey, onSelect }: DropDownMenuProps) => {
+  const { colorScheme } = useColorScheme();
+  const tint = Colors[colorScheme!].tint;
+  const menuItems = [
+    { key: "daily", label: "Daily" },
+    { key: "weekly", label: "Weekly" },
+    { key: "monthly", label: "Monthly" },
+    { key: "all", label: "All" },
+    { key: "current", label: "Trophy - Current" },
+    { key: "season-1", label: "Trophy - Season 1" },
+    { key: "season-2", label: "Trophy - Season 2" },
+  ];
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <View className="mr-3">
-          <Ionicons name="menu-outline" size={28} color={"white"} />
+        <View>
+          <Ionicons name="menu-outline" size={28} color={tint} />
         </View>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <DropdownMenu.Group>
-          <DropdownMenu.Item key="0" onSelect={() => onSelect("0")}>
-            <DropdownMenu.ItemTitle>Daily</DropdownMenu.ItemTitle>
-            {selectedKey === "daily" && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
-          </DropdownMenu.Item>
-          <DropdownMenu.Item key="weekly" onSelect={() => onSelect("1")}>
-            <DropdownMenu.ItemTitle>Weekly</DropdownMenu.ItemTitle>
-            {selectedKey === "weekly" && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
-          </DropdownMenu.Item>
-          <DropdownMenu.Item key="monthly" onSelect={() => onSelect("2")}>
-            <DropdownMenu.ItemTitle>Monthly</DropdownMenu.ItemTitle>
-            {selectedKey === "monthly" && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
-          </DropdownMenu.Item>
-          <DropdownMenu.Item key="all" onSelect={() => onSelect("3")}>
-            <DropdownMenu.ItemTitle>All</DropdownMenu.ItemTitle>
-            {selectedKey === "all" && (
-              <DropdownMenu.ItemIcon
-                ios={{
-                  name: "checkmark",
-                  pointSize: 16,
-                }}
-              />
-            )}
-          </DropdownMenu.Item>
-        </DropdownMenu.Group>
-        <DropdownMenu.Item key="trophy" onSelect={() => onSelect("4")}>
-          <DropdownMenu.ItemTitle>Trophy</DropdownMenu.ItemTitle>
-          {selectedKey === "trophy" && (
-            <DropdownMenu.ItemIcon
-              ios={{
-                name: "checkmark",
-                pointSize: 16,
-              }}
-            />
-          )}
-        </DropdownMenu.Item>
+        {menuItems.map(({ key, label }) => (
+          <DropdownMenu.CheckboxItem
+            key={key}
+            value={selectedKey === key}
+            onValueChange={(next) => next && onSelect(key)}
+          >
+            <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
+            <DropdownMenu.ItemIndicator />
+          </DropdownMenu.CheckboxItem>
+        ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );

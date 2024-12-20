@@ -1,29 +1,20 @@
 import { memo } from "react";
+import { Link } from "expo-router";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
-import { useRouter } from "expo-router";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
-// Need to fix this, make the types more dynamic to take in info based on if it's leaderboard, player or trophy.
 interface PlayerCardProps {
-  type: "leaderboard" | "trophy" | "player";
-  index: number;
+  type: "leaderboard" | "trophy" | "player" | "search" | "count" | "average" | "fastest" | "conversion";
+  index?: number;
   uuid: string;
   nickname: string;
   score?: number;
-  time: number;
+  time?: number;
 }
 
 const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }: PlayerCardProps) => {
-  const router = useRouter();
-  const handlePress = () => {
-    router.push({
-      pathname: `/(tabs)/stats/player/[id]`,
-      params: {
-        id: nickname,
-      },
-    });
-  };
+  // For some reason this function doesn't work when declared in frontendConverters
   const getRankColor = (index: number) => {
     return index === 0
       ? `text-rank-gold italic`
@@ -31,33 +22,40 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
       ? `text-rank-silver italic`
       : index === 2
       ? `text-rank-bronze italic`
-      : `text-black dark:text-white`;
+      : `text-text-primary`;
   };
-  return (
-    <Pressable
-      // entering={FadeInDown.delay(10 * index).springify()}
-      className="flex flex-row w-full items-center px-4 py-4 gap-3"
-      onPress={handlePress}
-    >
-      {/* RANK || POINTS  */}
-      <View className="min-w-10 flex">
-        <Text className={`text-xl font-bold ${getRankColor(index)}`}>
-          {(type === "leaderboard" || type === "player") && index + 1}
-          {type === "trophy" && score}
-        </Text>
-      </View>
 
-      {/* PLAYER AVATAR */}
-      <Image
-        source={`https://mc-heads.net/avatar/${uuid}`}
-        style={{ height: 35, width: 35 }}
-        placeholder={require("@/assets/images/steve.png")}
-      />
-      {/* PLAYER NAME */}
-      <Text className={`flex flex-1 text-xl font-bold ${getRankColor(index)}`}>{nickname}</Text>
-      {/* TIMESTAMP (PB | SPLIT TIME) */}
-      <Text className={`text-xl font-bold ${getRankColor(index)}`}>{msToTime(time)}</Text>
-    </Pressable>
+  return (
+    <Link href={`/stats/player/${nickname}`} push asChild>
+      <TouchableOpacity activeOpacity={0.5} className="flex flex-row w-full items-center px-4 py-4 gap-3">
+        {/* RANK || POINTS  */}
+        {type !== "search" && (
+          <View className="min-w-10 flex">
+            <Text className={`text-xl font-bold ${getRankColor(index!)}`}>{index! + 1}</Text>
+          </View>
+        )}
+
+        {/* PLAYER AVATAR */}
+        <Image
+          source={`https://mc-heads.net/avatar/${uuid}`}
+          style={{ height: 35, width: 35 }}
+          placeholder={require("@/assets/images/placeholder.png")}
+        />
+        {/* PLAYER NAME */}
+        <Text numberOfLines={1} className={`flex flex-1 text-xl font-bold ${getRankColor(index!)}`}>
+          {nickname}
+        </Text>
+        {/* TIMESTAMP (PB | SPLIT TIME) */}
+        {type !== "search" && (
+          <Text className={`text-xl font-bold ${getRankColor(index!)}`}>
+            {type === "count" && `${score}`}
+            {type === "trophy" && `${score} pts`}
+            {type === "conversion" && `${score?.toPrecision(4)}%`}
+            {(type === "leaderboard" || type === "fastest" || type === "average") && msToTime(time!)}
+          </Text>
+        )}
+      </TouchableOpacity>
+    </Link>
   );
 };
 

@@ -1,82 +1,68 @@
 import React from "react";
-import { Tabs } from "expo-router";
-import { Colors } from "@/constants/Colors";
-import { TabBarIcon } from "@/components/TabBarIcon";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { Tabs } from "@/components/NativeBottomTabs";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { storage } from "@/lib/utils/mmkv";
+import { Platform } from "react-native";
+import { useMMKVBoolean } from "react-native-mmkv";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
+  const { tintColor, backgroundColor, tabBarTintColor } = useColorsForUI();
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        tabBarStyle: {
-          backgroundColor: Colors[colorScheme ?? "light"].background,
-        },
-      }}
+      ignoresTopSafeArea
+      hapticFeedbackEnabled={haptics}
+      barTintColor={Platform.select({
+        ios: undefined,
+        android: backgroundColor,
+      })}
+      activeIndicatorColor={tabBarTintColor}
+      tabBarActiveTintColor={tintColor}
     >
       {/* HOME SCREEN - Paces */}
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
-          headerTitle: "PaceMan.gg",
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: Colors[colorScheme ?? "light"].background,
-          },
-          tabBarLabel: "PaceMan",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "stopwatch" : "stopwatch-outline"} color={color} />
-          ),
+          headerShown: false,
+          tabBarLabel: "PaceMan.gg",
+
+          tabBarIcon: Platform.select({
+            ios: ({ focused }: { focused: boolean }) =>
+              focused ? { sfSymbol: "stopwatch.fill" } : { sfSymbol: "stopwatch" },
+            android: ({ focused }) =>
+              focused ? require("@/assets/icons/stopwatch.svg") : require("@/assets/icons/stopwatch-outline.svg"),
+          }),
         }}
       />
 
       {/* LEADERBOARD SCREEN */}
       <Tabs.Screen
-        name="lb/[id]"
+        name="lb"
         options={{
-          headerTitle: "Leaderboard",
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: Colors[colorScheme ?? "light"].background,
-          },
+          headerShown: false,
           tabBarLabel: "Leaderboard",
-          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "podium" : "podium-outline"} color={color} />,
+          tabBarIcon: Platform.select({
+            ios: ({ focused }: { focused: boolean }) => (focused ? { sfSymbol: "medal.fill" } : { sfSymbol: "medal" }),
+            android: ({ focused }) =>
+              focused ? require("@/assets/icons/trophy.svg") : require("@/assets/icons/trophy-outline.svg"),
+          }),
         }}
         initialParams={{ id: "monthly" }}
-      />
-
-      {/* EVENTS SCREEN */}
-      <Tabs.Screen
-        name="events/[id]"
-        options={{
-          headerTitle: "Events",
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: Colors[colorScheme ?? "light"].background,
-          },
-          tabBarLabel: "Events",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "calendar" : "calendar-outline"} color={color} />
-          ),
-        }}
-        initialParams={{ id: "latest" }}
       />
 
       {/* STATS SCREEN */}
       <Tabs.Screen
         name="stats"
         options={{
-          headerTitle: "Stats",
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: Colors[colorScheme ?? "light"].background,
-          },
+          headerShown: false,
           tabBarLabel: "Stats",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "stats-chart" : "stats-chart-outline"} color={color} />
-          ),
+          tabBarIcon: Platform.select({
+            ios: ({ focused }: { focused: boolean }) =>
+              focused ? { sfSymbol: "chart.bar.fill" } : { sfSymbol: "chart.bar" },
+            android: ({ focused }) =>
+              focused ? require("@/assets/icons/stats-chart.svg") : require("@/assets/icons/stats-chart-outline.svg"),
+          }),
         }}
       />
     </Tabs>
