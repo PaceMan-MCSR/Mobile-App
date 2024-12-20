@@ -26,8 +26,8 @@ export default function RootLayout() {
   // Initialise MMKV + Theme on first launch.
   useEffect(() => {
     if (theme === undefined) {
-      setTheme("system");
-      setColorScheme("system");
+      setTheme("dark");
+      setColorScheme("dark");
     }
     if (haptics === undefined) {
       setHaptics(true);
