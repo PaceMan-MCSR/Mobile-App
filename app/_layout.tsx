@@ -10,6 +10,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import * as SplashScreen from "expo-splash-screen";
 
 import "@/global.css";
 import { useMMKVString, useMMKVBoolean } from "react-native-mmkv";
@@ -23,16 +24,19 @@ export default function RootLayout() {
 
   // Fixes flicker on Android while switching between screens.
   SystemUI.setBackgroundColorAsync(backgroundColor);
+  SplashScreen.preventAutoHideAsync();
 
   // Initialise MMKV
   useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
     if (theme === undefined) {
       console.log("Initialise");
-      setTheme("system");
+      setTheme("dark");
     }
     if (haptics === undefined) {
       setHaptics(true);
     }
+    SplashScreen.hideAsync();
   }, []);
 
   // Update Theme
