@@ -1,5 +1,9 @@
 # PaceMan App
 
+<a href="https://apps.apple.com/us/app/paceman-gg/id6739722390?itscg=30200&itsct=apps_box_badge&mttnsubad=6739722390" style="display: inline-block;">
+  <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1734825600" alt="Download on the App Store" style="width: 246px; height: 82px; vertical-align: middle; object-fit: contain;" />
+</a>
+
 A mobile app to query [PaceMan.gg](https://paceman.gg/).
 
 # Tech Stack
@@ -12,7 +16,7 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 - Expo
 - TypeScript
 
-### Dependencies
+### Native Dependencies
 
 - `zeego` - Native Dropdown and Context Menus
 - `nativewind` Tailwind CSS for React Native
@@ -21,4 +25,6 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 - `@gorhom/bottom-sheet` Bottom Sheet component
 - `@tanstack/react-query` Managing fetched data from API Endpoints
 - `react-native-reanimated` App Animations
+- `react-native-bottom-tabs` Native Bottom Tabs for Android and iOS
+- `react-native-edge-to-edge` Edge-to-Edge support on Android.
 - `react-native-gesture-handler` Gesture Handling
