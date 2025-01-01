@@ -7,7 +7,7 @@ body:
       value: |
         Please fill out the form below to suggest a new feature for the app.
 
-  - type: input
+  - type: textarea
     id: feature_description
     attributes:
       label: Describe the feature you'd like

@@ -7,7 +7,7 @@ body:
       value: |
         Please fill out the form below to report a bug.
 
-  - type: input
+  - type: textarea
     id: bug_description
     attributes:
       label: Describe the bug
