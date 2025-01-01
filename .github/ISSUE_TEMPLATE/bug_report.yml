@@ -1,0 +1,76 @@
+name: Bug Report
+description: Report a bug in the PaceMan.gg Mobile app
+labels: bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill out the form below to report a bug.
+
+  - type: input
+    id: bug_description
+    attributes:
+      label: Describe the bug
+      description: Provide a clear and concise description of the issue.
+      placeholder: A detailed description of the issue...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Describe the steps to reproduce the issue.
+      placeholder: |
+        1. Go to '...'
+        2. Tap on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected Behavior
+      description: Describe what you expected to happen.
+      placeholder: Expected outcome...
+
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Actual Behavior
+      description: Describe what actually happened.
+      placeholder: Actual outcome...
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform does this bug occur on?
+      options:
+        - Android
+        - iOS
+        - Both
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device
+      description: Specify the device where the issue occurred (e.g., Pixel 5, iPhone 12).
+      placeholder: Device name...
+
+  - type: input
+    id: os_version
+    attributes:
+      label: OS Version
+      description: Provide the OS version (e.g., Android 12, iOS 16).
+      placeholder: OS version...
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Add any additional context or comments about the issue.
+      placeholder: Additional information...
