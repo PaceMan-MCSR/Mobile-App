@@ -20,6 +20,7 @@ const LBRightComponent: React.FC<DropDownMenuProps> = ({ selectedKey, onSelect }
     { key: "current", label: "Trophy - Current" },
     { key: "season-1", label: "Trophy - Season 1" },
     { key: "season-2", label: "Trophy - Season 2" },
+    { key: "season-3", label: "Trophy - Season 3" },
   ];
 
   const getTextColor = () => (colorScheme === "dark" ? "#FFFFFF" : "#000000");

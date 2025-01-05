@@ -9,7 +9,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { lbIdToName } from "@/lib/utils/frontendConverters";
 import ErrorScreen from "@/components/ErrorScreen";
 
-const filters = ["daily", "weekly", "monthly", "all", "current", "season-1", "season-2"];
+const filters = ["daily", "weekly", "monthly", "all", "current", "season-1", "season-2", "season-3"];
 
 const LeaderboardPage = () => {
   const headerHeight = Math.ceil(useHeaderHeight());
@@ -26,7 +26,7 @@ const LeaderboardPage = () => {
   const { data: leaderboard, isLoading, isError } = useLeaderboardData(params);
 
   const handleSelect = (key: string) => {
-    const isTrophy = ["current", "season-1", "season-2"].includes(key);
+    const isTrophy = ["current", "season-1", "season-2", "season-3"].includes(key);
     setParams((prevParams) => ({
       ...prevParams,
       filter: filters.indexOf(key),
@@ -40,7 +40,7 @@ const LeaderboardPage = () => {
       setParams((prevParams) => ({
         ...prevParams,
         filter: filters.indexOf(id),
-        season: ["current", "season-1", "season-2"].includes(id) ? id : "current",
+        season: ["current", "season-1", "season-2", "season-3"].includes(id) ? id : "current",
       }));
     }
   }, [id]);
