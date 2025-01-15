@@ -70,7 +70,12 @@ export default {
         },
       ],
       "react-native-bottom-tabs",
-      "react-native-edge-to-edge",
+      [
+        "react-native-edge-to-edge",
+        {
+          enforceNavigationBarContrast: false,
+        },
+      ],
     ],
     experiments: {
       typedRoutes: true,
