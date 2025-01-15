@@ -13,10 +13,12 @@ export default function TabLayout() {
     <Tabs
       ignoresTopSafeArea
       hapticFeedbackEnabled={haptics}
-      barTintColor={Platform.select({
-        ios: undefined,
-        android: backgroundColor,
-      })}
+      tabBarStyle={{
+        backgroundColor: Platform.select({
+          ios: undefined,
+          android: backgroundColor,
+        }),
+      }}
       activeIndicatorColor={tabBarTintColor}
       tabBarActiveTintColor={tintColor}
     >
