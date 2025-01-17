@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-
+import { Stats } from "@/lib/types/Stats";
 interface StatsProps {
   days: number;
   category: string;
@@ -7,7 +7,7 @@ interface StatsProps {
 }
 
 export const useStatsData = ({ days, category, type }: StatsProps) => {
-  return useQuery({
+  return useQuery<Stats>({
     queryKey: ["stats", { days, category, type }],
     queryFn: () =>
       fetch(

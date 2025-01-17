@@ -1,26 +1,26 @@
 import PaceCard from "@/components/PaceCard";
-import LoadingScreen from "@/components/LoadingScreen";
-import { Pace } from "@/lib/types/Pace";
-import { FlatList, Text, View } from "react-native";
-import { useLiverunsData } from "@/hooks/useLiverunsData";
+import ErrorScreen from "@/components/screens/ErrorScreen";
+import LoadingScreen from "@/components/screens/LoadingScreen";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
-import { useRef, useState, useCallback, useEffect } from "react";
 import HomeRightComponent from "@/components/HomeRightComponent";
-import { Stack } from "expo-router";
+import { Tabs } from "expo-router";
+import { Pace } from "@/lib/types/Pace";
+import { FlatList, View } from "react-native";
+import { useLiverunsData } from "@/hooks/useLiverunsData";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
-import React from "react";
-import ErrorScreen from "@/components/ErrorScreen";
 
 const HomePage = () => {
   const [params, setParams] = useState({
     gameVersion: "1.16.1",
     liveOnly: false,
   });
-  const bottomSheetRef = useRef<BottomSheet>(null);
-
   const { data: liveruns, isLoading, isError } = useLiverunsData(params);
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
   const [selected, setSelected] = useState<string | null>(null);
 
+  // CLOSE BOTTOM SHEET IF PACE RESET
   useEffect(() => {
     if (!liveruns?.some((run) => run.worldId === selected)) {
       bottomSheetRef.current?.close();
@@ -44,18 +44,6 @@ const HomePage = () => {
     }));
   };
 
-  const headerRight = useCallback(
-    () => (
-      <HomeRightComponent
-        gameVersion={params.gameVersion}
-        liveOnly={params.liveOnly}
-        onGameVersionSelect={handleGameVersionSelect}
-        onLiveOnlyToggle={handleLiveOnlyToggle}
-      />
-    ),
-    [params.liveOnly, params.gameVersion]
-  );
-
   // BOTTOM SHEET FUNCTIONS
   const renderBackdrop = useCallback(
     (props: BottomSheetBackdropProps) => (
@@ -76,41 +64,60 @@ const HomePage = () => {
     }
   }, []);
 
+  // TOP HEADER
+  const Header = () => {
+    return (
+      <Tabs.Screen
+        options={{
+          headerRight: () => (
+            <HomeRightComponent
+              gameVersion={params.gameVersion}
+              liveOnly={params.liveOnly}
+              onGameVersionSelect={handleGameVersionSelect}
+              onLiveOnlyToggle={handleLiveOnlyToggle}
+            />
+          ),
+        }}
+      />
+    );
+  };
+
+  // LOADING
   if (isLoading)
     return (
       <>
-        <Stack.Screen options={{ headerRight }} />
+        <Header />
         <LoadingScreen />
       </>
     );
 
+  // ERROR
   if (isError)
     return (
       <>
-        <Stack.Screen options={{ headerRight }} />
+        <Header />
         <ErrorScreen />
       </>
     );
 
+  // NO ONE ON PACE
   if (!liveruns!.length)
     return (
       <>
-        <Stack.Screen options={{ headerRight }} />
-        <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
-          <Text className="text-black dark:text-white text-lg">No one is currently on pace...</Text>
-        </View>
+        <Header />
+        <ErrorScreen message="No one is currently on pace..." />
       </>
     );
 
+  // MAIN SCREEN
   return (
     <>
-      <Stack.Screen options={{ headerRight }} />
-
-      <View className={`flex flex-1 bg-background-primary`}>
+      <Header />
+      <View className={`flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]`}>
         {/* PACE LIST */}
         <FlatList
           contentInsetAdjustmentBehavior="automatic"
-          contentContainerClassName={`px-4 py-3`}
+          contentContainerClassName={`p-4 gap-4`}
           data={liveruns}
           keyExtractor={(item: Pace) => item.worldId}
           showsVerticalScrollIndicator={false}

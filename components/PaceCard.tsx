@@ -12,7 +12,7 @@ const PaceCard = ({ splitName, nickname, uuid, twitch, time, onPress }: PaceCard
   const { tintColor } = useColorsForUI();
   return (
     <TouchableOpacity
-      className="flex flex-row w-full items-center px-4 py-7 my-2 gap-4 rounded-xl bg-background-secondary"
+      className="flex flex-row w-full items-center px-4 py-7 gap-4 rounded-xl bg-[#DBDEE3] dark:bg-[#1F2937]"
       activeOpacity={0.75}
       onPress={onPress}
     >

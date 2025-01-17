@@ -112,6 +112,7 @@ export const lbIdToName = new Map<string, string>([
   ["current", "Trophy - Current"],
   ["season-1", "Trophy - Season 1"],
   ["season-2", "Trophy - Season 2"],
+  ["season-3", "Trophy - Season 3"],
 ]);
 
 export const statsDaysToName = new Map<number, string>([

@@ -3,11 +3,11 @@ import { Stack } from "expo-router";
 import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useUserData } from "@/hooks/useUserData";
-import LoadingScreen from "@/components/LoadingScreen";
+import LoadingScreen from "@/components/screens/LoadingScreen";
 import RunCard from "@/components/RunCard";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
-import ErrorScreen from "@/components/ErrorScreen";
+import ErrorScreen from "@/components/screens/ErrorScreen";
 
 const StatsPlayerPage = () => {
   const { id: name } = useLocalSearchParams<{ id: string }>();
@@ -52,14 +52,14 @@ const StatsPlayerPage = () => {
           headerTitle: name,
         }}
       />
-      <View className="flex flex-1 bg-background-primary">
+      <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
         <FlatList
           contentInsetAdjustmentBehavior="automatic"
           showsVerticalScrollIndicator={false}
           data={completions}
           ListHeaderComponent={() => (
             <View className="m-4 gap-3">
-              <View className="p-4 bg-background-secondary rounded-xl gap-4">
+              <View className="p-4 bg-[#DBDEE3] dark:bg-[#1F2937] rounded-xl gap-4">
                 <View className="flex flex-row items-center gap-4">
                   <Image
                     source={`https://mc-heads.net/avatar/${uuid}`}
@@ -71,34 +71,38 @@ const StatsPlayerPage = () => {
                   </Text>
                 </View>
                 {allTime && (
-                  <Text className="text-text-primary text-xl font-semibold">
+                  <Text className="text-black dark:text-[#ECEDEE] text-xl font-semibold">
                     Personal Best: {msToTime(allTime.time)}
                   </Text>
                 )}
                 {daily && (
-                  <Text className="text-text-primary text-md font-semibold">Daily Best: {msToTime(daily.time)}</Text>
+                  <Text className="text-black dark:text-[#ECEDEE] text-md font-semibold">
+                    Daily Best: {msToTime(daily.time)}
+                  </Text>
                 )}
                 {weekly && (
-                  <Text className="text-text-primary text-md font-semibold">Weekly Best: {msToTime(weekly.time)}</Text>
+                  <Text className="text-black dark:text-[#ECEDEE] text-md font-semibold">
+                    Weekly Best: {msToTime(weekly.time)}
+                  </Text>
                 )}
                 {monthly && (
-                  <Text className="text-text-primary text-md font-semibold">
+                  <Text className="text-black dark:text-[#ECEDEE] text-md font-semibold">
                     Monthly Best: {msToTime(monthly.time)}
                   </Text>
                 )}
               </View>
               {completions.length ? (
                 <>
-                  <Text className="text-text-primary text-2xl font-bold py-3">{name}'s Completions</Text>
+                  <Text className="text-black dark:text-[#ECEDEE] text-2xl font-bold py-3">{name}'s Completions</Text>
                   <View className="flex flex-row w-full items-center">
-                    <Text className="flex min-w-10 text-text-primary text-xl font-black">#</Text>
-                    <Text className="flex flex-1 text-text-primary text-xl font-black">Time</Text>
-                    <Text className="text-text-primary text-xl font-black">Submitted</Text>
+                    <Text className="flex min-w-10 text-black dark:text-[#ECEDEE] text-xl font-black">#</Text>
+                    <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-xl font-black">Time</Text>
+                    <Text className="text-black dark:text-[#ECEDEE] text-xl font-black">Submitted</Text>
                   </View>
                 </>
               ) : (
                 <>
-                  <Text className="text-text-primary text-2xl font-bold py-3">
+                  <Text className="text-black dark:text-[#ECEDEE] text-2xl font-bold py-3">
                     {name} does not have any completions.
                   </Text>
                 </>

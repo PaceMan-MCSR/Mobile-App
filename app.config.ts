@@ -52,6 +52,7 @@ export default {
     plugins: [
       "expo-router",
       "expo-font",
+      "react-native-bottom-tabs",
       [
         "expo-build-properties",
         {
@@ -69,11 +70,12 @@ export default {
           imageWidth: 180,
         },
       ],
-      "react-native-bottom-tabs",
       [
         "react-native-edge-to-edge",
         {
-          enforceNavigationBarContrast: false,
+          android: {
+            enforceNavigationBarContrast: false,
+          },
         },
       ],
     ],

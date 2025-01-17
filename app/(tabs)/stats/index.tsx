@@ -1,13 +1,13 @@
 import { View, FlatList, Text } from "react-native";
 import React, { useState, useMemo } from "react";
 import { Stack } from "expo-router";
-import LoadingScreen from "@/components/LoadingScreen";
+import LoadingScreen from "@/components/screens/LoadingScreen";
 import { useStatsData } from "@/hooks/useStatsData";
 import PlayerCard from "@/components/PlayerCard";
 import StatsRightComponent from "@/components/StatsRightComponent";
 import { useAllUsersData } from "@/hooks/useAllUsersData";
 import { statsDaysToName, statsCategoryToName, statsTypeToName } from "@/lib/utils/frontendConverters";
-import ErrorScreen from "@/components/ErrorScreen";
+import ErrorScreen from "@/components/screens/ErrorScreen";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -141,7 +141,7 @@ const StatsPage = () => {
           ),
         }}
       />
-      <View className="flex flex-1 bg-background-primary">
+      <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
         {searchQuery.trim() ? (
           <FlatList
             keyboardDismissMode="on-drag"
@@ -160,13 +160,15 @@ const StatsPage = () => {
             keyExtractor={(item, index) => `${item.uuid}-${index}`}
             ListHeaderComponent={() => (
               <>
-                <Text className="text-2xl p-4 font-bold text-text-primary">{`Stats for ${statsCategoryToName.get(
+                <Text className="text-2xl p-4 font-bold text-black dark:text-[#ECEDEE]">{`Stats for ${statsCategoryToName.get(
                   params.category
                 )} based on ${statsTypeToName.get(params.type)} (${statsDaysToName.get(params.days)})`}</Text>
                 <View className="flex flex-row w-full items-center p-4 gap-3">
-                  <Text className="flex min-w-10 text-text-primary text-xl font-black">#</Text>
-                  <Text className="flex flex-1 text-text-primary text-xl font-black">Player</Text>
-                  <Text className="text-text-primary text-xl font-black">{statsTypeToName.get(params.type)}</Text>
+                  <Text className="flex min-w-10 text-black dark:text-[#ECEDEE] text-xl font-black">#</Text>
+                  <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-xl font-black">Player</Text>
+                  <Text className="text-black dark:text-[#ECEDEE] text-xl font-black">
+                    {statsTypeToName.get(params.type)}
+                  </Text>
                 </View>
               </>
             )}
