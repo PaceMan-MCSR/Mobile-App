@@ -1,10 +1,13 @@
-# PaceMan App
+# PaceMan.gg Mobile App
 
-<a href="https://apps.apple.com/us/app/paceman-gg/id6739722390?itscg=30200&itsct=apps_box_badge&mttnsubad=6739722390" style="display: inline-block;">
-  <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1734825600" alt="Download on the App Store" style="width: 246px; height: 82px; vertical-align: middle; object-fit: contain;" />
-</a>
-
-A mobile app to query [PaceMan.gg](https://paceman.gg/).
+<div>
+  <a href="https://apps.apple.com/us/app/paceman-gg/id6739722390?itscg=30200&itsct=apps_box_badge&mttnsubad=6739722390" style="display: inline-block;">
+    <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1734825600" alt="Download on the App Store" style="height: 80px; vertical-align: middle; object-fit: contain;" />
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=com.chitrakshtarun.pacemangg" style="display: inline-block;">
+    <img src="https://user-images.githubusercontent.com/54859075/160051854-21a57556-6b5a-41e9-8127-334daf1fac47.svg" alt="Download on the Play Store" style="height: 80px; vertical-align: middle; object-fit: contain;" />
+  </a>
+</div>
 
 # Tech Stack
 
