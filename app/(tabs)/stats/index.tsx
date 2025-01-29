@@ -1,13 +1,13 @@
-import { View, FlatList, Text } from "react-native";
-import React, { useState, useMemo } from "react";
-import { Stack } from "expo-router";
-import LoadingScreen from "@/components/screens/LoadingScreen";
-import { useStatsData } from "@/hooks/useStatsData";
 import PlayerCard from "@/components/PlayerCard";
-import StatsRightComponent from "@/components/StatsRightComponent";
-import { useAllUsersData } from "@/hooks/useAllUsersData";
-import { statsDaysToName, statsCategoryToName, statsTypeToName } from "@/lib/utils/frontendConverters";
 import ErrorScreen from "@/components/screens/ErrorScreen";
+import LoadingScreen from "@/components/screens/LoadingScreen";
+import StatsRightComponent from "@/components/StatsRightComponent";
+import { Stack } from "expo-router";
+import { useStatsData } from "@/hooks/useStatsData";
+import { useAllUsersData } from "@/hooks/useAllUsersData";
+import { View, FlatList, Text } from "react-native";
+import { statsDaysToName, statsCategoryToName, statsTypeToName } from "@/lib/utils/frontendConverters";
+import React, { useState, useMemo } from "react";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,8 +17,8 @@ const StatsPage = () => {
     type: "count" as "count" | "average" | "fastest" | "conversion",
   });
 
-  const { data: stats, isLoading, isError } = useStatsData(params);
-  const { data: users, isLoading: isUsersLoading } = useAllUsersData();
+  const { data: stats, isLoading: isStatsLoading, isError: isStatsError } = useStatsData(params);
+  const { data: users, isLoading: isUsersLoading, isError: isUsersError } = useAllUsersData();
 
   const filteredUsers = useMemo(() => {
     if (!users || searchQuery.trim() === "") return null;
@@ -43,86 +43,8 @@ const StatsPage = () => {
     setSearchQuery(event.nativeEvent.text);
   };
 
-  if (isLoading || isUsersLoading) {
+  const Header = () => {
     return (
-      <>
-        <Stack.Screen
-          options={{
-            headerSearchBarOptions: {
-              placeholder: "Search for Speedrunners",
-              onChangeText: handleSearch,
-            },
-            headerRight: () => (
-              <StatsRightComponent
-                days={params.days}
-                category={params.category}
-                type={params.type}
-                onDaysSelect={handleDaysSelect}
-                onCategorySelect={handleCategorySelect}
-                onTypeSelect={handleTypeSelect}
-              />
-            ),
-          }}
-        />
-        <LoadingScreen />
-      </>
-    );
-  }
-
-  if (isError) {
-    return (
-      <>
-        <Stack.Screen
-          options={{
-            headerSearchBarOptions: {
-              placeholder: "Search for Speedrunners",
-              onChangeText: handleSearch,
-            },
-            headerRight: () => (
-              <StatsRightComponent
-                days={params.days}
-                category={params.category}
-                type={params.type}
-                onDaysSelect={handleDaysSelect}
-                onCategorySelect={handleCategorySelect}
-                onTypeSelect={handleTypeSelect}
-              />
-            ),
-          }}
-        />
-        <ErrorScreen />
-      </>
-    );
-  }
-
-  if (!stats.length) {
-    return (
-      <>
-        <Stack.Screen
-          options={{
-            headerSearchBarOptions: {
-              placeholder: "Search for Speedrunners",
-              onChangeText: handleSearch,
-            },
-            headerRight: () => (
-              <StatsRightComponent
-                days={params.days}
-                category={params.category}
-                type={params.type}
-                onDaysSelect={handleDaysSelect}
-                onCategorySelect={handleCategorySelect}
-                onTypeSelect={handleTypeSelect}
-              />
-            ),
-          }}
-        />
-        <ErrorScreen message={`No stats available for this category yet...`} />
-      </>
-    );
-  }
-
-  return (
-    <>
       <Stack.Screen
         options={{
           headerSearchBarOptions: {
@@ -141,50 +63,94 @@ const StatsPage = () => {
           ),
         }}
       />
-      <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
-        {searchQuery.trim() ? (
-          <FlatList
-            keyboardDismissMode="on-drag"
-            contentInsetAdjustmentBehavior="automatic"
-            showsVerticalScrollIndicator={false}
-            data={filteredUsers}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <PlayerCard uuid={item.id} nickname={item.nick} type="search" />}
-          />
-        ) : (
-          <FlatList
-            data={stats}
-            keyboardDismissMode="on-drag"
-            contentInsetAdjustmentBehavior="automatic"
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item, index) => `${item.uuid}-${index}`}
-            ListHeaderComponent={() => (
-              <>
-                <Text className="text-2xl p-4 font-bold text-black dark:text-[#ECEDEE]">{`Stats for ${statsCategoryToName.get(
-                  params.category
-                )} based on ${statsTypeToName.get(params.type)} (${statsDaysToName.get(params.days)})`}</Text>
-                <View className="flex flex-row w-full items-center p-4 gap-3">
-                  <Text className="flex min-w-10 text-black dark:text-[#ECEDEE] text-xl font-black">#</Text>
-                  <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-xl font-black">Player</Text>
-                  <Text className="text-black dark:text-[#ECEDEE] text-xl font-black">
-                    {statsTypeToName.get(params.type)}
-                  </Text>
-                </View>
-              </>
-            )}
-            renderItem={({ item, index }) => (
-              <PlayerCard
-                uuid={item.uuid}
-                nickname={item.name}
-                index={index}
-                time={item.value}
-                type={params.type}
-                score={item.value}
-              />
-            )}
+    );
+  };
+
+  // LOADING
+  if (isStatsLoading || (searchQuery.trim() && isUsersLoading)) {
+    return (
+      <>
+        <Header />
+        <LoadingScreen />
+      </>
+    );
+  }
+
+  // ERROR
+  if (isStatsError || (searchQuery.trim() && isUsersError)) {
+    return (
+      <>
+        <Header />
+        <ErrorScreen />
+      </>
+    );
+  }
+
+  // NO ENTRIES
+  if (!stats!.length) {
+    return (
+      <>
+        <Header />
+        <ErrorScreen message={`No stats available for this category yet...`} />
+      </>
+    );
+  }
+
+  // SEARCHING
+  if (searchQuery.trim())
+    return (
+      <>
+        <Header />
+        <FlatList
+          data={filteredUsers}
+          className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
+          keyExtractor={(item) => item.id}
+          keyboardDismissMode="on-drag"
+          contentContainerClassName={`px-4 py-3 gap-8`}
+          showsVerticalScrollIndicator={false}
+          contentInsetAdjustmentBehavior="automatic"
+          renderItem={({ item }) => <PlayerCard uuid={item.id} nickname={item.nick} type="search" />}
+        />
+      </>
+    );
+
+  // MAIN SCREEN
+  return (
+    <>
+      <Header />
+      <FlatList
+        data={stats}
+        className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
+        keyExtractor={(item, index) => `${item.uuid}-${index}`}
+        keyboardDismissMode="on-drag"
+        contentContainerClassName={`px-4 py-3 gap-8`}
+        showsVerticalScrollIndicator={false}
+        contentInsetAdjustmentBehavior="automatic"
+        ListHeaderComponent={() => (
+          <>
+            <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE] pb-8">{`Stats for ${statsCategoryToName.get(
+              params.category
+            )} based on ${statsTypeToName.get(params.type)} (${statsDaysToName.get(params.days)})`}</Text>
+            <View className="flex flex-row w-full items-center gap-3">
+              <Text className="flex min-w-10 text-black dark:text-[#ECEDEE] text-xl font-black">#</Text>
+              <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-xl font-black">Player</Text>
+              <Text className="text-black dark:text-[#ECEDEE] text-xl font-black">
+                {statsTypeToName.get(params.type)}
+              </Text>
+            </View>
+          </>
+        )}
+        renderItem={({ item, index }) => (
+          <PlayerCard
+            type={params.type}
+            uuid={item.uuid}
+            nickname={item.name}
+            index={index}
+            time={item.value}
+            score={item.value}
           />
         )}
-      </View>
+      />
     </>
   );
 };

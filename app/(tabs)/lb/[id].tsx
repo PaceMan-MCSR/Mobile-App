@@ -7,6 +7,7 @@ import { useLeaderboardData } from "@/hooks/useLeaderboardData";
 import { FlatList, Text, View } from "react-native";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
+import LeaderboardEntry, { TrophyEntry } from "@/lib/types/Leaderboard";
 
 const filters = Array.from(lbIdToName.keys());
 
@@ -92,7 +93,7 @@ const LeaderboardPage = () => {
       <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
         <FlatList
           contentInsetAdjustmentBehavior="automatic"
-          data={leaderboard}
+          data={params.filter >= 4 ? (leaderboard as TrophyEntry[]) : (leaderboard as LeaderboardEntry[])}
           showsVerticalScrollIndicator={false}
           contentContainerClassName={`px-4 py-3 gap-8`}
           ListHeaderComponent={() => (

@@ -16,14 +16,20 @@ export default function TabLayout() {
     <Tabs
       ignoresTopSafeArea
       hapticFeedbackEnabled={haptics}
-      barTintColor={Platform.select({
-        ios: undefined,
-        android: backgroundColor,
-      })}
-      activeIndicatorColor={tabBarTintColor}
       tabBarActiveTintColor={tintColor}
+      activeIndicatorColor={tabBarTintColor}
+      disablePageAnimations={Platform.select({
+        ios: false,
+        android: true,
+      })}
+      tabBarStyle={{
+        backgroundColor: Platform.select({
+          ios: undefined,
+          android: backgroundColor,
+        }),
+      }}
     >
-      {/* HOME SCREEN - Paces */}
+      {/* HOME SCREEN - PACE */}
       <Tabs.Screen
         name="(home)"
         options={{
