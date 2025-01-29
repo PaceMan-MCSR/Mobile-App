@@ -7,7 +7,7 @@ interface StatsProps {
 }
 
 export const useStatsData = ({ days, category, type }: StatsProps) => {
-  return useQuery<Stats>({
+  return useQuery<Stats[]>({
     queryKey: ["stats", { days, category, type }],
     queryFn: () =>
       fetch(
