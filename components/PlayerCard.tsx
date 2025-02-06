@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { View, Text, TouchableOpacity } from "react-native";
@@ -22,9 +22,15 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
     return `text-black dark:text-[#ECEDEE]`;
   };
 
+  const router = useRouter();
+
   return (
     <Link href={`/stats/player/${nickname}`} push asChild>
-      <TouchableOpacity activeOpacity={0.5} className="flex flex-row w-full items-center gap-3">
+      <TouchableOpacity
+        onPress={() => router.push(`/stats/player/${nickname}`)}
+        activeOpacity={0.5}
+        className="flex flex-row w-full items-center gap-3"
+      >
         {/* RANK || POINTS  */}
         {type !== "search" && (
           <View className="min-w-10 flex">

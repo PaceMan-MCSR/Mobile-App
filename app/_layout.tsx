@@ -23,7 +23,7 @@ export default function RootLayout() {
   const { tintColor, backgroundColor } = useColorsForUI();
 
   // Fixes flicker on Android while switching between screens.
-  if (Platform.OS === "android") SystemUI.setBackgroundColorAsync(backgroundColor);
+  SystemUI.setBackgroundColorAsync(backgroundColor);
   SplashScreen.preventAutoHideAsync();
 
   // Initialise MMKV

@@ -5,10 +5,9 @@ import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { useMMKVBoolean } from "react-native-mmkv";
 import { withLayoutContext } from "expo-router";
 import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
+const Tabs = withLayoutContext(createNativeBottomTabNavigator().Navigator);
 
 export default function TabLayout() {
-  const Tabs = withLayoutContext(createNativeBottomTabNavigator().Navigator);
-
   const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
   const { tintColor, backgroundColor, tabBarTintColor } = useColorsForUI();
 
