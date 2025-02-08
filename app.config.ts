@@ -17,7 +17,7 @@ export default {
   expo: {
     name: appName,
     slug: "PaceManGG",
-    version: "1.0.0",
+    version: "1.0.1",
     orientation: "portrait",
     newArchEnabled: true,
     icon: "./assets/images/icon.png",
