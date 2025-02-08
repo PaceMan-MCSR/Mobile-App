@@ -1,7 +1,6 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { ActivityIndicator, Text, View } from "react-native";
 
-const loadingMessagesArray = [
+const loadingMessages = [
   "Finding 9 9",
   "Collecting 3 bread from the blacksmith",
   "Collecting 3 iron from the golem",
@@ -19,10 +18,10 @@ const loadingMessagesArray = [
 
 const LoadingScreen = () => {
   return (
-    <View className="flex flex-1 items-center justify-center gap-2 bg-background-primary">
+    <View className="flex flex-1 items-center justify-center gap-2 bg-[#F2F2F2] dark:bg-[#111827]">
       <ActivityIndicator className="color-black dark:color-white" />
       <Text className="text-black dark:text-white text-lg">
-        {loadingMessagesArray[Math.floor(Math.random() * loadingMessagesArray.length)]}...
+        {loadingMessages[Math.floor(Math.random() * loadingMessages.length)]}...
       </Text>
     </View>
   );

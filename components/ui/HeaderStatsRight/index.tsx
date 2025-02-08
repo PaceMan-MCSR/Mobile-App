@@ -1,75 +1,43 @@
-import { View } from "react-native";
-import React from "react";
 import * as DropdownMenu from "zeego/dropdown-menu";
+import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
+import {
+  sortByFilters,
+  categoriesFilters,
+  daysFilters,
+  HeaderStatsRightProps,
+} from "@/components/ui/HeaderStatsRight/options";
 
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "nativewind";
-interface StatsRightComponentProps {
-  days: number;
-  category: string;
-  type: "count" | "average" | "fastest" | "conversion";
-  onDaysSelect: (days: number) => void;
-  onCategorySelect: (category: string) => void;
-  onTypeSelect: (type: "count" | "average" | "fastest" | "conversion") => void;
-}
-
-const StatsRightComponent = ({
-  days,
+const HeaderStatsRight = ({
+  sortBy,
   category,
-  type,
-  onDaysSelect,
+  days,
+  onSortSelect,
   onCategorySelect,
-  onTypeSelect,
-}: StatsRightComponentProps) => {
-  const { colorScheme } = useColorScheme();
-  const tint = Colors[colorScheme!].tint;
-  const daysOptions = [
-    { key: 1, label: "Daily" },
-    { key: 7, label: "Weekly" },
-    { key: 30, label: "Monthly" },
-    { key: 9999, label: "All Time" },
-  ];
-
-  const categoryOptions = [
-    { key: "nether", label: "Nether Enter" },
-    { key: "bastion", label: "Bastion Enter" },
-    { key: "fortress", label: "Fortress Enter" },
-    { key: "first_structure", label: "Structure 1 Enter" },
-    { key: "second_structure", label: "Structure 2 Enter" },
-    { key: "first_portal", label: "First Portal" },
-    { key: "second_portal", label: "Second Portal" },
-    { key: "stronghold", label: "Stronghold Enter" },
-    { key: "end", label: "End Enter" },
-    { key: "finish", label: "Completion" },
-  ];
-
-  const typeOptions = [
-    { key: "count", label: "Count" },
-    { key: "average", label: "Average" },
-    { key: "fastest", label: "Fastest" },
-    { key: "conversion", label: "Conversion" },
-  ];
+  onDaysSelect,
+}: HeaderStatsRightProps) => {
+  const { tintColor } = useColorsForUI();
 
   return (
     <View className="flex flex-row-reverse items-center">
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <View>
-            <Ionicons name="menu-outline" size={28} color={tint} />
+            <Ionicons name="menu-outline" size={28} color={tintColor} />
           </View>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
           <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger key="type">
+            <DropdownMenu.SubTrigger key="sort-by">
               <DropdownMenu.ItemTitle>Sort By</DropdownMenu.ItemTitle>
             </DropdownMenu.SubTrigger>
             <DropdownMenu.SubContent>
-              {typeOptions.map(({ key, label }) => (
+              {sortByFilters.map(({ key, label }) => (
                 <DropdownMenu.CheckboxItem
                   key={key}
-                  value={type === key}
-                  onValueChange={(next) => next && onTypeSelect(key as typeof type)}
+                  value={sortBy === key}
+                  onValueChange={(next) => next && onSortSelect(key)}
                 >
                   <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
                   <DropdownMenu.ItemIndicator />
@@ -83,7 +51,7 @@ const StatsRightComponent = ({
               <DropdownMenu.ItemTitle>Category</DropdownMenu.ItemTitle>
             </DropdownMenu.SubTrigger>
             <DropdownMenu.SubContent>
-              {categoryOptions.map(({ key, label }) => (
+              {categoriesFilters.map(({ key, label }) => (
                 <DropdownMenu.CheckboxItem
                   key={key}
                   value={category === key}
@@ -101,7 +69,7 @@ const StatsRightComponent = ({
               <DropdownMenu.ItemTitle>Time Period</DropdownMenu.ItemTitle>
             </DropdownMenu.SubTrigger>
             <DropdownMenu.SubContent>
-              {daysOptions.map(({ key, label }) => (
+              {daysFilters.map(({ key, label }) => (
                 <DropdownMenu.CheckboxItem
                   key={key.toString()}
                   value={days === key}
@@ -119,4 +87,4 @@ const StatsRightComponent = ({
   );
 };
 
-export default StatsRightComponent;
+export default HeaderStatsRight;

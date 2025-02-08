@@ -1,13 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { Pace, PaceSettings } from "@/lib/types/Pace";
 import { apiToPace, paceSort } from "@/lib/utils/converters";
 
-interface LiverunsDataParams {
-  gameVersion?: string;
-  liveOnly?: boolean;
-}
-
-export const useLiverunsData = ({ gameVersion, liveOnly }: LiverunsDataParams) => {
-  return useQuery({
+export const useLiverunsData = ({ gameVersion, liveOnly }: PaceSettings) => {
+  return useQuery<Pace[]>({
     queryKey: ["liveruns", gameVersion, liveOnly],
     queryFn: async () => {
       const response = await fetch(

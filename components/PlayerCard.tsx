@@ -4,8 +4,9 @@ import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { View, Text, TouchableOpacity } from "react-native";
 
+// TODO: Fix this type declaration
 interface PlayerCardProps {
-  type: "leaderboard" | "trophy" | "player" | "search" | "count" | "average" | "fastest" | "conversion";
+  type: "leaderboard" | "trophy" | "search" | "count" | "average" | "fastest" | "conversion";
   index?: number;
   uuid: string;
   nickname: string;
@@ -14,20 +15,16 @@ interface PlayerCardProps {
 }
 
 const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }: PlayerCardProps) => {
-  // For some reason this function doesn't work when declared in frontendConverters
   const getRankColor = (index: number) => {
-    return index === 0
-      ? `text-rank-gold italic`
-      : index === 1
-      ? `text-rank-silver italic`
-      : index === 2
-      ? `text-rank-bronze italic`
-      : `text-text-primary`;
+    if (index === 0) return `text-[#daa520] italic`;
+    if (index === 1) return `text-[#929292] italic`;
+    if (index === 2) return `text-[#cd7f32] italic`;
+    return `text-black dark:text-[#ECEDEE]`;
   };
 
   return (
     <Link href={`/stats/player/${nickname}`} push asChild>
-      <TouchableOpacity activeOpacity={0.5} className="flex flex-row w-full items-center px-4 py-4 gap-3">
+      <TouchableOpacity activeOpacity={0.5} className="flex flex-row w-full items-center gap-3">
         {/* RANK || POINTS  */}
         {type !== "search" && (
           <View className="min-w-10 flex">

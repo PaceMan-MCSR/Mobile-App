@@ -1,9 +1,10 @@
-import React from "react";
-import { Tabs } from "@/components/NativeBottomTabs";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { storage } from "@/lib/utils/mmkv";
 import { Platform } from "react-native";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { useMMKVBoolean } from "react-native-mmkv";
+import { withLayoutContext } from "expo-router";
+import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
+const Tabs = withLayoutContext(createNativeBottomTabNavigator().Navigator);
 
 export default function TabLayout() {
   const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
@@ -13,14 +14,20 @@ export default function TabLayout() {
     <Tabs
       ignoresTopSafeArea
       hapticFeedbackEnabled={haptics}
-      barTintColor={Platform.select({
-        ios: undefined,
-        android: backgroundColor,
-      })}
-      activeIndicatorColor={tabBarTintColor}
       tabBarActiveTintColor={tintColor}
+      activeIndicatorColor={tabBarTintColor}
+      disablePageAnimations={Platform.select({
+        ios: false,
+        android: true,
+      })}
+      tabBarStyle={{
+        backgroundColor: Platform.select({
+          ios: undefined,
+          android: backgroundColor,
+        }),
+      }}
     >
-      {/* HOME SCREEN - Paces */}
+      {/* HOME SCREEN - PACE */}
       <Tabs.Screen
         name="(home)"
         options={{
@@ -35,7 +42,6 @@ export default function TabLayout() {
           }),
         }}
       />
-
       {/* LEADERBOARD SCREEN */}
       <Tabs.Screen
         name="lb"
@@ -50,7 +56,6 @@ export default function TabLayout() {
         }}
         initialParams={{ id: "monthly" }}
       />
-
       {/* STATS SCREEN */}
       <Tabs.Screen
         name="stats"

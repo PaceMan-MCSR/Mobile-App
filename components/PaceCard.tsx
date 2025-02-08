@@ -1,9 +1,9 @@
 import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
-import { Text, TouchableOpacity, View } from "react-native";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { Text, TouchableOpacity, View } from "react-native";
 interface PaceCardProps extends Pace {
   onPress: () => void;
 }
@@ -12,7 +12,7 @@ const PaceCard = ({ splitName, nickname, uuid, twitch, time, onPress }: PaceCard
   const { tintColor } = useColorsForUI();
   return (
     <TouchableOpacity
-      className="flex flex-row w-full items-center px-4 py-7 my-2 gap-4 rounded-xl bg-background-secondary"
+      className="flex flex-row w-full items-center px-4 py-7 gap-4 rounded-xl bg-[#DBDEE3] dark:bg-[#1F2937]"
       activeOpacity={0.75}
       onPress={onPress}
     >

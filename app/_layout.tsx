@@ -1,16 +1,16 @@
 import * as SystemUI from "expo-system-ui";
+import * as SplashScreen from "expo-splash-screen";
 import { Stack } from "expo-router";
 import { storage } from "@/lib/utils/mmkv";
 import { Platform } from "react-native";
 import { useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
+import { SystemBars } from "react-native-edge-to-edge";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { useColorScheme } from "nativewind";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import * as SplashScreen from "expo-splash-screen";
 
 import "@/global.css";
 import { useMMKVString, useMMKVBoolean } from "react-native-mmkv";
@@ -30,7 +30,6 @@ export default function RootLayout() {
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
     if (theme === undefined) {
-      console.log("Initialise");
       setTheme("dark");
     }
     if (haptics === undefined) {
@@ -47,7 +46,7 @@ export default function RootLayout() {
       <BottomSheetModalProvider>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-            <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+            <SystemBars style={colorScheme === "dark" ? "light" : "dark"} />
             <Stack
               screenOptions={{
                 headerTintColor: tintColor,

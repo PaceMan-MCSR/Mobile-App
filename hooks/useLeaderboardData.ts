@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 
 interface LeaderboardParams {
   filter: number;
@@ -7,19 +8,26 @@ interface LeaderboardParams {
   season?: string;
 }
 
-export const useLeaderboardData = ({ filter, removeDuplicates, date, season }: LeaderboardParams) => {
-  return useQuery({
-    queryKey: ["leaderboard", { filter, removeDuplicates, date, season }],
+export const useLeaderboardData = ({ filter, removeDuplicates, date, season = "current" }: LeaderboardParams) => {
+  if (filter >= 4) {
+    return useQuery<TrophyEntry[]>({
+      queryKey: ["trophy", { season }],
+      queryFn: () =>
+        fetch(`https://paceman.gg/api/us/trophy?season=${encodeURIComponent(season.replace("-", " "))}`).then((res) =>
+          res.json()
+        ),
+      staleTime: Infinity,
+    });
+  }
+
+  return useQuery<LeaderboardEntry[]>({
+    queryKey: ["leaderboard", { filter, removeDuplicates, date }],
     queryFn: () =>
-      filter >= 4
-        ? fetch(
-            `https://paceman.gg/api/us/trophy?season=${encodeURIComponent((season ?? "current").replace("-", " "))}`
-          ).then((res) => res.json())
-        : fetch(
-            `https://paceman.gg/api/cs/leaderboard?filter=${filter}&removeDuplicates=${
-              removeDuplicates ? 1 : 0
-            }&date=${date}`
-          ).then((res) => res.json()),
+      fetch(
+        `https://paceman.gg/api/cs/leaderboard?filter=${filter}&removeDuplicates=${
+          removeDuplicates ? 1 : 0
+        }&date=${date}`
+      ).then((res) => res.json()),
     staleTime: Infinity,
   });
 };

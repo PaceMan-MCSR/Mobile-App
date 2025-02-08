@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, View } from "react-native";
 import { msToTime, msToDate } from "@/lib/utils/frontendConverters";
 
@@ -10,13 +9,10 @@ interface RunCardProps {
 
 // For some reason this function doesn't work when declared in frontendConverters
 const getRankColor = (index: number) => {
-  return index === 0
-    ? `text-rank-gold italic`
-    : index === 1
-    ? `text-rank-silver italic`
-    : index === 2
-    ? `text-rank-bronze italic`
-    : `text-text-primary`;
+  if (index === 0) return `text-[#daa520] italic`;
+  if (index === 1) return `text-[#929292] italic`;
+  if (index === 2) return `text-[#cd7f32] italic`;
+  return `text-black dark:text-[#ECEDEE]`;
 };
 
 const RunCard = ({ index, submitted, time }: RunCardProps) => {

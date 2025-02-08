@@ -20,6 +20,6 @@ export interface Pace {
 }
 
 export interface PaceSettings {
-  version: string;
+  gameVersion: string;
   liveOnly: boolean;
 }

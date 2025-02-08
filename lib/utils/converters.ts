@@ -1,6 +1,6 @@
-import { Pace } from "@/lib/types/Pace";
 import Event from "@/lib/types/Event";
 import Completion from "@/lib/types/Completion";
+import { Pace } from "@/lib/types/Pace";
 
 export const eventIdToName = new Map<string, string>([
   ["rsg.enter_nether", "Enter Nether"],

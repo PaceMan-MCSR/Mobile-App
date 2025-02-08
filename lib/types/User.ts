@@ -1,5 +1,11 @@
 import UserCompletion from "./Completion";
 
+export interface User {
+  id: string;
+  nick: string;
+  twitches: string[];
+}
+
 export interface UserData {
   user: {
     uuid: string;

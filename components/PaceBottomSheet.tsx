@@ -1,16 +1,12 @@
-import React, { forwardRef, useEffect, useMemo } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import BottomSheetModal, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import TwitchButton from "@/components/TwitchButton";
 import { Image } from "expo-image";
-import { msToTime, getSortedEventsWithTimes } from "@/lib/utils/frontendConverters";
-import { Pace } from "@/lib/types/Pace";
-import { useBottomTabBarHeight } from "react-native-bottom-tabs";
-import { useLiverunsData } from "@/hooks/useLiverunsData";
-import BottomSheet from "@gorhom/bottom-sheet";
 import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useLiverunsData } from "@/hooks/useLiverunsData";
+import { forwardRef, useMemo } from "react";
+import { useBottomTabBarHeight } from "react-native-bottom-tabs";
+import { View, Text, TouchableOpacity } from "react-native";
+import { msToTime, getSortedEventsWithTimes } from "@/lib/utils/frontendConverters";
+import BottomSheet, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 
 interface PaceBottomSheetProps {
   selected: string | null;
@@ -26,7 +22,6 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
     const bottomTabBarHeight = useBottomTabBarHeight();
     const { data: liveruns } = useLiverunsData(params);
     const selectedPace = liveruns?.find((liveruns) => liveruns.worldId === selected);
-    const { tintColor } = useColorsForUI();
 
     const splits = useMemo(() => {
       if (!selectedPace) return [];
@@ -41,6 +36,7 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
         index={0}
         ref={ref}
         enablePanDownToClose
+        enableOverDrag={false}
         enableHandlePanningGesture
         handleComponent={null}
         backgroundComponent={null}
@@ -67,7 +63,7 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
                 {selectedPace.nickname}
               </Text>
             </TouchableOpacity>
-            <TwitchButton href={selectedPace.twitch} />
+            {selectedPace.twitch && <TwitchButton href={selectedPace.twitch} />}
           </View>
 
           {/* CURRENT PACE SPLIT */}
@@ -83,10 +79,18 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
 
             return (
               <View key={index} className="flex flex-row items-center mb-3">
-                <Text className={`flex flex-1 ${isCompleted ? "text-text-primary" : "text-text-secondary"} text-lg`}>
+                <Text
+                  className={`flex flex-1 ${
+                    isCompleted ? "text-black dark:text-[#ECEDEE]" : "text-[#A0A0A0] dark:text-[#6B7280]"
+                  } text-lg`}
+                >
                   {splitName}
                 </Text>
-                <Text className={`${isCompleted ? "text-text-primary" : "text-text-secondary"} text-lg`}>
+                <Text
+                  className={`${
+                    isCompleted ? "text-black dark:text-[#ECEDEE]" : "text-[#A0A0A0] dark:text-[#6B7280]"
+                  } text-lg`}
+                >
                   {isCompleted ? msToTime(splitTime) : "--:--"}
                 </Text>
               </View>
