@@ -30,7 +30,6 @@ export default function RootLayout() {
   useEffect(() => {
     SplashScreen.preventAutoHideAsync();
     if (theme === undefined) {
-      console.log("Initialise");
       setTheme("dark");
     }
     if (haptics === undefined) {

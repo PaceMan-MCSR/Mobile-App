@@ -2,7 +2,7 @@ import PaceCard from "@/components/PaceCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
-import HomeRightComponent from "@/components/HomeRightComponent";
+import HeaderHomeRight from "@/components/ui/HeaderHomeRight";
 import { Tabs } from "expo-router";
 import { Pace } from "@/lib/types/Pace";
 import { FlatList, View } from "react-native";
@@ -70,7 +70,7 @@ const HomePage = () => {
       <Tabs.Screen
         options={{
           headerRight: () => (
-            <HomeRightComponent
+            <HeaderHomeRight
               gameVersion={params.gameVersion}
               liveOnly={params.liveOnly}
               onGameVersionSelect={handleGameVersionSelect}

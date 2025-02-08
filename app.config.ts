@@ -31,6 +31,9 @@ export default {
     ios: {
       supportsTablet: false,
       bundleIdentifier: bundleIdentifier,
+      config: {
+        usesNonExemptEncryption: false,
+      },
       icon: {
         light: "./assets/images/icon.png",
         dark: "./assets/images/icon-dark.png",

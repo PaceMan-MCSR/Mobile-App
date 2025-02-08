@@ -1,7 +1,8 @@
 import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import LBRightComponent from "@/components/LBRightComponent";
+import HeaderLBRight from "@/components/ui/HeaderLBRight";
+import { leaderboardFilters, LeaderboardType } from "@/components/ui/HeaderLBRight/options";
 import { lbIdToName } from "@/lib/utils/frontendConverters";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
 import { FlatList, Text, View } from "react-native";
@@ -48,7 +49,9 @@ const LeaderboardPage = () => {
     return (
       <Tabs.Screen
         options={{
-          headerRight: () => <LBRightComponent onSelect={handleSelect} selectedKey={id ?? "monthly"} />,
+          headerRight: () => (
+            <HeaderLBRight onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
+          ),
         }}
       />
     );

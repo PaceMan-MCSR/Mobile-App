@@ -1,11 +1,11 @@
-export const timePeriod = [
-  { key: 1, label: "Daily" },
-  { key: 7, label: "Weekly" },
-  { key: 30, label: "Monthly" },
-  { key: 9999, label: "All Time" },
-];
+export const sortByFilters = [
+  { key: "count", label: "Count" },
+  { key: "average", label: "Average" },
+  { key: "fastest", label: "Fastest" },
+  { key: "conversion", label: "Conversion" },
+] as const;
 
-export const category = [
+export const categoriesFilters = [
   { key: "nether", label: "Nether Enter" },
   { key: "bastion", label: "Bastion Enter" },
   { key: "fortress", label: "Fortress Enter" },
@@ -16,11 +16,24 @@ export const category = [
   { key: "stronghold", label: "Stronghold Enter" },
   { key: "end", label: "End Enter" },
   { key: "finish", label: "Completion" },
-];
+] as const;
 
-export const sortBy = [
-  { key: "count", label: "Count" },
-  { key: "average", label: "Average" },
-  { key: "fastest", label: "Fastest" },
-  { key: "conversion", label: "Conversion" },
-];
+export const daysFilters = [
+  { key: 1, label: "Daily" },
+  { key: 7, label: "Weekly" },
+  { key: 30, label: "Monthly" },
+  { key: 9999, label: "All Time" },
+] as const;
+
+export type SortByType = (typeof sortByFilters)[number]["key"];
+export type CategoriesType = (typeof categoriesFilters)[number]["key"];
+export type DaysType = (typeof daysFilters)[number]["key"];
+
+export interface HeaderStatsRightProps {
+  sortBy: SortByType;
+  category: CategoriesType;
+  days: DaysType;
+  onSortSelect: (sortBy: SortByType) => void;
+  onCategorySelect: (category: CategoriesType) => void;
+  onDaysSelect: (days: DaysType) => void;
+}

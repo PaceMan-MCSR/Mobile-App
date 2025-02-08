@@ -1,7 +1,8 @@
 import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import StatsRightComponent from "@/components/StatsRightComponent";
+import HeaderStatsRight from "@/components/ui/HeaderStatsRight";
+import { SortByType, CategoriesType, DaysType } from "@/components/ui/HeaderStatsRight/options";
 import { Stack } from "expo-router";
 import { useStatsData } from "@/hooks/useStatsData";
 import { useAllUsersData } from "@/hooks/useAllUsersData";
@@ -11,10 +12,14 @@ import React, { useState, useMemo } from "react";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [params, setParams] = useState({
+  const [params, setParams] = useState<{
+    days: DaysType;
+    category: CategoriesType;
+    type: SortByType;
+  }>({
     days: 30,
     category: "nether",
-    type: "count" as "count" | "average" | "fastest" | "conversion",
+    type: "count",
   });
 
   const { data: stats, isLoading: isStatsLoading, isError: isStatsError } = useStatsData(params);
@@ -27,15 +32,15 @@ const StatsPage = () => {
     return users.filter((user) => user.nick.toLowerCase().includes(normalizedQuery));
   }, [users, searchQuery]);
 
-  const handleDaysSelect = (days: number) => {
+  const handleDaysSelect = (days: DaysType) => {
     setParams((prev) => ({ ...prev, days }));
   };
 
-  const handleCategorySelect = (category: string) => {
+  const handleCategorySelect = (category: CategoriesType) => {
     setParams((prev) => ({ ...prev, category }));
   };
 
-  const handleTypeSelect = (type: "count" | "average" | "fastest" | "conversion") => {
+  const handleTypeSelect = (type: SortByType) => {
     setParams((prev) => ({ ...prev, type }));
   };
 
@@ -52,13 +57,13 @@ const StatsPage = () => {
             onChangeText: handleSearch,
           },
           headerRight: () => (
-            <StatsRightComponent
-              days={params.days}
+            <HeaderStatsRight
+              sortBy={params.type}
               category={params.category}
-              type={params.type}
-              onDaysSelect={handleDaysSelect}
+              days={params.days}
+              onSortSelect={handleTypeSelect}
               onCategorySelect={handleCategorySelect}
-              onTypeSelect={handleTypeSelect}
+              onDaysSelect={handleDaysSelect}
             />
           ),
         }}
@@ -113,7 +118,6 @@ const StatsPage = () => {
         />
       </>
     );
-
   // MAIN SCREEN
   return (
     <>
