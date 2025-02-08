@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiToPace, paceSort } from "@/lib/utils/converters";
 import { Pace, PaceSettings } from "@/lib/types/Pace";
+import { apiToPace, paceSort } from "@/lib/utils/converters";
 
 export const useLiverunsData = ({ gameVersion, liveOnly }: PaceSettings) => {
   return useQuery<Pace[]>({

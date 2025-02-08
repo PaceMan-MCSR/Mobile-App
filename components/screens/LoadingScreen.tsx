@@ -1,5 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { ActivityIndicator, Text, View } from "react-native";
 
 const loadingMessages = [
   "Finding 9 9",

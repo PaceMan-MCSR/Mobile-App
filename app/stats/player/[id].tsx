@@ -1,6 +1,5 @@
 import { View, Text, FlatList } from "react-native";
 import { Stack } from "expo-router";
-import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useUserData } from "@/hooks/useUserData";
 import LoadingScreen from "@/components/screens/LoadingScreen";
@@ -26,7 +25,7 @@ const StatsPlayerPage = () => {
     );
   }
 
-  if (isLoading) {
+  if (isError) {
     return (
       <>
         <Stack.Screen

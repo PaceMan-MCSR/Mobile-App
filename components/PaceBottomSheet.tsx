@@ -1,12 +1,12 @@
 import TwitchButton from "@/components/TwitchButton";
-import React, { forwardRef, useMemo } from "react";
-import BottomSheet, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
+import { forwardRef, useMemo } from "react";
 import { useBottomTabBarHeight } from "react-native-bottom-tabs";
 import { View, Text, TouchableOpacity } from "react-native";
 import { msToTime, getSortedEventsWithTimes } from "@/lib/utils/frontendConverters";
+import BottomSheet, { BottomSheetView, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 
 interface PaceBottomSheetProps {
   selected: string | null;
@@ -63,7 +63,7 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
                 {selectedPace.nickname}
               </Text>
             </TouchableOpacity>
-            <TwitchButton href={selectedPace.twitch} />
+            {selectedPace.twitch && <TwitchButton href={selectedPace.twitch} />}
           </View>
 
           {/* CURRENT PACE SPLIT */}

@@ -1,11 +1,12 @@
 import { memo } from "react";
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { View, Text, TouchableOpacity } from "react-native";
 
+// TODO: Fix this type declaration
 interface PlayerCardProps {
-  type: "leaderboard" | "trophy" | "player" | "search" | "count" | "average" | "fastest" | "conversion";
+  type: "leaderboard" | "trophy" | "search" | "count" | "average" | "fastest" | "conversion";
   index?: number;
   uuid: string;
   nickname: string;
@@ -14,7 +15,6 @@ interface PlayerCardProps {
 }
 
 const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }: PlayerCardProps) => {
-  // For some reason this function doesn't work when declared in frontendConverters
   const getRankColor = (index: number) => {
     if (index === 0) return `text-[#daa520] italic`;
     if (index === 1) return `text-[#929292] italic`;
@@ -22,15 +22,9 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
     return `text-black dark:text-[#ECEDEE]`;
   };
 
-  const router = useRouter();
-
   return (
     <Link href={`/stats/player/${nickname}`} push asChild>
-      <TouchableOpacity
-        onPress={() => router.push(`/stats/player/${nickname}`)}
-        activeOpacity={0.5}
-        className="flex flex-row w-full items-center gap-3"
-      >
+      <TouchableOpacity activeOpacity={0.5} className="flex flex-row w-full items-center gap-3">
         {/* RANK || POINTS  */}
         {type !== "search" && (
           <View className="min-w-10 flex">

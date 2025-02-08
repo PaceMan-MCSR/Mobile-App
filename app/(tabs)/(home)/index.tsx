@@ -7,7 +7,7 @@ import { Tabs } from "expo-router";
 import { Pace } from "@/lib/types/Pace";
 import { FlatList, View } from "react-native";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
-import React, { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 
 const HomePage = () => {

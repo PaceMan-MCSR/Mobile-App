@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { Stats } from "@/lib/types/Stats";
+import { useQuery } from "@tanstack/react-query";
 interface StatsProps {
   days: number;
   category: string;

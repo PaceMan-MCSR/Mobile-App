@@ -2,13 +2,13 @@ import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
 import HeaderLBRight from "@/components/ui/HeaderLBRight";
-import { leaderboardFilters, LeaderboardType } from "@/components/ui/HeaderLBRight/options";
 import { lbIdToName } from "@/lib/utils/frontendConverters";
+import { LeaderboardType } from "@/components/ui/HeaderLBRight/options";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
 import { FlatList, Text, View } from "react-native";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
-import LeaderboardEntry, { TrophyEntry } from "@/lib/types/Leaderboard";
+import { useEffect, useState } from "react";
+import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 
 const filters = Array.from(lbIdToName.keys());
 

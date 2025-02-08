@@ -1,9 +1,9 @@
 import { Pace } from "@/lib/types/Pace";
 import { Image } from "expo-image";
-import { Text, TouchableOpacity, View } from "react-native";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { Text, TouchableOpacity, View } from "react-native";
 interface PaceCardProps extends Pace {
   onPress: () => void;
 }

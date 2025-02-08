@@ -1,4 +1,3 @@
-import React from "react";
 import { storage } from "@/lib/utils/mmkv";
 import { Platform } from "react-native";
 import { useColorsForUI } from "@/hooks/useColorsForUI";

@@ -2,13 +2,13 @@ import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
 import HeaderStatsRight from "@/components/ui/HeaderStatsRight";
-import { SortByType, CategoriesType, DaysType } from "@/components/ui/HeaderStatsRight/options";
 import { Stack } from "expo-router";
 import { useStatsData } from "@/hooks/useStatsData";
 import { useAllUsersData } from "@/hooks/useAllUsersData";
 import { View, FlatList, Text } from "react-native";
+import { SortByType, CategoriesType, DaysType } from "@/components/ui/HeaderStatsRight/options";
 import { statsDaysToName, statsCategoryToName, statsTypeToName } from "@/lib/utils/frontendConverters";
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");

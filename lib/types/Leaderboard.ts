@@ -1,6 +1,6 @@
 import Completion from "./Completion";
 
-export default interface LeaderboardEntry extends Completion {
+export interface LeaderboardEntry extends Completion {
   worldId: string;
   submitted: number;
 }
