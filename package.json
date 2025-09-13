@@ -7,14 +7,15 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@bottom-tabs/react-navigation": "^0.11.2",
     "@expo/metro-runtime": "~6.1.2",
     "@expo/vector-icons": "^15.0.2",
     "@gorhom/bottom-sheet": "^5.2.6",
-    "@react-native-menu/menu": "^1.2.2",
+    "@react-native-menu/menu": "^2.0.0",
     "@react-navigation/native": "^7.0.0",
     "@tanstack/react-query": "^5.87.4",
     "dayjs": "^1.11.18",
@@ -55,12 +56,14 @@
     "@types/react": "~19.1.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
+    "patch-package": "^8.0.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "~5.9.2"
   },
   "overrides": {
     "zeego": {
+      "@react-native-menu/menu": "^2.0.0",
       "react-native-ios-context-menu": "^3.1.0",
       "react-native-ios-utilities": "^5.1.8"
     }

@@ -1,0 +1,38 @@
+diff --git a/node_modules/react-native-ios-context-menu/react-native-ios-context-menu.podspec b/node_modules/react-native-ios-context-menu/react-native-ios-context-menu.podspec
+index 79adbdd..414e0f1 100644
+--- a/node_modules/react-native-ios-context-menu/react-native-ios-context-menu.podspec
++++ b/node_modules/react-native-ios-context-menu/react-native-ios-context-menu.podspec
+@@ -14,7 +14,10 @@ reactNativeTargetVersion = reactNativeVersion.split('.')[1].to_i
+ fabric_enabled = ENV['RCT_NEW_ARCH_ENABLED'] == '1'
+ fabric_compiler_flags = '-DRN_FABRIC_ENABLED -DRCT_NEW_ARCH_ENABLED'
+ folly_version = '2022.05.16.00'
+-folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -Wno-comma -Wno-shorten-64-to-32'
++folly_compiler_flags = (get_folly_config()[:compiler_flags] || '').strip
++base_flags = "-DREACT_NATIVE_TARGET_VERSION=#{reactNativeTargetVersion}"
++
++compiler_flags = base_flags.dup
+ 
+ linkage = ENV['USE_FRAMEWORKS']
+ 
+@@ -98,7 +101,9 @@ Pod::Spec.new do |s|
+   #   ],
+   # }
+ 
+-  compiler_flags = folly_compiler_flags + ' ' + "-DREACT_NATIVE_TARGET_VERSION=#{reactNativeTargetVersion}"
++  if ENV['RCT_USE_RN_DEP'] != '1'
++    compiler_flags = [folly_compiler_flags, base_flags].reject(&:empty?).join(' ')
++  end
+   if ENV['USE_HERMES'] == nil || ENV['USE_HERMES'] == '1'
+     compiler_flags += ' -DUSE_HERMES'
+   end
+@@ -116,7 +121,9 @@ Pod::Spec.new do |s|
+     compiler_flags << ' ' << fabric_compiler_flags
+ 
+     s.dependency 'React-RCTFabric'
+-    s.dependency 'RCT-Folly', folly_version
++    if ENV['RCT_USE_RN_DEP'] != '1'
++      s.dependency 'RCT-Folly', folly_version
++    end
+   end
+ 
+   unless defined?(install_modules_dependencies)
