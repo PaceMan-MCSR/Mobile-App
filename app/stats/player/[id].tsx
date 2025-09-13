@@ -1,7 +1,7 @@
 import RunCard from "@/components/RunCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import { useUserData } from "@/hooks/useUserData";
+import { useUserData } from "@/hooks/api/useUserData";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { Image } from "expo-image";
 import { Stack, useLocalSearchParams } from "expo-router";

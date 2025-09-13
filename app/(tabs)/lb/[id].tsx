@@ -3,7 +3,7 @@ import { LeaderboardType } from "@/components/header-buttons/lb/options";
 import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import { useLeaderboardData } from "@/hooks/useLeaderboardData";
+import { useLeaderboardData } from "@/hooks/api/useLeaderboardData";
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { lbIdToName } from "@/lib/utils/frontendConverters";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";

@@ -3,7 +3,7 @@ import PaceBottomSheet from "@/components/PaceBottomSheet";
 import PaceCard from "@/components/PaceCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import { useLiverunsData } from "@/hooks/useLiverunsData";
+import { useLiverunsData } from "@/hooks/api/useLiverunsData";
 import { Pace } from "@/lib/types/Pace";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { Tabs } from "expo-router";

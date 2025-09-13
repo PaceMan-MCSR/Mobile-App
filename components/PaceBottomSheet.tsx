@@ -1,5 +1,5 @@
 import TwitchButton from "@/components/TwitchButton";
-import { useLiverunsData } from "@/hooks/useLiverunsData";
+import { useLiverunsData } from "@/hooks/api/useLiverunsData";
 import { getSortedEventsWithTimes, msToTime } from "@/lib/utils/frontendConverters";
 import BottomSheet, { BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";

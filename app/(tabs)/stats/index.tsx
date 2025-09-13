@@ -3,8 +3,8 @@ import { CategoriesType, DaysType, SortByType } from "@/components/header-button
 import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
+import { useStatsData } from "@/hooks/api/useStatsData";
 import { useAllUsersData } from "@/hooks/useAllUsersData";
-import { useStatsData } from "@/hooks/useStatsData";
 import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontendConverters";
 import { Stack } from "expo-router";
 import { useMemo, useState } from "react";
