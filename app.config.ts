@@ -34,11 +34,7 @@ export default {
       config: {
         usesNonExemptEncryption: false,
       },
-      icon: {
-        light: "./assets/images/icon.png",
-        dark: "./assets/images/icon-dark.png",
-        tinted: "./assets/images/icon-tinted.png",
-      },
+      icon: "./assets/images/ios.icon",
     },
     android: {
       adaptiveIcon: {
