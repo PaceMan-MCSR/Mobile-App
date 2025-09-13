@@ -74,20 +74,20 @@ export default function RootLayout() {
                 name="settings"
                 options={{
                   headerTitle: "Settings",
-                  headerBackTitle: "Back",
+                  headerBackButtonDisplayMode: "minimal",
                 }}
               />
               <Stack.Screen
                 name="stats/player/[id]"
                 options={{
-                  headerBackTitle: "Back",
+                  headerBackButtonDisplayMode: "minimal",
                 }}
               />
               <Stack.Screen
                 name="+not-found"
                 options={{
                   headerTitle: "Page Not Found",
-                  headerBackTitle: "Back",
+                  headerBackButtonDisplayMode: "minimal",
                 }}
               />
             </Stack>

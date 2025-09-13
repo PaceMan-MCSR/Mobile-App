@@ -1,25 +1,25 @@
-import { View } from "react-native";
-import { MenuView } from "@react-native-menu/menu";
-import { Ionicons } from "@expo/vector-icons";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
 import {
-  sortByFilters,
   categoriesFilters,
-  daysFilters,
-  HeaderStatsRightProps,
-  SortByType,
   CategoriesType,
+  daysFilters,
   DaysType,
-} from "@/components/ui/HeaderStatsRight/options";
+  HeaderButtonStatsProps,
+  sortByFilters,
+  SortByType,
+} from "@/components/header-buttons/stats/options";
+import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { Ionicons } from "@expo/vector-icons";
+import { MenuView } from "@react-native-menu/menu";
+import { View } from "react-native";
 
-const HeaderStatsRight = ({
+const HeaderButtonStats = ({
   sortBy,
   category,
   days,
   onSortSelect,
   onCategorySelect,
   onDaysSelect,
-}: HeaderStatsRightProps) => {
+}: HeaderButtonStatsProps) => {
   const { tintColor } = useColorsForUI();
 
   return (
@@ -81,4 +81,4 @@ const HeaderStatsRight = ({
   );
 };
 
-export default HeaderStatsRight;
+export default HeaderButtonStats;

@@ -1,10 +1,10 @@
-import { View } from "react-native";
-import { MenuView } from "@react-native-menu/menu";
-import { Ionicons } from "@expo/vector-icons";
+import { HeaderButtonLBProps, leaderboardFilters, LeaderboardType } from "@/components/header-buttons/lb/options";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
-import { leaderboardFilters, HeaderLBRightProps, LeaderboardType } from "@/components/ui/HeaderLBRight/options";
+import { Ionicons } from "@expo/vector-icons";
+import { MenuView } from "@react-native-menu/menu";
+import { View } from "react-native";
 
-const HeaderLBRight = ({ leaderboard, onSelect }: HeaderLBRightProps) => {
+const HeaderButtonLB = ({ leaderboard, onSelect }: HeaderButtonLBProps) => {
   const { tintColor } = useColorsForUI();
 
   return (
@@ -32,4 +32,4 @@ const HeaderLBRight = ({ leaderboard, onSelect }: HeaderLBRightProps) => {
   );
 };
 
-export default HeaderLBRight;
+export default HeaderButtonLB;

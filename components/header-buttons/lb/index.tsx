@@ -1,17 +1,23 @@
-import * as DropdownMenu from "zeego/dropdown-menu";
-import { View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { HeaderButtonLBProps, leaderboardFilters } from "@/components/header-buttons/lb/options";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
-import { leaderboardFilters, HeaderLBRightProps } from "@/components/ui/HeaderLBRight/options";
+import { SymbolView } from "expo-symbols";
+import * as DropdownMenu from "zeego/dropdown-menu";
 
-const HeaderLBRight = ({ leaderboard, onSelect }: HeaderLBRightProps) => {
+const HeaderButtonLB = ({ leaderboard, onSelect }: HeaderButtonLBProps) => {
   const { tintColor } = useColorsForUI();
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <View>
-          <Ionicons name="menu-outline" size={28} color={tintColor} />
-        </View>
+        <SymbolView
+          name="line.3.horizontal"
+          style={{
+            width: 25,
+            height: 25,
+            margin: 5,
+          }}
+          tintColor={tintColor}
+          type="hierarchical"
+        />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         {leaderboardFilters.map(({ key, label }) => (
@@ -28,4 +34,4 @@ const HeaderLBRight = ({ leaderboard, onSelect }: HeaderLBRightProps) => {
   );
 };
 
-export default HeaderLBRight;
+export default HeaderButtonLB;

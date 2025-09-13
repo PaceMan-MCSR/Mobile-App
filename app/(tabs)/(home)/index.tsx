@@ -1,8 +1,8 @@
+import HeaderButtonHome from "@/components/header-buttons/home";
 import PaceBottomSheet from "@/components/PaceBottomSheet";
 import PaceCard from "@/components/PaceCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import HeaderHomeRight from "@/components/ui/HeaderHomeRight";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
 import { Pace } from "@/lib/types/Pace";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
@@ -69,8 +69,8 @@ const HomePage = () => {
     return (
       <Tabs.Screen
         options={{
-          headerRight: () => (
-            <HeaderHomeRight
+          headerLeft: () => (
+            <HeaderButtonHome
               gameVersion={params.gameVersion}
               liveOnly={params.liveOnly}
               onGameVersionSelect={handleGameVersionSelect}

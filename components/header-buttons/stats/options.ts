@@ -29,7 +29,7 @@ export type SortByType = (typeof sortByFilters)[number]["key"];
 export type CategoriesType = (typeof categoriesFilters)[number]["key"];
 export type DaysType = (typeof daysFilters)[number]["key"];
 
-export interface HeaderStatsRightProps {
+export interface HeaderButtonStatsProps {
   sortBy: SortByType;
   category: CategoriesType;
   days: DaysType;

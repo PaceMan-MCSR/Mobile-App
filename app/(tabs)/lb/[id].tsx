@@ -1,8 +1,8 @@
+import HeaderButtonLB from "@/components/header-buttons/lb";
+import { LeaderboardType } from "@/components/header-buttons/lb/options";
 import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import HeaderLBRight from "@/components/ui/HeaderLBRight";
-import { LeaderboardType } from "@/components/ui/HeaderLBRight/options";
 import { useLeaderboardData } from "@/hooks/useLeaderboardData";
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { lbIdToName } from "@/lib/utils/frontendConverters";
@@ -49,8 +49,8 @@ const LeaderboardPage = () => {
     return (
       <Tabs.Screen
         options={{
-          headerRight: () => (
-            <HeaderLBRight onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
+          headerLeft: () => (
+            <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
           ),
         }}
       />

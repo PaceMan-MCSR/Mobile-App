@@ -1,11 +1,11 @@
-import { View } from "react-native";
-import { MenuView } from "@react-native-menu/menu";
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { gameVersionFilters, HeaderButtonHomeProps } from "@/components/header-buttons/home/options";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
-import { gameVersionFilters, HeaderHomeRightProps } from "@/components/ui/HeaderHomeRight/options";
+import { Ionicons } from "@expo/vector-icons";
+import { MenuView } from "@react-native-menu/menu";
+import { useRouter } from "expo-router";
+import { View } from "react-native";
 
-const HeaderHomeRight = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOnlyToggle }: HeaderHomeRightProps) => {
+const HeaderButtonHome = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOnlyToggle }: HeaderButtonHomeProps) => {
   const router = useRouter();
   const { tintColor } = useColorsForUI();
 
@@ -57,4 +57,4 @@ const HeaderHomeRight = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOnl
   );
 };
 
-export default HeaderHomeRight;
+export default HeaderButtonHome;

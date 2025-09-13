@@ -1,8 +1,8 @@
+import HeaderButtonStats from "@/components/header-buttons/stats";
+import { CategoriesType, DaysType, SortByType } from "@/components/header-buttons/stats/options";
 import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import HeaderStatsRight from "@/components/ui/HeaderStatsRight";
-import { CategoriesType, DaysType, SortByType } from "@/components/ui/HeaderStatsRight/options";
 import { useAllUsersData } from "@/hooks/useAllUsersData";
 import { useStatsData } from "@/hooks/useStatsData";
 import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontendConverters";
@@ -55,9 +55,10 @@ const StatsPage = () => {
           headerSearchBarOptions: {
             placeholder: "Search for Speedrunners",
             onChangeText: handleSearch,
+            placement: "automatic",
           },
-          headerRight: () => (
-            <HeaderStatsRight
+          headerLeft: () => (
+            <HeaderButtonStats
               sortBy={params.type}
               category={params.category}
               days={params.days}
