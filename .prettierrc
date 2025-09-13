@@ -4,5 +4,6 @@
   "trailingComma": "es5",
   "semi": true,
   "singleQuote": false,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

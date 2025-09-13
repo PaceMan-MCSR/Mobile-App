@@ -1,8 +1,8 @@
-import { memo } from "react";
-import { Link } from "expo-router";
-import { Image } from "expo-image";
 import { msToTime } from "@/lib/utils/frontendConverters";
-import { View, Text, TouchableOpacity } from "react-native";
+import { Image } from "expo-image";
+import { Link } from "expo-router";
+import { memo } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
 // TODO: Fix this type declaration
 interface PlayerCardProps {
@@ -24,10 +24,10 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
 
   return (
     <Link href={`/stats/player/${nickname}`} push asChild>
-      <TouchableOpacity activeOpacity={0.5} className="flex flex-row w-full items-center gap-3">
+      <TouchableOpacity activeOpacity={0.5} className="flex w-full flex-row items-center gap-3">
         {/* RANK || POINTS  */}
         {type !== "search" && (
-          <View className="min-w-10 flex">
+          <View className="flex min-w-10">
             <Text className={`text-xl font-bold ${getRankColor(index!)}`}>{index! + 1}</Text>
           </View>
         )}

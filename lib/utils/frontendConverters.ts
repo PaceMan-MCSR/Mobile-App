@@ -1,8 +1,8 @@
 // Shamelessly taken from https://github.com/Specnr/PaceMan.gg/ :P
 
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { useColorScheme } from "nativewind";
 
 dayjs.extend(utc);

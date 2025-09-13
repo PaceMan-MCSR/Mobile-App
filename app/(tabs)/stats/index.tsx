@@ -2,13 +2,13 @@ import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
 import HeaderStatsRight from "@/components/ui/HeaderStatsRight";
-import { Stack } from "expo-router";
-import { useStatsData } from "@/hooks/useStatsData";
+import { CategoriesType, DaysType, SortByType } from "@/components/ui/HeaderStatsRight/options";
 import { useAllUsersData } from "@/hooks/useAllUsersData";
-import { View, FlatList, Text } from "react-native";
-import { SortByType, CategoriesType, DaysType } from "@/components/ui/HeaderStatsRight/options";
-import { statsDaysToName, statsCategoryToName, statsTypeToName } from "@/lib/utils/frontendConverters";
-import { useState, useMemo } from "react";
+import { useStatsData } from "@/hooks/useStatsData";
+import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontendConverters";
+import { Stack } from "expo-router";
+import { useMemo, useState } from "react";
+import { FlatList, Text, View } from "react-native";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -132,13 +132,13 @@ const StatsPage = () => {
         contentInsetAdjustmentBehavior="automatic"
         ListHeaderComponent={() => (
           <>
-            <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE] pb-8">{`Stats for ${statsCategoryToName.get(
+            <Text className="pb-8 text-2xl font-bold text-black dark:text-[#ECEDEE]">{`Stats for ${statsCategoryToName.get(
               params.category
             )} based on ${statsTypeToName.get(params.type)} (${statsDaysToName.get(params.days)})`}</Text>
-            <View className="flex flex-row w-full items-center gap-3">
-              <Text className="flex min-w-10 text-black dark:text-[#ECEDEE] text-xl font-black">#</Text>
-              <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-xl font-black">Player</Text>
-              <Text className="text-black dark:text-[#ECEDEE] text-xl font-black">
+            <View className="flex w-full flex-row items-center gap-3">
+              <Text className="flex min-w-10 text-xl font-black text-black dark:text-[#ECEDEE]">#</Text>
+              <Text className="flex flex-1 text-xl font-black text-black dark:text-[#ECEDEE]">Player</Text>
+              <Text className="text-xl font-black text-black dark:text-[#ECEDEE]">
                 {statsTypeToName.get(params.type)}
               </Text>
             </View>

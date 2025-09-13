@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
+import { useQuery } from "@tanstack/react-query";
 
 interface LeaderboardParams {
   filter: number;

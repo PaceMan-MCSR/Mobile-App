@@ -1,18 +1,17 @@
-import { storage } from "@/lib/utils/mmkv";
-import { Platform } from "react-native";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
-import { useMMKVBoolean } from "react-native-mmkv";
-import { withLayoutContext } from "expo-router";
+import { storage } from "@/lib/utils/mmkv";
 import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
+import { withLayoutContext } from "expo-router";
+import { Platform } from "react-native";
+import { useMMKVBoolean } from "react-native-mmkv";
 const Tabs = withLayoutContext(createNativeBottomTabNavigator().Navigator);
 
 export default function TabLayout() {
-  const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
+  const [haptics] = useMMKVBoolean("settings-haptics", storage);
   const { tintColor, backgroundColor, tabBarTintColor } = useColorsForUI();
 
   return (
     <Tabs
-      ignoresTopSafeArea
       hapticFeedbackEnabled={haptics}
       tabBarActiveTintColor={tintColor}
       activeIndicatorColor={tabBarTintColor}

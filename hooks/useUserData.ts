@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { UserData } from "@/lib/types/User";
+import { useQuery } from "@tanstack/react-query";
 
 interface UserProps {
   name: string;

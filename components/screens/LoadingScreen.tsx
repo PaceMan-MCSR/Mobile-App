@@ -20,7 +20,7 @@ const LoadingScreen = () => {
   return (
     <View className="flex flex-1 items-center justify-center gap-2 bg-[#F2F2F2] dark:bg-[#111827]">
       <ActivityIndicator className="color-black dark:color-white" />
-      <Text className="text-black dark:text-white text-lg">
+      <Text className="text-lg text-black dark:text-white">
         {loadingMessages[Math.floor(Math.random() * loadingMessages.length)]}...
       </Text>
     </View>

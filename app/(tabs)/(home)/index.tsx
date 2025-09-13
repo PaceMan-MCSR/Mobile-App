@@ -1,14 +1,14 @@
+import PaceBottomSheet from "@/components/PaceBottomSheet";
 import PaceCard from "@/components/PaceCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import PaceBottomSheet from "@/components/PaceBottomSheet";
 import HeaderHomeRight from "@/components/ui/HeaderHomeRight";
-import { Tabs } from "expo-router";
-import { Pace } from "@/lib/types/Pace";
-import { FlatList, View } from "react-native";
 import { useLiverunsData } from "@/hooks/useLiverunsData";
-import { useRef, useState, useCallback, useEffect } from "react";
+import { Pace } from "@/lib/types/Pace";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
+import { Tabs } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { FlatList, View } from "react-native";
 
 const HomePage = () => {
   const [params, setParams] = useState({

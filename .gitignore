@@ -2,7 +2,6 @@ node_modules/
 android/
 ios/
 .expo/
-.vscode/
 testdata/
 dist/
 npm-debug.*
