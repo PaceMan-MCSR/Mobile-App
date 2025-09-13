@@ -41,13 +41,13 @@
     "react-native-edge-to-edge": "^1.4.0",
     "react-native-gesture-handler": "~2.28.0",
     "react-native-ios-context-menu": "^3.1.0",
-    "react-native-ios-utilities": "^5.1.1",
+    "react-native-ios-utilities": "^5.1.8",
     "react-native-mmkv": "^3.3.1",
     "react-native-reanimated": "~4.1.0",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
-    "react-native-worklets": "0.5.1",
     "react-native-web": "^0.21.0",
+    "react-native-worklets": "0.5.1",
     "tailwindcss": "^3.4.10",
     "zeego": "^2.0.4"
   },
@@ -60,7 +60,7 @@
   "overrides": {
     "zeego": {
       "react-native-ios-context-menu": "^3.1.0",
-      "react-native-ios-utilities": "^5.1.1"
+      "react-native-ios-utilities": "^5.1.8"
     }
   },
   "private": true
