@@ -60,7 +60,6 @@ export default function RootLayout() {
                     android: backgroundColor,
                   }),
                 },
-                headerBlurEffect: colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark",
               }}
             >
               <Stack.Screen
