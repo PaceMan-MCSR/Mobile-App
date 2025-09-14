@@ -3,12 +3,12 @@ import { CategoriesType, DaysType, SortByType } from "@/components/header-button
 import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
+import { useAllUsersData } from "@/hooks/api/useAllUsersData";
 import { useStatsData } from "@/hooks/api/useStatsData";
-import { useAllUsersData } from "@/hooks/useAllUsersData";
 import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontendConverters";
 import { Stack } from "expo-router";
 import { useMemo, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Platform, Text, View } from "react-native";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,23 +51,42 @@ const StatsPage = () => {
   const Header = () => {
     return (
       <Stack.Screen
-        options={{
-          headerSearchBarOptions: {
-            placeholder: "Search for Speedrunners",
-            onChangeText: handleSearch,
-            placement: "automatic",
+        options={Platform.select({
+          ios: {
+            headerLeft: () => (
+              <HeaderButtonStats
+                sortBy={params.type}
+                category={params.category}
+                days={params.days}
+                onSortSelect={handleTypeSelect}
+                onCategorySelect={handleCategorySelect}
+                onDaysSelect={handleDaysSelect}
+              />
+            ),
+            headerSearchBarOptions: {
+              placeholder: "Search for Speedrunners",
+              onChangeText: handleSearch,
+              placement: "automatic",
+            },
           },
-          headerLeft: () => (
-            <HeaderButtonStats
-              sortBy={params.type}
-              category={params.category}
-              days={params.days}
-              onSortSelect={handleTypeSelect}
-              onCategorySelect={handleCategorySelect}
-              onDaysSelect={handleDaysSelect}
-            />
-          ),
-        }}
+          android: {
+            headerRight: () => (
+              <HeaderButtonStats
+                sortBy={params.type}
+                category={params.category}
+                days={params.days}
+                onSortSelect={handleTypeSelect}
+                onCategorySelect={handleCategorySelect}
+                onDaysSelect={handleDaysSelect}
+              />
+            ),
+            headerSearchBarOptions: {
+              placeholder: "Search for Speedrunners",
+              onChangeText: handleSearch,
+              placement: "automatic",
+            },
+          },
+        })}
       />
     );
   };

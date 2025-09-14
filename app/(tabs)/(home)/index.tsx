@@ -8,7 +8,7 @@ import { Pace } from "@/lib/types/Pace";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { Tabs } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Platform, View } from "react-native";
 
 const HomePage = () => {
   const [params, setParams] = useState({
@@ -68,16 +68,28 @@ const HomePage = () => {
   const Header = () => {
     return (
       <Tabs.Screen
-        options={{
-          headerLeft: () => (
-            <HeaderButtonHome
-              gameVersion={params.gameVersion}
-              liveOnly={params.liveOnly}
-              onGameVersionSelect={handleGameVersionSelect}
-              onLiveOnlyToggle={handleLiveOnlyToggle}
-            />
-          ),
-        }}
+        options={Platform.select({
+          ios: {
+            headerLeft: () => (
+              <HeaderButtonHome
+                gameVersion={params.gameVersion}
+                liveOnly={params.liveOnly}
+                onGameVersionSelect={handleGameVersionSelect}
+                onLiveOnlyToggle={handleLiveOnlyToggle}
+              />
+            ),
+          },
+          android: {
+            headerRight: () => (
+              <HeaderButtonHome
+                gameVersion={params.gameVersion}
+                liveOnly={params.liveOnly}
+                onGameVersionSelect={handleGameVersionSelect}
+                onLiveOnlyToggle={handleLiveOnlyToggle}
+              />
+            ),
+          },
+        })}
       />
     );
   };

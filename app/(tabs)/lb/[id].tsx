@@ -8,7 +8,7 @@ import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { lbIdToName } from "@/lib/utils/frontendConverters";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Platform, Text, View } from "react-native";
 
 const filters = Array.from(lbIdToName.keys());
 
@@ -48,11 +48,18 @@ const LeaderboardPage = () => {
   const Header = () => {
     return (
       <Tabs.Screen
-        options={{
-          headerLeft: () => (
-            <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
-          ),
-        }}
+        options={Platform.select({
+          ios: {
+            headerLeft: () => (
+              <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
+            ),
+          },
+          android: {
+            headerRight: () => (
+              <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
+            ),
+          },
+        })}
       />
     );
   };
