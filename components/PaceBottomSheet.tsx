@@ -1,11 +1,12 @@
 import TwitchButton from "@/components/TwitchButton";
 import { useLiverunsData } from "@/hooks/api/useLiverunsData";
+import { useBottomSheetBackHandler } from "@/hooks/useBottomSheetBackHandler";
 import { getSortedEventsWithTimes, msToTime } from "@/lib/utils/frontendConverters";
 import BottomSheet, { BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { forwardRef, useMemo } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { forwardRef, useCallback, useMemo } from "react";
+import { Platform, Text, TouchableOpacity, View } from "react-native";
 import { useBottomTabBarHeight } from "react-native-bottom-tabs";
 
 interface PaceBottomSheetProps {
@@ -22,6 +23,18 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
     const bottomTabBarHeight = useBottomTabBarHeight();
     const { data: liveruns } = useLiverunsData(params);
     const selectedPace = liveruns?.find((liveruns) => liveruns.worldId === selected);
+
+    // Use the back handler hook
+    const { handleSheetPositionChange } = useBottomSheetBackHandler(ref as React.RefObject<BottomSheet | null>);
+
+    // Combine the existing onSheetChanges with the back handler
+    const handleSheetChange = useCallback(
+      (index: number) => {
+        handleSheetPositionChange(index);
+        onSheetChanges(index);
+      },
+      [handleSheetPositionChange, onSheetChanges]
+    );
 
     const splits = useMemo(() => {
       if (!selectedPace) return [];
@@ -41,10 +54,10 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
         handleComponent={null}
         backgroundComponent={null}
         backdropComponent={renderBackdrop}
-        onChange={onSheetChanges}
+        onChange={handleSheetChange}
       >
         <BottomSheetView
-          style={{ paddingBottom: bottomTabBarHeight }}
+          style={{ paddingBottom: Platform.select({ ios: bottomTabBarHeight, android: 0 }) }}
           className="flex flex-1 rounded-t-2xl bg-white px-4 dark:bg-[#1f2937]"
         >
           {/* PLAYER AVATAR + NAME + TWITCH BUTTON */}
