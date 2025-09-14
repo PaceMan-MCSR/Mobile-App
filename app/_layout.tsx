@@ -1,4 +1,5 @@
 import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { deviceSupportsLiquidGlass } from "@/lib/utils/frontendConverters";
 import { storage } from "@/lib/utils/mmkv";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
@@ -60,6 +61,7 @@ export default function RootLayout() {
                     android: backgroundColor,
                   }),
                 },
+                headerBlurEffect: !deviceSupportsLiquidGlass() ? colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark" : "none",
               }}
             >
               <Stack.Screen
