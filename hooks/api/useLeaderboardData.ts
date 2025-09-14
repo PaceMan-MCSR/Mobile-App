@@ -20,8 +20,8 @@ export const useLeaderboardData = ({ filter, removeDuplicates, date, season = "c
         fetch(`https://paceman.gg/api/us/trophy?season=${encodeURIComponent(season.replace("-", " "))}`).then((res) =>
           res.json()
         ),
-      staleTime: 24 * 60 * 60 * 1000,
-      refetchInterval: 24 * 60 * 60 * 1000,
+      staleTime: 60 * 60 * 1000,
+      refetchInterval: 60 * 60 * 1000,
       enabled: isFocusedOnLBPage,
     });
   }
@@ -34,8 +34,8 @@ export const useLeaderboardData = ({ filter, removeDuplicates, date, season = "c
           removeDuplicates ? 1 : 0
         }&date=${date}`
       ).then((res) => res.json()),
-    staleTime: 24 * 60 * 60 * 1000,
-    refetchInterval: 24 * 60 * 60 * 1000,
+    staleTime: 60 * 60 * 1000,
+    refetchInterval: 60 * 60 * 1000,
     enabled: isFocusedOnLBPage,
   });
 };

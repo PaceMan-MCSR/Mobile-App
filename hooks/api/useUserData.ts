@@ -12,8 +12,8 @@ export const useUserData = ({ name }: UserProps) => {
   return useQuery<UserData>({
     queryKey: ["user", { name }],
     queryFn: () => fetch(`https://paceman.gg/api/us/user?name=${name}&sortByTime=1`).then((res) => res.json()),
-    staleTime: 24 * 60 * 60 * 1000,
-    refetchInterval: 24 * 60 * 60 * 1000,
+    staleTime: 60 * 60 * 1000,
+    refetchInterval: 60 * 60 * 1000,
     enabled: isFocusedOnPlayerPage,
   });
 };
