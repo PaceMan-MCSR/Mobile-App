@@ -1,9 +1,8 @@
-import Checkbox from "expo-checkbox";
-import { storage } from "@/lib/utils/mmkv";
-import { Linking } from "react-native";
-import { useColorScheme } from "nativewind";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
-import { ScrollView, Text, View } from "react-native";
+import { storage } from "@/lib/utils/mmkv";
+import { Checkbox } from "expo-checkbox";
+import { useColorScheme } from "nativewind";
+import { Linking, ScrollView, Text, View } from "react-native";
 import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
 
 const SettingsPage = () => {
@@ -16,10 +15,10 @@ const SettingsPage = () => {
       <ScrollView contentInsetAdjustmentBehavior="automatic" className="px-4" contentContainerClassName="gap-4">
         {/* APPEARANCE SETTINGS */}
         <View>
-          <Text className="text-black dark:text-[#ECEDEE] text-2xl font-bold py-3">Appearance</Text>
-          <View className="bg-[#DBDEE3] dark:bg-[#1F2937] gap-4 p-4 rounded-xl">
+          <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">Appearance</Text>
+          <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
             <View className="flex flex-row items-center">
-              <Text className="flex flex-1 text-black dark:text-[#ECEDEE] font-semibold text-xl">System</Text>
+              <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">System</Text>
               <Checkbox
                 value={theme === "system"}
                 onValueChange={() => {
@@ -30,7 +29,7 @@ const SettingsPage = () => {
               />
             </View>
             <View className="flex flex-row items-center">
-              <Text className="flex flex-1 text-black dark:text-[#ECEDEE] font-semibold text-xl">Light</Text>
+              <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">Light</Text>
               <Checkbox
                 value={theme === "light"}
                 onValueChange={() => {
@@ -41,7 +40,7 @@ const SettingsPage = () => {
               />
             </View>
             <View className="flex flex-row items-center">
-              <Text className="flex flex-1 text-black dark:text-[#ECEDEE] font-semibold text-xl">Dark</Text>
+              <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">Dark</Text>
               <Checkbox
                 value={theme === "dark"}
                 onValueChange={() => {
@@ -55,32 +54,32 @@ const SettingsPage = () => {
         </View>
         {/* ACCESSIBILITY SETTINGS */}
         <View>
-          <Text className="text-black dark:text-[#ECEDEE] text-2xl font-bold py-3">Accessibility</Text>
-          <View className="bg-[#DBDEE3] dark:bg-[#1F2937] gap-2 p-4  rounded-xl">
+          <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">Accessibility</Text>
+          <View className="gap-2 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
             <View className="flex flex-row items-center">
-              <Text className="flex flex-1 text-black dark:text-[#ECEDEE] font-semibold text-xl">Tab Bar Haptics</Text>
+              <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">Tab Bar Haptics</Text>
               <Checkbox value={haptics} onValueChange={setHaptics} color={checkboxColor} />
             </View>
-            <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-sm">
+            <Text className="flex flex-1 text-sm text-black dark:text-[#ECEDEE]">
               Toggle haptic feedback effect on the bottom tab bar.
             </Text>
           </View>
         </View>
         {/* ABOUT SECTION */}
         <View>
-          <Text className="text-black dark:text-[#ECEDEE] text-2xl font-bold py-3">About</Text>
-          <View className="bg-[#DBDEE3] dark:bg-[#1F2937] gap-4  p-4 rounded-xl">
-            <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-md">
+          <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">About</Text>
+          <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
+            <Text className="text-md flex flex-1 text-black dark:text-[#ECEDEE]">
               PaceMan.gg is a community-driven application to serve as a real-time speedrun pace tracker. This
               application is not affiliated with or endorsed by Minecraft, Mojang or Microsoft.
             </Text>
-            <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-md">
+            <Text className="text-md flex flex-1 text-black dark:text-[#ECEDEE]">
               In accordance with{" "}
               <Text
                 onPress={() => Linking.openURL(`https://www.minecraft.net/en-us/usage-guidelines`)}
                 className="underline"
               >
-                Minecraft's Usage Guidelines
+                {"Minecraft's Usage Guidelines"}
               </Text>
               .
             </Text>

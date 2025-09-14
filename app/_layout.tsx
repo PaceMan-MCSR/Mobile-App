@@ -1,19 +1,19 @@
-import * as SystemUI from "expo-system-ui";
-import * as SplashScreen from "expo-splash-screen";
-import { Stack } from "expo-router";
-import { storage } from "@/lib/utils/mmkv";
-import { Platform } from "react-native";
-import { useEffect } from "react";
-import { SystemBars } from "react-native-edge-to-edge";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
-import { useColorScheme } from "nativewind";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { storage } from "@/lib/utils/mmkv";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import * as SystemUI from "expo-system-ui";
+import { useColorScheme } from "nativewind";
+import { useEffect } from "react";
+import { Platform } from "react-native";
+import { SystemBars } from "react-native-edge-to-edge";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import "@/global.css";
-import { useMMKVString, useMMKVBoolean } from "react-native-mmkv";
+import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
@@ -60,7 +60,6 @@ export default function RootLayout() {
                     android: backgroundColor,
                   }),
                 },
-                headerBlurEffect: colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark",
               }}
             >
               <Stack.Screen
@@ -74,20 +73,20 @@ export default function RootLayout() {
                 name="settings"
                 options={{
                   headerTitle: "Settings",
-                  headerBackTitle: "Back",
+                  headerBackButtonDisplayMode: "minimal",
                 }}
               />
               <Stack.Screen
                 name="stats/player/[id]"
                 options={{
-                  headerBackTitle: "Back",
+                  headerBackButtonDisplayMode: "minimal",
                 }}
               />
               <Stack.Screen
                 name="+not-found"
                 options={{
                   headerTitle: "Page Not Found",
-                  headerBackTitle: "Back",
+                  headerBackButtonDisplayMode: "minimal",
                 }}
               />
             </Stack>

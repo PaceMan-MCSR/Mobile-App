@@ -1,5 +1,5 @@
+import { msToDate, msToTime } from "@/lib/utils/frontendConverters";
 import { Text, View } from "react-native";
-import { msToTime, msToDate } from "@/lib/utils/frontendConverters";
 
 interface RunCardProps {
   index: number;
@@ -17,7 +17,7 @@ const getRankColor = (index: number) => {
 
 const RunCard = ({ index, submitted, time }: RunCardProps) => {
   return (
-    <View className="flex flex-row w-full items-center px-4 pb-6">
+    <View className="flex w-full flex-row items-center px-4 pb-6">
       <Text className={`flex min-w-10 ${getRankColor(index)} text-xl font-bold`}>{index + 1}</Text>
       <Text className={`flex flex-1 ${getRankColor(index)} text-xl font-bold`}>{msToTime(time)}</Text>
       <Text className={`${getRankColor(index)} text-xl font-bold`}>{msToDate(submitted)}</Text>

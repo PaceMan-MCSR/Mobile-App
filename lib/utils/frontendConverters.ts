@@ -1,8 +1,8 @@
 // Shamelessly taken from https://github.com/Specnr/PaceMan.gg/ :P
 
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { useColorScheme } from "nativewind";
 
 dayjs.extend(utc);
@@ -113,6 +113,7 @@ export const lbIdToName = new Map<string, string>([
   ["season-1", "Trophy - Season 1"],
   ["season-2", "Trophy - Season 2"],
   ["season-3", "Trophy - Season 3"],
+  ["season-4", "Trophy - Season 4"],
 ]);
 
 export const statsDaysToName = new Map<number, string>([

@@ -1,14 +1,14 @@
+import HeaderButtonLB from "@/components/header-buttons/lb";
+import { LeaderboardType } from "@/components/header-buttons/lb/options";
 import PlayerCard from "@/components/PlayerCard";
 import ErrorScreen from "@/components/screens/ErrorScreen";
 import LoadingScreen from "@/components/screens/LoadingScreen";
-import HeaderLBRight from "@/components/ui/HeaderLBRight";
+import { useLeaderboardData } from "@/hooks/api/useLeaderboardData";
+import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { lbIdToName } from "@/lib/utils/frontendConverters";
-import { LeaderboardType } from "@/components/ui/HeaderLBRight/options";
-import { useLeaderboardData } from "@/hooks/useLeaderboardData";
-import { FlatList, Text, View } from "react-native";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
+import { FlatList, Platform, RefreshControl, Text, View } from "react-native";
 
 const filters = Array.from(lbIdToName.keys());
 
@@ -22,7 +22,7 @@ const LeaderboardPage = () => {
     season: filters.includes(id) && id.startsWith("season") ? id : "current",
   });
 
-  const { data: leaderboard, isLoading, isError } = useLeaderboardData(params);
+  const { data: leaderboard, refetch, isLoading, isError, isRefetching } = useLeaderboardData(params);
 
   const handleSelect = (key: string) => {
     const isTrophy = !["daily", "weekly", "monthly", "all"].includes(key);
@@ -48,11 +48,18 @@ const LeaderboardPage = () => {
   const Header = () => {
     return (
       <Tabs.Screen
-        options={{
-          headerRight: () => (
-            <HeaderLBRight onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
-          ),
-        }}
+        options={Platform.select({
+          ios: {
+            headerLeft: () => (
+              <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
+            ),
+          },
+          android: {
+            headerRight: () => (
+              <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
+            ),
+          },
+        })}
       />
     );
   };
@@ -83,7 +90,7 @@ const LeaderboardPage = () => {
       <>
         <Header />
         <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
-          <Text className="text-black dark:text-white text-lg">There are no completions yet...</Text>
+          <Text className="text-lg text-black dark:text-white">There are no completions yet...</Text>
         </View>
       </>
     );
@@ -99,16 +106,17 @@ const LeaderboardPage = () => {
           data={params.filter >= 4 ? (leaderboard as TrophyEntry[]) : (leaderboard as LeaderboardEntry[])}
           showsVerticalScrollIndicator={false}
           contentContainerClassName={`px-4 py-3 gap-8`}
+          refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
           ListHeaderComponent={() => (
             <View>
               <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">{`PaceMan.gg Leaderboard`}</Text>
-              <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE] pb-8">{`(${lbIdToName.get(
+              <Text className="pb-8 text-2xl font-bold text-black dark:text-[#ECEDEE]">{`(${lbIdToName.get(
                 id
               )})`}</Text>
-              <View className="flex flex-row w-full items-center gap-3">
-                <Text className="flex min-w-10 text-black dark:text-[#ECEDEE] text-xl font-black">#</Text>
-                <Text className="flex flex-1 text-black dark:text-[#ECEDEE] text-xl font-black">Player</Text>
-                <Text className="text-black dark:text-[#ECEDEE] text-xl font-black">Time</Text>
+              <View className="flex w-full flex-row items-center gap-3">
+                <Text className="flex min-w-10 text-xl font-black text-black dark:text-[#ECEDEE]">#</Text>
+                <Text className="flex flex-1 text-xl font-black text-black dark:text-[#ECEDEE]">Player</Text>
+                <Text className="text-xl font-black text-black dark:text-[#ECEDEE]">Time</Text>
               </View>
             </View>
           )}

@@ -17,7 +17,7 @@ export default {
   expo: {
     name: appName,
     slug: "PaceManGG",
-    version: "1.0.1",
+    version: "1.1.0",
     orientation: "portrait",
     newArchEnabled: true,
     icon: "./assets/images/icon.png",
@@ -34,11 +34,7 @@ export default {
       config: {
         usesNonExemptEncryption: false,
       },
-      icon: {
-        light: "./assets/images/icon.png",
-        dark: "./assets/images/icon-dark.png",
-        tinted: "./assets/images/icon-tinted.png",
-      },
+      icon: "./assets/images/ios.icon",
     },
     android: {
       adaptiveIcon: {
