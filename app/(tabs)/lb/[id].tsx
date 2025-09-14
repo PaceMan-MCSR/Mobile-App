@@ -8,7 +8,7 @@ import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { lbIdToName } from "@/lib/utils/frontendConverters";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Platform, Text, View } from "react-native";
+import { FlatList, Platform, RefreshControl, Text, View } from "react-native";
 
 const filters = Array.from(lbIdToName.keys());
 
@@ -22,7 +22,7 @@ const LeaderboardPage = () => {
     season: filters.includes(id) && id.startsWith("season") ? id : "current",
   });
 
-  const { data: leaderboard, isLoading, isError } = useLeaderboardData(params);
+  const { data: leaderboard, refetch, isLoading, isError, isRefetching } = useLeaderboardData(params);
 
   const handleSelect = (key: string) => {
     const isTrophy = !["daily", "weekly", "monthly", "all"].includes(key);
@@ -106,6 +106,7 @@ const LeaderboardPage = () => {
           data={params.filter >= 4 ? (leaderboard as TrophyEntry[]) : (leaderboard as LeaderboardEntry[])}
           showsVerticalScrollIndicator={false}
           contentContainerClassName={`px-4 py-3 gap-8`}
+          refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
           ListHeaderComponent={() => (
             <View>
               <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">{`PaceMan.gg Leaderboard`}</Text>

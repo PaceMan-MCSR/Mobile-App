@@ -8,7 +8,7 @@ import { useStatsData } from "@/hooks/api/useStatsData";
 import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontendConverters";
 import { Stack } from "expo-router";
 import { useMemo, useState } from "react";
-import { FlatList, Platform, Text, View } from "react-native";
+import { FlatList, Platform, RefreshControl, Text, View } from "react-native";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,7 +22,7 @@ const StatsPage = () => {
     type: "count",
   });
 
-  const { data: stats, isLoading: isStatsLoading, isError: isStatsError } = useStatsData(params);
+  const { data: stats, refetch, isLoading: isStatsLoading, isError: isStatsError, isRefetching } = useStatsData(params);
   const { data: users, isLoading: isUsersLoading, isError: isUsersError } = useAllUsersData();
 
   const filteredUsers = useMemo(() => {
@@ -150,6 +150,7 @@ const StatsPage = () => {
         contentContainerClassName={`px-4 py-3 gap-8`}
         showsVerticalScrollIndicator={false}
         contentInsetAdjustmentBehavior="automatic"
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
         ListHeaderComponent={() => (
           <>
             <Text className="pb-8 text-2xl font-bold text-black dark:text-[#ECEDEE]">{`Stats for ${statsCategoryToName.get(

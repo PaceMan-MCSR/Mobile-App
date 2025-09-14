@@ -5,11 +5,11 @@ import { useUserData } from "@/hooks/api/useUserData";
 import { msToTime } from "@/lib/utils/frontendConverters";
 import { Image } from "expo-image";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, RefreshControl, Text, View } from "react-native";
 
 const StatsPlayerPage = () => {
   const { id: name } = useLocalSearchParams<{ id: string }>();
-  const { data, isLoading, isError } = useUserData({ name });
+  const { data, refetch, isLoading, isError, isRefetching } = useUserData({ name });
 
   if (isLoading) {
     return (
@@ -53,6 +53,7 @@ const StatsPlayerPage = () => {
           contentInsetAdjustmentBehavior="automatic"
           showsVerticalScrollIndicator={false}
           data={completions}
+          refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
           ListHeaderComponent={() => (
             <View className="m-4 gap-3">
               <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
