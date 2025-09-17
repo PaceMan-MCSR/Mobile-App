@@ -10,8 +10,15 @@ const getBundleIdentifier = () => {
   if (process.env.APP_VARIANT === "preview") return "com.chitrakshtarun.pacemangg.preview";
 };
 
+const getGoogleServicesFile = () => {
+  if (process.env.APP_VARIANT === "production") return "./.google-services/production.json";
+  if (process.env.APP_VARIANT === "development") return "./.google-services/development.json";
+  if (process.env.APP_VARIANT === "preview") return "./.google-services/preview.json";
+};
+
 const appName = getAppName();
 const bundleIdentifier = getBundleIdentifier();
+const googleServicesFile = getGoogleServicesFile();
 
 export default {
   expo: {
@@ -42,6 +49,7 @@ export default {
         backgroundColor: "#ffffff",
       },
       package: bundleIdentifier,
+      googleServicesFile: googleServicesFile,
     },
     web: {
       bundler: "metro",
@@ -51,6 +59,7 @@ export default {
     plugins: [
       "expo-router",
       "expo-font",
+      "expo-notifications",
       "react-native-bottom-tabs",
       [
         "expo-build-properties",
