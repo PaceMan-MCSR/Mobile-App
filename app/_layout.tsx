@@ -1,6 +1,8 @@
+import "@/global.css";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { deviceSupportsLiquidGlass } from "@/lib/utils/frontendConverters";
 import { storage } from "@/lib/utils/mmkv";
+import { NotificationProvider } from "@/providers/NotificationsProvider";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -12,9 +14,8 @@ import { useEffect } from "react";
 import { Platform } from "react-native";
 import { SystemBars } from "react-native-edge-to-edge";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
-import "@/global.css";
 import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
+
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
@@ -43,58 +44,64 @@ export default function RootLayout() {
   useEffect(() => setColorScheme(theme as "light" | "dark" | "system"), [theme]);
 
   return (
-    <GestureHandlerRootView>
-      <BottomSheetModalProvider>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-            <SystemBars style={colorScheme === "dark" ? "light" : "dark"} />
-            <Stack
-              screenOptions={{
-                headerTintColor: tintColor,
-                headerShadowVisible: false,
-                headerTransparent: Platform.select({
-                  ios: true,
-                  android: false,
-                }),
-                headerStyle: {
-                  backgroundColor: Platform.select({
-                    android: backgroundColor,
+    <NotificationProvider>
+      <GestureHandlerRootView>
+        <BottomSheetModalProvider>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+              <SystemBars style={colorScheme === "dark" ? "light" : "dark"} />
+              <Stack
+                screenOptions={{
+                  headerTintColor: tintColor,
+                  headerShadowVisible: false,
+                  headerTransparent: Platform.select({
+                    ios: true,
+                    android: false,
                   }),
-                },
-                headerBlurEffect: !deviceSupportsLiquidGlass() ? colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark" : "none",
-              }}
-            >
-              <Stack.Screen
-                name="(tabs)"
-                options={{
-                  headerShown: false,
+                  headerStyle: {
+                    backgroundColor: Platform.select({
+                      android: backgroundColor,
+                    }),
+                  },
+                  headerBlurEffect: !deviceSupportsLiquidGlass()
+                    ? colorScheme === "light"
+                      ? "systemChromeMaterialLight"
+                      : "systemChromeMaterialDark"
+                    : "none",
                 }}
-                initialParams={{ lbType: "monthly" }}
-              />
-              <Stack.Screen
-                name="settings"
-                options={{
-                  headerTitle: "Settings",
-                  headerBackButtonDisplayMode: "minimal",
-                }}
-              />
-              <Stack.Screen
-                name="stats/player/[id]"
-                options={{
-                  headerBackButtonDisplayMode: "minimal",
-                }}
-              />
-              <Stack.Screen
-                name="+not-found"
-                options={{
-                  headerTitle: "Page Not Found",
-                  headerBackButtonDisplayMode: "minimal",
-                }}
-              />
-            </Stack>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+              >
+                <Stack.Screen
+                  name="(tabs)"
+                  options={{
+                    headerShown: false,
+                  }}
+                  initialParams={{ lbType: "monthly" }}
+                />
+                <Stack.Screen
+                  name="settings"
+                  options={{
+                    headerTitle: "Settings",
+                    headerBackButtonDisplayMode: "minimal",
+                  }}
+                />
+                <Stack.Screen
+                  name="stats/player/[id]"
+                  options={{
+                    headerBackButtonDisplayMode: "minimal",
+                  }}
+                />
+                <Stack.Screen
+                  name="+not-found"
+                  options={{
+                    headerTitle: "Page Not Found",
+                    headerBackButtonDisplayMode: "minimal",
+                  }}
+                />
+              </Stack>
+            </ThemeProvider>
+          </QueryClientProvider>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
+    </NotificationProvider>
   );
 }

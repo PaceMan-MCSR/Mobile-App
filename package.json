@@ -50,7 +50,10 @@
     "react-native-web": "^0.21.0",
     "react-native-worklets": "0.5.1",
     "tailwindcss": "^3.4.10",
-    "zeego": "^2.0.4"
+    "zeego": "^2.0.4",
+    "expo-device": "~8.0.9",
+    "expo-glass-effect": "~0.1.4",
+    "expo-notifications": "~0.32.12"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
