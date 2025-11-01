@@ -60,6 +60,7 @@ export default {
       "expo-router",
       "expo-font",
       "expo-notifications",
+      "expo-web-browser",
       "react-native-bottom-tabs",
       [
         "expo-build-properties",
