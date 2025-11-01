@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { useColorScheme } from "nativewind";
-import { Platform } from "react-native";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -188,8 +187,3 @@ export const getSortedEventsWithTimes = (completedEvents: Map<string, number>): 
 
   return sortedEvents;
 };
-
-export const deviceSupportsLiquidGlass = () => {
-  if (Platform.OS !== "ios") return false;
-  return parseInt(Platform.Version) >= 26;
-}

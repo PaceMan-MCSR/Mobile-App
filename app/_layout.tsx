@@ -1,11 +1,11 @@
 import "@/global.css";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
-import { deviceSupportsLiquidGlass } from "@/lib/utils/frontendConverters";
 import { storage } from "@/lib/utils/mmkv";
 import { NotificationProvider } from "@/providers/NotificationsProvider";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { isLiquidGlassAvailable } from "expo-glass-effect";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import * as SystemUI from "expo-system-ui";
@@ -63,7 +63,7 @@ export default function RootLayout() {
                       android: backgroundColor,
                     }),
                   },
-                  headerBlurEffect: !deviceSupportsLiquidGlass()
+                  headerBlurEffect: !isLiquidGlassAvailable()
                     ? colorScheme === "light"
                       ? "systemChromeMaterialLight"
                       : "systemChromeMaterialDark"
