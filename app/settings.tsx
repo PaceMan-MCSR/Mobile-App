@@ -1,6 +1,7 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
 import { Checkbox } from "expo-checkbox";
+import { Link } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { Linking, ScrollView, Text, View } from "react-native";
 import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
@@ -85,6 +86,9 @@ const SettingsPage = () => {
             </Text>
           </View>
         </View>
+        <Link href={"/notifications"}>
+          <Text className="text-xl text-white underline">Notifications</Text>
+        </Link>
       </ScrollView>
     </View>
   );

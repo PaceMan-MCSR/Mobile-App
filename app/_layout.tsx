@@ -44,10 +44,10 @@ export default function RootLayout() {
   useEffect(() => setColorScheme(theme as "light" | "dark" | "system"), [theme]);
 
   return (
-    <NotificationsProvider>
-      <GestureHandlerRootView>
-        <BottomSheetModalProvider>
-          <QueryClientProvider client={queryClient}>
+    <GestureHandlerRootView>
+      <BottomSheetModalProvider>
+        <QueryClientProvider client={queryClient}>
+          <NotificationsProvider>
             <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
               <SystemBars style={colorScheme === "dark" ? "light" : "dark"} />
               <Stack
@@ -85,6 +85,13 @@ export default function RootLayout() {
                   }}
                 />
                 <Stack.Screen
+                  name="notifications"
+                  options={{
+                    headerTitle: "Notification Tests",
+                    headerBackButtonDisplayMode: "minimal",
+                  }}
+                />
+                <Stack.Screen
                   name="stats/player/[id]"
                   options={{
                     headerBackButtonDisplayMode: "minimal",
@@ -99,9 +106,9 @@ export default function RootLayout() {
                 />
               </Stack>
             </ThemeProvider>
-          </QueryClientProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </NotificationsProvider>
+          </NotificationsProvider>
+        </QueryClientProvider>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }

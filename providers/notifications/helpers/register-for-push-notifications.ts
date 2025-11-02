@@ -1,11 +1,13 @@
+import { RegisterTokenParams, RegisterTokenResponse } from "@/providers/notifications/hooks/api/use-push-tokens";
+import { UseMutationResult } from "@tanstack/react-query";
 import Constants from "expo-constants";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 
-const pushNotificationsServiceURL = process.env.EXPO_PUBLIC_PUSH_NOTIFICATIONS_SERVICE_URL!;
-
-export async function registerForPushNotifications() {
+export async function registerForPushNotifications(
+  registerTokenMutation: UseMutationResult<RegisterTokenResponse, Error, RegisterTokenParams>
+) {
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
       name: "default",
@@ -41,25 +43,13 @@ export async function registerForPushNotifications() {
       // Make API call if permissions were just granted (first time)
       if (wasFirstTimeGrant && finalStatus === "granted") {
         console.log("First time permission grant, pushing token to DB");
-        fetch(`${pushNotificationsServiceURL}/api/token/register-token`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        registerTokenMutation
+          .mutateAsync({
             expoToken: pushTokenString,
-            deviceType: Platform.OS,
-          }),
-        })
-          .then((res) => {
-            res
-              .json()
-              .then((data) => {
-                console.log("API response:", data);
-              })
-              .catch((error) => {
-                console.error("Error parsing API response JSON:", error);
-              });
+            deviceType: Platform.OS === "ios" || Platform.OS === "android" ? Platform.OS : undefined,
+          })
+          .then((data) => {
+            console.log("API response:", data);
           })
           .catch((error) => {
             console.error("Failed to register push token with server:", error);
