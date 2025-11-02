@@ -1,4 +1,4 @@
-import { registerForPushNotificationsAsync } from "@/lib/utils/registerForPushNotificationsAsync";
+import { registerForPushNotifications } from "@/providers/notifications/helpers/registerForPushNotifications";
 import * as Notifications from "expo-notifications";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
@@ -14,16 +14,16 @@ const NotificationContext = createContext<NotificationContextType | undefined>(u
 export const useNotification = () => {
   const context = useContext(NotificationContext);
   if (context === undefined) {
-    throw new Error("useNotification must be used within a NotificationProvider");
+    throw new Error("useNotification must be used within a NotificationsProvider");
   }
   return context;
 };
 
-interface NotificationProviderProps {
+interface NotificationsProviderProps {
   children: ReactNode;
 }
 
-export const NotificationProvider: React.FC<NotificationProviderProps> = ({ children }) => {
+export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ children }) => {
   const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
   const [notification, setNotification] = useState<Notifications.Notification | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -32,7 +32,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
   const responseListener = useRef<Notifications.EventSubscription>(null);
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(
+    registerForPushNotifications().then(
       (token) => setExpoPushToken(token),
       (error) => setError(error)
     );

@@ -1,7 +1,7 @@
 import "@/global.css";
 import { useColorsForUI } from "@/hooks/useColorsForUI";
 import { storage } from "@/lib/utils/mmkv";
-import { NotificationProvider } from "@/providers/NotificationsProvider";
+import { NotificationsProvider } from "@/providers/notifications";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -44,7 +44,7 @@ export default function RootLayout() {
   useEffect(() => setColorScheme(theme as "light" | "dark" | "system"), [theme]);
 
   return (
-    <NotificationProvider>
+    <NotificationsProvider>
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
           <QueryClientProvider client={queryClient}>
@@ -102,6 +102,6 @@ export default function RootLayout() {
           </QueryClientProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-    </NotificationProvider>
+    </NotificationsProvider>
   );
 }

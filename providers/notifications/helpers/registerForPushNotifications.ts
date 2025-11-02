@@ -5,7 +5,7 @@ import { Platform } from "react-native";
 
 const pushNotificationsServiceURL = process.env.PUSH_NOTIFICATIONS_SERVICE_URL!;
 
-export async function registerForPushNotificationsAsync() {
+export async function registerForPushNotifications() {
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
       name: "default",
