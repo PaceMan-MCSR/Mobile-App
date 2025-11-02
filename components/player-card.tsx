@@ -1,4 +1,4 @@
-import { msToTime } from "@/lib/utils/frontendConverters";
+import { msToTime } from "@/lib/utils/frontend-converters";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { memo } from "react";

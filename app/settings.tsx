@@ -1,4 +1,4 @@
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
 import { Checkbox } from "expo-checkbox";
 import { useColorScheme } from "nativewind";

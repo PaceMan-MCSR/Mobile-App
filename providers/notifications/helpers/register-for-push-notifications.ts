@@ -3,7 +3,7 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 
-const pushNotificationsServiceURL = process.env.PUSH_NOTIFICATIONS_SERVICE_URL!;
+const pushNotificationsServiceURL = process.env.EXPO_PUBLIC_PUSH_NOTIFICATIONS_SERVICE_URL!;
 
 export async function registerForPushNotifications() {
   if (Platform.OS === "android") {

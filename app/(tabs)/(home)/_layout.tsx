@@ -1,6 +1,6 @@
-import { useColorsForUI } from "@/hooks/useColorsForUI";
-import { Stack } from "expo-router";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { isLiquidGlassAvailable } from "expo-glass-effect";
+import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { Platform } from "react-native";
 
@@ -24,7 +24,11 @@ export default function StatsLayout() {
               android: backgroundColor,
             }),
           },
-          headerBlurEffect: !isLiquidGlassAvailable() ? colorScheme === "light" ? "systemChromeMaterialLight" : "systemChromeMaterialDark" : "none",
+          headerBlurEffect: !isLiquidGlassAvailable()
+            ? colorScheme === "light"
+              ? "systemChromeMaterialLight"
+              : "systemChromeMaterialDark"
+            : "none",
         }}
       />
     </Stack>

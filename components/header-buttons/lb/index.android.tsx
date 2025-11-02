@@ -1,5 +1,5 @@
 import { HeaderButtonLBProps, leaderboardFilters, LeaderboardType } from "@/components/header-buttons/lb/options";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { MenuView } from "@react-native-menu/menu";
 import { View } from "react-native";

@@ -1,4 +1,4 @@
-import { registerForPushNotifications } from "@/providers/notifications/helpers/registerForPushNotifications";
+import { registerForPushNotifications } from "@/providers/notifications/helpers/register-for-push-notifications";
 import * as Notifications from "expo-notifications";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";

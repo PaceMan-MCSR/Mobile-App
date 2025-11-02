@@ -1,5 +1,5 @@
 import "@/global.css";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
 import { NotificationsProvider } from "@/providers/notifications";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";

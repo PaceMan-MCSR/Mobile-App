@@ -1,4 +1,4 @@
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
 import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
 import { withLayoutContext } from "expo-router";

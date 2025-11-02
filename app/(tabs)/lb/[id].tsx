@@ -1,11 +1,11 @@
 import HeaderButtonLB from "@/components/header-buttons/lb";
 import { LeaderboardType } from "@/components/header-buttons/lb/options";
-import PlayerCard from "@/components/PlayerCard";
-import ErrorScreen from "@/components/screens/ErrorScreen";
-import LoadingScreen from "@/components/screens/LoadingScreen";
-import { useLeaderboardData } from "@/hooks/api/useLeaderboardData";
+import PlayerCard from "@/components/player-card";
+import ErrorScreen from "@/components/screens/error-screen";
+import LoadingScreen from "@/components/screens/loading-screen";
+import { useLeaderboardData } from "@/hooks/api/use-leaderboard-data";
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
-import { lbIdToName } from "@/lib/utils/frontendConverters";
+import { lbIdToName } from "@/lib/utils/frontend-converters";
 import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, Platform, RefreshControl, Text, View } from "react-native";

@@ -1,4 +1,4 @@
-import { msToDate, msToTime } from "@/lib/utils/frontendConverters";
+import { msToDate, msToTime } from "@/lib/utils/frontend-converters";
 import { Text, View } from "react-native";
 
 interface RunCardProps {

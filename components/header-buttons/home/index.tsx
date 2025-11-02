@@ -1,5 +1,5 @@
 import { gameVersionFilters, HeaderButtonHomeProps } from "@/components/header-buttons/home/options";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { useRouter } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import * as DropdownMenu from "zeego/dropdown-menu";
