@@ -19,7 +19,7 @@ const NotificationsTestPage = () => {
     try {
       const result = await updateTokenMutation.mutateAsync({
         expoToken: expoPushToken,
-        paceLimit1_16_1: 500000,
+        paceLimit1_16_1: 10,
         paceLimit1_15_2: null,
         paceLimit1_7_10: null,
       });

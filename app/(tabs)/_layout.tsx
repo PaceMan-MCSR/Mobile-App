@@ -67,6 +67,18 @@ export default function TabLayout() {
           }),
         }}
       />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Settings",
+          tabBarIcon: Platform.select({
+            ios: () => ({ sfSymbol: "gear" }),
+            android: ({ focused }: { focused: boolean }) =>
+              focused ? require("@/assets/icons/stats-chart.svg") : require("@/assets/icons/stats-chart-outline.svg"),
+          }),
+        }}
+      />
     </Tabs>
   );
 }

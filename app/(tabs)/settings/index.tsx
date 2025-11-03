@@ -1,7 +1,7 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
 import { Checkbox } from "expo-checkbox";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { Linking, ScrollView, Text, View } from "react-native";
 import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
@@ -11,6 +11,7 @@ const SettingsPage = () => {
   const [theme, setTheme] = useMMKVString("settings-theme", storage);
   const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
   const { checkboxColor } = useColorsForUI();
+  const router = useRouter();
   return (
     <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
       <ScrollView contentInsetAdjustmentBehavior="automatic" className="px-4" contentContainerClassName="gap-4">
@@ -86,9 +87,14 @@ const SettingsPage = () => {
             </Text>
           </View>
         </View>
-        <Link href={"/notifications"}>
-          <Text className="text-xl text-white underline">Notifications</Text>
-        </Link>
+        <Text
+          onPress={() => {
+            router.push("/(tabs)/settings/notifications");
+          }}
+          className="text-xl text-white underline"
+        >
+          Notifications
+        </Text>
       </ScrollView>
     </View>
   );

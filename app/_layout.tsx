@@ -78,20 +78,6 @@ export default function RootLayout() {
                   initialParams={{ lbType: "monthly" }}
                 />
                 <Stack.Screen
-                  name="settings"
-                  options={{
-                    headerTitle: "Settings",
-                    headerBackButtonDisplayMode: "minimal",
-                  }}
-                />
-                <Stack.Screen
-                  name="notifications"
-                  options={{
-                    headerTitle: "Notification Tests",
-                    headerBackButtonDisplayMode: "minimal",
-                  }}
-                />
-                <Stack.Screen
                   name="stats/player/[id]"
                   options={{
                     headerBackButtonDisplayMode: "minimal",
