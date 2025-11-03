@@ -2,6 +2,7 @@ import "@/global.css";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
 import { NotificationsProvider } from "@/providers/notifications";
+import { PrefetcherProvider } from "@/providers/prefetcher";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -48,50 +49,52 @@ export default function RootLayout() {
       <BottomSheetModalProvider>
         <QueryClientProvider client={queryClient}>
           <NotificationsProvider>
-            <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-              <SystemBars style={colorScheme === "dark" ? "light" : "dark"} />
-              <Stack
-                screenOptions={{
-                  headerTintColor: tintColor,
-                  headerShadowVisible: false,
-                  headerTransparent: Platform.select({
-                    ios: true,
-                    android: false,
-                  }),
-                  headerStyle: {
-                    backgroundColor: Platform.select({
-                      android: backgroundColor,
+            <PrefetcherProvider>
+              <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+                <SystemBars style={colorScheme === "dark" ? "light" : "dark"} />
+                <Stack
+                  screenOptions={{
+                    headerTintColor: tintColor,
+                    headerShadowVisible: false,
+                    headerTransparent: Platform.select({
+                      ios: true,
+                      android: false,
                     }),
-                  },
-                  headerBlurEffect: !isLiquidGlassAvailable()
-                    ? colorScheme === "light"
-                      ? "systemChromeMaterialLight"
-                      : "systemChromeMaterialDark"
-                    : "none",
-                }}
-              >
-                <Stack.Screen
-                  name="(tabs)"
-                  options={{
-                    headerShown: false,
+                    headerStyle: {
+                      backgroundColor: Platform.select({
+                        android: backgroundColor,
+                      }),
+                    },
+                    headerBlurEffect: !isLiquidGlassAvailable()
+                      ? colorScheme === "light"
+                        ? "systemChromeMaterialLight"
+                        : "systemChromeMaterialDark"
+                      : "none",
                   }}
-                  initialParams={{ lbType: "monthly" }}
-                />
-                <Stack.Screen
-                  name="stats/player/[id]"
-                  options={{
-                    headerBackButtonDisplayMode: "minimal",
-                  }}
-                />
-                <Stack.Screen
-                  name="+not-found"
-                  options={{
-                    headerTitle: "Page Not Found",
-                    headerBackButtonDisplayMode: "minimal",
-                  }}
-                />
-              </Stack>
-            </ThemeProvider>
+                >
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{
+                      headerShown: false,
+                    }}
+                    initialParams={{ lbType: "monthly" }}
+                  />
+                  <Stack.Screen
+                    name="stats/player/[id]"
+                    options={{
+                      headerBackButtonDisplayMode: "minimal",
+                    }}
+                  />
+                  <Stack.Screen
+                    name="+not-found"
+                    options={{
+                      headerTitle: "Page Not Found",
+                      headerBackButtonDisplayMode: "minimal",
+                    }}
+                  />
+                </Stack>
+              </ThemeProvider>
+            </PrefetcherProvider>
           </NotificationsProvider>
         </QueryClientProvider>
       </BottomSheetModalProvider>
