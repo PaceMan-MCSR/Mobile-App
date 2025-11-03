@@ -1,3 +1,4 @@
+import { storage } from "@/lib/utils/mmkv";
 import { RegisterTokenParams, RegisterTokenResponse } from "@/providers/notifications/hooks/api/use-push-tokens";
 import { UseMutationResult } from "@tanstack/react-query";
 import Constants from "expo-constants";
@@ -19,8 +20,8 @@ export async function registerForPushNotifications(
 
   if (Device.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    console.log(`[${Platform.OS}] - ${existingStatus}`);
     let finalStatus = existingStatus;
-    const wasFirstTimeGrant = existingStatus !== "granted"; // Track if we need to request
 
     if (existingStatus !== "granted") {
       const { status } = await Notifications.requestPermissionsAsync();
@@ -34,29 +35,55 @@ export async function registerForPushNotifications(
       throw new Error("Project ID not found");
     }
     try {
-      const pushTokenString = (
+      const expoToken = (
         await Notifications.getExpoPushTokenAsync({
           projectId,
         })
       ).data;
 
-      // Make API call if permissions were just granted (first time)
-      if (wasFirstTimeGrant && finalStatus === "granted") {
-        console.log("First time permission grant, pushing token to DB");
-        registerTokenMutation
-          .mutateAsync({
-            expoToken: pushTokenString,
-            deviceType: Platform.OS === "ios" || Platform.OS === "android" ? Platform.OS : undefined,
-          })
-          .then((data) => {
-            console.log("API response:", data);
-          })
-          .catch((error) => {
-            console.error("Failed to register push token with server:", error);
-          });
+      // Check MMKV storage for existing token registration
+      const storedTokenData = storage.getString("notifications-token-registered");
+      console.log(`[${Platform.OS}] - ${JSON.stringify(storedTokenData)}`);
+      let shouldRegister = false;
+
+      if (storedTokenData) {
+        try {
+          const parsedData = JSON.parse(storedTokenData);
+          if (!parsedData.registered || parsedData.token !== expoToken) {
+            shouldRegister = true;
+          } else {
+            console.log(`[${Platform.OS}] - Already registered, don't hit API`);
+          }
+        } catch (error) {
+          console.error(`[${Platform.OS}] - Failed to parse stored token data: ${error}`);
+          shouldRegister = true;
+        }
+      } else {
+        shouldRegister = true;
       }
-      console.log(`[${Platform.OS}] - ${pushTokenString}`);
-      return pushTokenString;
+
+      // Make API call if we need to register the token
+      if (shouldRegister && finalStatus === "granted") {
+        console.log(`[${Platform.OS}] - Registering token with server`);
+        try {
+          const data = await registerTokenMutation.mutateAsync({
+            expoToken,
+            deviceType: Platform.OS as "ios" | "android",
+          });
+          console.log("API response:", data);
+
+          const tokenRegistrationData = {
+            registered: true,
+            token: expoToken,
+          };
+          storage.set("notifications-token-registered", JSON.stringify(tokenRegistrationData));
+        } catch (error) {
+          console.error(`[${Platform.OS}] - Failed to register push token with server: ${error}`);
+          throw error;
+        }
+      }
+      console.log(`[${Platform.OS}] - ${expoToken}`);
+      return expoToken;
     } catch (e: unknown) {
       throw new Error(`${e}`);
     }

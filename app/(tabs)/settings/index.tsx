@@ -1,16 +1,18 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
 import { useRouter } from "expo-router";
+import { SymbolView } from "expo-symbols";
 import { useColorScheme } from "nativewind";
-import { Linking, ScrollView, Text, View } from "react-native";
+import { Linking, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
 
 const SettingsPage = () => {
   const { setColorScheme } = useColorScheme();
   const [theme, setTheme] = useMMKVString("settings-theme", storage);
   const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
-  const { checkboxColor } = useColorsForUI();
+  const { tintColor, checkboxColor } = useColorsForUI();
   const router = useRouter();
   return (
     <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
@@ -67,6 +69,22 @@ const SettingsPage = () => {
             </Text>
           </View>
         </View>
+        {/* NOTIFICATIONS SETTINGS */}
+        <View>
+          <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">Push Notifications</Text>
+          <Pressable
+            onPress={() => router.push("/(tabs)/settings/notifications")}
+            className="gap-2 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
+          >
+            <View className="flex flex-row items-center">
+              <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
+                Notifications Settings
+              </Text>
+              {Platform.OS === "ios" && <SymbolView name="chevron.right" size={18} />}
+              {Platform.OS === "android" && <MaterialCommunityIcons name="chevron-right" size={24} color={tintColor} />}
+            </View>
+          </Pressable>
+        </View>
         {/* ABOUT SECTION */}
         <View>
           <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">About</Text>
@@ -87,14 +105,6 @@ const SettingsPage = () => {
             </Text>
           </View>
         </View>
-        <Text
-          onPress={() => {
-            router.push("/(tabs)/settings/notifications");
-          }}
-          className="text-xl text-white underline"
-        >
-          Notifications
-        </Text>
       </ScrollView>
     </View>
   );
