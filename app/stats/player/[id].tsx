@@ -3,13 +3,52 @@ import ErrorScreen from "@/components/screens/error-screen";
 import LoadingScreen from "@/components/screens/loading-screen";
 import { useUserData } from "@/hooks/api/use-user-data";
 import { msToTime } from "@/lib/utils/frontend-converters";
+import { useSettingsForToken, useTokenForRunner } from "@/providers/notifications/hooks/api/use-token-for-runner";
+
 import { Image } from "expo-image";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { FlatList, RefreshControl, Text, View } from "react-native";
+import { SymbolView } from "expo-symbols";
+import { FlatList, Pressable, RefreshControl, Text, View } from "react-native";
 
 const StatsPlayerPage = () => {
   const { id: name } = useLocalSearchParams<{ id: string }>();
   const { data, refetch, isLoading, isError, isRefetching } = useUserData({ name });
+  const { data: notificationSettings, isLoading: isLoadingNotificationSettings } = useSettingsForToken();
+  const { runners = [] } = notificationSettings || {};
+  const { addTokenForRunnerMutation, deleteTokenForRunnerMutation } = useTokenForRunner();
+
+  // Compute enableNotifications if we have both user data and notification settings
+  const userUuid = data?.user?.uuid;
+  const enableNotifications = userUuid ? runners.includes(userUuid) : false;
+
+  // Show loading indicator if user data is loading OR notification settings are loading OR we don't have uuid yet
+  const isRunnerNotificationStateLoading = isLoading || isLoadingNotificationSettings || !userUuid;
+
+  const toggleRunnerNotification = (runnerId: string, runnerNick: string) => {
+    const isEnabled = runners.includes(runnerId);
+
+    if (isEnabled) {
+      deleteTokenForRunnerMutation.mutate({ runnerId });
+    } else {
+      addTokenForRunnerMutation.mutate({ runnerId });
+    }
+  };
+
+  // Header right component for bell icon
+  const renderHeaderRight = () => {
+    if (isRunnerNotificationStateLoading || !userUuid) return null;
+
+    return (
+      <Pressable
+        onPress={() => toggleRunnerNotification(userUuid, name)}
+        style={{
+          margin: 6,
+        }}
+      >
+        <SymbolView name={enableNotifications ? "bell.fill" : "bell.slash"} tintColor={"white"} />
+      </Pressable>
+    );
+  };
 
   if (isLoading) {
     return (
@@ -17,6 +56,7 @@ const StatsPlayerPage = () => {
         <Stack.Screen
           options={{
             headerTitle: name,
+            headerRight: renderHeaderRight,
           }}
         />
         <LoadingScreen />
@@ -30,6 +70,7 @@ const StatsPlayerPage = () => {
         <Stack.Screen
           options={{
             headerTitle: name,
+            headerRight: renderHeaderRight,
           }}
         />
         <ErrorScreen />
@@ -46,6 +87,7 @@ const StatsPlayerPage = () => {
       <Stack.Screen
         options={{
           headerTitle: name,
+          headerRight: renderHeaderRight,
         }}
       />
       <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">

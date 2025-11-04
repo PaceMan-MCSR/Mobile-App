@@ -1,5 +1,5 @@
 import { registerForPushNotifications } from "@/providers/notifications/helpers/register-for-push-notifications";
-import { usePushToken } from "@/providers/notifications/hooks/api/use-push-tokens";
+import { useRegisterToken } from "@/providers/notifications/hooks/api/use-push-tokens";
 import * as Notifications from "expo-notifications";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
@@ -29,7 +29,7 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
   const [notification, setNotification] = useState<Notifications.Notification | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
-  const { registerTokenMutation } = usePushToken();
+  const { registerTokenMutation } = useRegisterToken();
 
   const notificationListener = useRef<Notifications.EventSubscription>(null);
   const responseListener = useRef<Notifications.EventSubscription>(null);

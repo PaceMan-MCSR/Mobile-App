@@ -34,7 +34,45 @@ export default function StatsLayout() {
       <Stack.Screen
         name="notifications"
         options={{
-          headerShown: false,
+          headerTitle: "Notifications Settings",
+          headerShadowVisible: false,
+          headerTransparent: Platform.select({
+            ios: true,
+            android: false,
+          }),
+          headerStyle: {
+            backgroundColor: Platform.select({
+              android: backgroundColor,
+            }),
+          },
+          headerBlurEffect: !isLiquidGlassAvailable()
+            ? colorScheme === "light"
+              ? "systemChromeMaterialLight"
+              : "systemChromeMaterialDark"
+            : "none",
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      />
+      <Stack.Screen
+        name="runners"
+        options={{
+          headerTitle: "Runners Settings",
+          headerShadowVisible: false,
+          headerTransparent: Platform.select({
+            ios: true,
+            android: false,
+          }),
+          headerStyle: {
+            backgroundColor: Platform.select({
+              android: backgroundColor,
+            }),
+          },
+          headerBlurEffect: !isLiquidGlassAvailable()
+            ? colorScheme === "light"
+              ? "systemChromeMaterialLight"
+              : "systemChromeMaterialDark"
+            : "none",
+          headerBackButtonDisplayMode: "minimal",
         }}
       />
     </Stack>

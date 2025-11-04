@@ -1,8 +1,7 @@
+import PlayerCard from "@/components/player-card";
 import { useAllUsersData } from "@/hooks/api/use-all-users-data";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { useNotification } from "@/providers/notifications";
 import { useSettingsForToken, useTokenForRunner } from "@/providers/notifications/hooks/api/use-token-for-runner";
-import { useQueryClient } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useMemo, useState } from "react";
@@ -11,11 +10,9 @@ import { FlatList, Platform, Text, TouchableOpacity, View } from "react-native";
 const RunnersPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { tintColor } = useColorsForUI();
-  const { expoPushToken } = useNotification();
-  const { data: tokenSettings } = useSettingsForToken({ expoToken: expoPushToken || "" });
+  const { data: tokenSettings } = useSettingsForToken();
   const { addTokenForRunnerMutation, deleteTokenForRunnerMutation } = useTokenForRunner();
   const { data: users, isLoading, isError } = useAllUsersData();
-  const queryClient = useQueryClient();
 
   // Get enabled runners from token settings
   const enabledRunnersSet = useMemo(() => {
@@ -34,90 +31,12 @@ const RunnersPage = () => {
   };
 
   const toggleRunnerNotification = (runnerId: string, runnerNick: string) => {
-    if (!expoPushToken) {
-      console.error("[Runners] Expo push token not available");
-      return;
-    }
-
-    const queryKey = ["token-settings", expoPushToken];
     const isEnabled = enabledRunnersSet.has(runnerId);
 
-    console.log(
-      `[Runners] Toggle notification for ${runnerNick} (${runnerId}) - currently ${isEnabled ? "enabled" : "disabled"}`
-    );
-
     if (isEnabled) {
-      // Disable notifications - optimistic update
-      console.log(`[Runners] Optimistically removing ${runnerNick} from runners list`);
-      queryClient.setQueryData(queryKey, (old: any) => {
-        const currentRunners = old?.runners || [];
-        const newRunners = currentRunners.filter((id: string) => id !== runnerId);
-        console.log(`[Runners] Optimistic update - old runners:`, currentRunners, "new runners:", newRunners);
-        return {
-          ...old,
-          runners: newRunners,
-        };
-      });
-
-      deleteTokenForRunnerMutation.mutate(
-        {
-          expoToken: expoPushToken,
-          runnerId,
-        },
-        {
-          onSuccess: (data) => {
-            console.log(`[Runners] Notifications disabled for runner ${runnerNick}:`, data);
-            // Invalidate and refetch token settings to ensure consistency
-            queryClient.invalidateQueries({ queryKey });
-          },
-          onError: (error) => {
-            console.error(`[Runners] Failed to disable notifications for runner ${runnerNick}:`, error);
-            // Rollback on error
-            queryClient.invalidateQueries({ queryKey });
-          },
-          onSettled: () => {
-            console.log(`[Runners] Delete mutation settled for ${runnerNick}`);
-            // Refetch to ensure consistency
-            queryClient.invalidateQueries({ queryKey });
-          },
-        }
-      );
+      deleteTokenForRunnerMutation.mutate({ runnerId });
     } else {
-      // Enable notifications - optimistic update
-      console.log(`[Runners] Optimistically adding ${runnerNick} to runners list`);
-      queryClient.setQueryData(queryKey, (old: any) => {
-        const currentRunners = old?.runners || [];
-        const newRunners = [...currentRunners, runnerId];
-        console.log(`[Runners] Optimistic update - old runners:`, currentRunners, "new runners:", newRunners);
-        return {
-          ...old,
-          runners: newRunners,
-        };
-      });
-
-      addTokenForRunnerMutation.mutate(
-        {
-          expoToken: expoPushToken,
-          runnerId,
-        },
-        {
-          onSuccess: (data) => {
-            console.log(`[Runners] Notifications enabled for runner ${runnerNick}:`, data);
-            // Invalidate and refetch token settings to ensure consistency
-            queryClient.invalidateQueries({ queryKey });
-          },
-          onError: (error) => {
-            console.error(`[Runners] Failed to enable notifications for runner ${runnerNick}:`, error);
-            // Rollback on error
-            queryClient.invalidateQueries({ queryKey });
-          },
-          onSettled: () => {
-            console.log(`[Runners] Add mutation settled for ${runnerNick}`);
-            // Refetch to ensure consistency
-            queryClient.invalidateQueries({ queryKey });
-          },
-        }
-      );
+      addTokenForRunnerMutation.mutate({ runnerId });
     }
   };
 
@@ -181,7 +100,9 @@ const RunnersPage = () => {
           const isEnabled = enabledRunnersSet.has(item.id);
           return (
             <View className="flex flex-row items-center justify-between rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
-              <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">{item.nick}</Text>
+              <View className="flex flex-1">
+                <PlayerCard type="search" uuid={item.id} nickname={item.nick} />
+              </View>
               <TouchableOpacity
                 onPress={() => toggleRunnerNotification(item.id, item.nick)}
                 activeOpacity={0.6}
