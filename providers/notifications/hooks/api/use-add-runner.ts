@@ -87,7 +87,6 @@ export const useAddRunner = () => {
       queryClient.fetchQuery({ queryKey });
     },
     onSettled: () => {
-      console.log("We hitting the settle.");
       const queryKey = ["token-settings", expoToken];
       queryClient.fetchQuery({ queryKey });
     },

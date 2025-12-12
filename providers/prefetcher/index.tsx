@@ -27,7 +27,6 @@ export const PrefetcherProvider = ({ children }: PrefetcherProviderProps) => {
   useAllUsersData();
   useEffect(() => {
     if (expoToken) {
-      console.log("Refetched from prefetcher.");
       refetch();
     }
   }, [expoToken]);

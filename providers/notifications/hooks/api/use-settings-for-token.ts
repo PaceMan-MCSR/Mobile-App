@@ -13,7 +13,6 @@ export const getSettingsForToken = async ({
   if (!expoToken) {
     throw new Error("Expo token is required");
   }
-  console.log(`Refetch hit.`);
 
   const response = await fetch(`${PUSH_NOTIFICATIONS_SERVICE_URL}/api/pns/token/get-settings-for-token/${expoToken}`, {
     headers: {
