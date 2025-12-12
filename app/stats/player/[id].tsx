@@ -1,8 +1,9 @@
-import RunCard from "@/components/RunCard";
-import ErrorScreen from "@/components/screens/ErrorScreen";
-import LoadingScreen from "@/components/screens/LoadingScreen";
-import { useUserData } from "@/hooks/api/useUserData";
-import { msToTime } from "@/lib/utils/frontendConverters";
+import RunCard from "@/components/run-card";
+import ErrorScreen from "@/components/screens/error-screen";
+import LoadingScreen from "@/components/screens/loading-screen";
+import { useUserData } from "@/hooks/api/use-user-data";
+import { msToTime } from "@/lib/utils/frontend-converters";
+
 import { Image } from "expo-image";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { FlatList, RefreshControl, Text, View } from "react-native";

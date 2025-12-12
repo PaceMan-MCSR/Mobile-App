@@ -1,7 +1,7 @@
-import TwitchButton from "@/components/TwitchButton";
-import { useLiverunsData } from "@/hooks/api/useLiverunsData";
-import { useBottomSheetBackHandler } from "@/hooks/useBottomSheetBackHandler";
-import { getSortedEventsWithTimes, msToTime } from "@/lib/utils/frontendConverters";
+import TwitchButton from "@/components/twitch-button";
+import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
+import { useBottomSheetBackHandler } from "@/hooks/use-bottom-sheet-back-handler";
+import { getSortedEventsWithTimes, msToTime } from "@/lib/utils/frontend-converters";
 import BottomSheet, { BottomSheetBackdropProps, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
@@ -76,7 +76,7 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
                 {selectedPace.nickname}
               </Text>
             </TouchableOpacity>
-            {selectedPace.twitch && <TwitchButton href={selectedPace.twitch} />}
+            <TwitchButton twitch={selectedPace.twitch} />
           </View>
 
           {/* CURRENT PACE SPLIT */}

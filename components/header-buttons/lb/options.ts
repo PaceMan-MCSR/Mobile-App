@@ -8,6 +8,7 @@ export const leaderboardFilters = [
   { key: "season-2", label: "Trophy - Season 2" },
   { key: "season-3", label: "Trophy - Season 3" },
   { key: "season-4", label: "Trophy - Season 4" },
+  { key: "season-5", label: "Trophy - Season 5" },
 ] as const;
 
 export type LeaderboardType = (typeof leaderboardFilters)[number]["key"];

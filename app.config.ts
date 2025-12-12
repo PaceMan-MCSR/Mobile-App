@@ -10,14 +10,21 @@ const getBundleIdentifier = () => {
   if (process.env.APP_VARIANT === "preview") return "com.chitrakshtarun.pacemangg.preview";
 };
 
+const getGoogleServicesFile = () => {
+  if (process.env.APP_VARIANT === "production") return "./.google-services/production.json";
+  if (process.env.APP_VARIANT === "development") return "./.google-services/development.json";
+  if (process.env.APP_VARIANT === "preview") return "./.google-services/preview.json";
+};
+
 const appName = getAppName();
 const bundleIdentifier = getBundleIdentifier();
+const googleServicesFile = getGoogleServicesFile();
 
 export default {
   expo: {
     name: appName,
     slug: "PaceManGG",
-    version: "1.1.0",
+    version: "1.2.0",
     orientation: "portrait",
     newArchEnabled: true,
     icon: "./assets/images/icon.png",
@@ -42,6 +49,7 @@ export default {
         backgroundColor: "#ffffff",
       },
       package: bundleIdentifier,
+      googleServicesFile: googleServicesFile,
     },
     web: {
       bundler: "metro",
@@ -51,6 +59,9 @@ export default {
     plugins: [
       "expo-router",
       "expo-font",
+      "expo-notifications",
+      "expo-secure-store",
+      "expo-web-browser",
       "react-native-bottom-tabs",
       [
         "expo-build-properties",

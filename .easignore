@@ -1,0 +1,21 @@
+node_modules/
+
+android/
+ios/
+
+.expo/
+testdata/
+dist/
+
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+# macOS
+.DS_Store
+
+expo-env.d.ts

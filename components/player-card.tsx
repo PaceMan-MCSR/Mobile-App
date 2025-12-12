@@ -1,4 +1,4 @@
-import { msToTime } from "@/lib/utils/frontendConverters";
+import { msToTime } from "@/lib/utils/frontend-converters";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { memo } from "react";
@@ -12,9 +12,10 @@ interface PlayerCardProps {
   nickname: string;
   score?: number;
   time?: number;
+  route?: string;
 }
 
-const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }: PlayerCardProps) => {
+const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time, route }: PlayerCardProps) => {
   const getRankColor = (index: number) => {
     if (index === 0) return `text-[#daa520] italic`;
     if (index === 1) return `text-[#929292] italic`;
@@ -22,8 +23,11 @@ const PlayerCard = ({ type = "leaderboard", index, uuid, nickname, score, time }
     return `text-black dark:text-[#ECEDEE]`;
   };
 
+  const defaultRoute = `/stats/player/${nickname}`;
+  const href = route || defaultRoute;
+
   return (
-    <Link href={`/stats/player/${nickname}`} push asChild>
+    <Link href={href} push asChild>
       <TouchableOpacity activeOpacity={0.5} className="flex w-full flex-row items-center gap-3">
         {/* RANK || POINTS  */}
         {type !== "search" && (

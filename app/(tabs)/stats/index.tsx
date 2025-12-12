@@ -1,11 +1,11 @@
 import HeaderButtonStats from "@/components/header-buttons/stats";
 import { CategoriesType, DaysType, SortByType } from "@/components/header-buttons/stats/options";
-import PlayerCard from "@/components/PlayerCard";
-import ErrorScreen from "@/components/screens/ErrorScreen";
-import LoadingScreen from "@/components/screens/LoadingScreen";
-import { useAllUsersData } from "@/hooks/api/useAllUsersData";
-import { useStatsData } from "@/hooks/api/useStatsData";
-import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontendConverters";
+import PlayerCard from "@/components/player-card";
+import ErrorScreen from "@/components/screens/error-screen";
+import LoadingScreen from "@/components/screens/loading-screen";
+import { useAllUsersData } from "@/hooks/api/use-all-users-data";
+import { useStatsData } from "@/hooks/api/use-stats-data";
+import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontend-converters";
 import { Stack } from "expo-router";
 import { useMemo, useState } from "react";
 import { FlatList, Platform, RefreshControl, Text, View } from "react-native";

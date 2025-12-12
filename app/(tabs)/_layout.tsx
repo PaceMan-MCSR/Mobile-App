@@ -1,4 +1,4 @@
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
 import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
 import { withLayoutContext } from "expo-router";
@@ -6,12 +6,13 @@ import { Platform } from "react-native";
 import { useMMKVBoolean } from "react-native-mmkv";
 const Tabs = withLayoutContext(createNativeBottomTabNavigator().Navigator);
 
-export default function TabLayout() {
+export default function TabsLayout() {
   const [haptics] = useMMKVBoolean("settings-haptics", storage);
   const { tintColor, backgroundColor, tabBarTintColor } = useColorsForUI();
 
   return (
     <Tabs
+      labeled
       hapticFeedbackEnabled={haptics}
       tabBarActiveTintColor={tintColor}
       activeIndicatorColor={tabBarTintColor}
@@ -32,7 +33,6 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           tabBarLabel: "PaceMan.gg",
-
           tabBarIcon: Platform.select({
             ios: () => ({ sfSymbol: "stopwatch" }),
             android: ({ focused }: { focused: boolean }) =>
@@ -64,6 +64,18 @@ export default function TabLayout() {
             ios: () => ({ sfSymbol: "chart.bar" }),
             android: ({ focused }: { focused: boolean }) =>
               focused ? require("@/assets/icons/stats-chart.svg") : require("@/assets/icons/stats-chart-outline.svg"),
+          }),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Settings",
+          tabBarIcon: Platform.select({
+            ios: () => ({ sfSymbol: "gear" }),
+            android: ({ focused }: { focused: boolean }) =>
+              focused ? require("@/assets/icons/cog.svg") : require("@/assets/icons/cog-outline.svg"),
           }),
         }}
       />

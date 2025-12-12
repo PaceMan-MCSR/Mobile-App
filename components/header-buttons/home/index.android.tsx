@@ -1,12 +1,10 @@
 import { gameVersionFilters, HeaderButtonHomeProps } from "@/components/header-buttons/home/options";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { MenuView } from "@react-native-menu/menu";
-import { useRouter } from "expo-router";
 import { View } from "react-native";
 
 const HeaderButtonHome = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOnlyToggle }: HeaderButtonHomeProps) => {
-  const router = useRouter();
   const { tintColor } = useColorsForUI();
 
   return (
@@ -20,8 +18,6 @@ const HeaderButtonHome = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOn
             onGameVersionSelect(actionId);
           } else if (actionId === "live-only") {
             onLiveOnlyToggle();
-          } else if (actionId === "settings") {
-            router.push("/settings");
           }
         }}
         actions={[
@@ -41,11 +37,6 @@ const HeaderButtonHome = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOn
             title: "Live Only",
             titleColor: tintColor,
             state: liveOnly ? "on" : "off",
-          },
-          {
-            id: "settings",
-            title: "Settings",
-            titleColor: tintColor,
           },
         ]}
       >

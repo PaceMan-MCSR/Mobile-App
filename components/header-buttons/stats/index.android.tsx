@@ -7,7 +7,7 @@ import {
   sortByFilters,
   SortByType,
 } from "@/components/header-buttons/stats/options";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { MenuView } from "@react-native-menu/menu";
 import { View } from "react-native";

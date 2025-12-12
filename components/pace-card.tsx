@@ -1,6 +1,6 @@
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Pace } from "@/lib/types/Pace";
-import { msToTime } from "@/lib/utils/frontendConverters";
+import { msToTime } from "@/lib/utils/frontend-converters";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";

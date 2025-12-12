@@ -4,7 +4,7 @@ import {
   HeaderButtonStatsProps,
   sortByFilters,
 } from "@/components/header-buttons/stats/options";
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { SymbolView } from "expo-symbols";
 import * as DropdownMenu from "zeego/dropdown-menu";
 

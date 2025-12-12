@@ -1,5 +1,4 @@
 export interface Event {
-  eventId: any;
   name: string;
   time: number;
 }
@@ -15,8 +14,10 @@ export interface Pace {
   twitch: string | null;
   lastUpdated: number;
   isHighQuality: boolean;
-  itemEstimates?: any;
   gameVersion: string;
+  isLive?: boolean;
+  vodId?: number | null;
+  vodOffset?: number | null;
 }
 
 export interface PaceSettings {

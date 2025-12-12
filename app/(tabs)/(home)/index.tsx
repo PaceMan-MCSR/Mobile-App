@@ -1,9 +1,9 @@
 import HeaderButtonHome from "@/components/header-buttons/home";
-import PaceBottomSheet from "@/components/PaceBottomSheet";
-import PaceCard from "@/components/PaceCard";
-import ErrorScreen from "@/components/screens/ErrorScreen";
-import LoadingScreen from "@/components/screens/LoadingScreen";
-import { useLiverunsData } from "@/hooks/api/useLiverunsData";
+import PaceBottomSheet from "@/components/pace-bottom-sheet";
+import PaceCard from "@/components/pace-card";
+import ErrorScreen from "@/components/screens/error-screen";
+import LoadingScreen from "@/components/screens/loading-screen";
+import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
 import { Pace } from "@/lib/types/Pace";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { Tabs } from "expo-router";

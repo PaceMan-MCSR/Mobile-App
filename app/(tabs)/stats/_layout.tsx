@@ -1,25 +1,15 @@
-import { useColorsForUI } from "@/hooks/useColorsForUI";
+import { useScreenOptions } from "@/hooks/use-screen-options";
 import { Stack } from "expo-router";
-import { Platform } from "react-native";
 
 export default function StatsLayout() {
-  const { backgroundColor } = useColorsForUI();
+  const screenOptions = useScreenOptions();
+
   return (
-    <Stack>
+    <Stack screenOptions={screenOptions}>
       <Stack.Screen
         name="index"
         options={{
           headerTitle: "Stats",
-          headerShadowVisible: false,
-          headerTransparent: Platform.select({
-            ios: true,
-            android: false,
-          }),
-          headerStyle: {
-            backgroundColor: Platform.select({
-              android: backgroundColor,
-            }),
-          },
         }}
       />
     </Stack>
