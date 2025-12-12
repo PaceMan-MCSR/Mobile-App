@@ -82,6 +82,7 @@ const RunnersPage = () => {
           {
             text: "Add",
             onPress: () => addTokenForRunnerMutation.mutate({ runnerId }),
+            isPreferred: true,
           },
         ]
       );
