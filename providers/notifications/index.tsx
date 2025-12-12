@@ -1,3 +1,4 @@
+import RegisterTokenToast from "@/components/register-token-toast";
 import { prepareAndroidIntegrityTokenProvider } from "@/providers/notifications/helpers/android-integrity-provider";
 import { useRegisterToken } from "@/providers/notifications/hooks/api/use-register-token";
 import { registerForPushNotifications } from "@/providers/notifications/register-for-push-notifications";
@@ -91,6 +92,11 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
   return (
     <NotificationContext.Provider value={{ expoToken, deviceToken, notification, error, permission }}>
       {children}
+      <RegisterTokenToast
+        isPending={registerTokenMutation.isPending}
+        isSuccess={registerTokenMutation.isSuccess}
+        isError={registerTokenMutation.isError}
+      />
     </NotificationContext.Provider>
   );
 };
