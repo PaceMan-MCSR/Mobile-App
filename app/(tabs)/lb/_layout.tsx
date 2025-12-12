@@ -1,33 +1,15 @@
-import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { isLiquidGlassAvailable } from "expo-glass-effect";
+import { useScreenOptions } from "@/hooks/use-screen-options";
 import { Stack } from "expo-router";
-import { useColorScheme } from "nativewind";
-import { Platform } from "react-native";
 
-export default function StatsLayout() {
-  const { colorScheme } = useColorScheme();
-  const { backgroundColor } = useColorsForUI();
+export default function LeaderboardLayout() {
+  const screenOptions = useScreenOptions();
+
   return (
-    <Stack>
+    <Stack screenOptions={screenOptions}>
       <Stack.Screen
         name="[id]"
         options={{
           headerTitle: "Leaderboard",
-          headerShadowVisible: false,
-          headerTransparent: Platform.select({
-            ios: true,
-            android: false,
-          }),
-          headerStyle: {
-            backgroundColor: Platform.select({
-              android: backgroundColor,
-            }),
-          },
-          headerBlurEffect: !isLiquidGlassAvailable()
-            ? colorScheme === "light"
-              ? "systemChromeMaterialLight"
-              : "systemChromeMaterialDark"
-            : "none",
         }}
         initialParams={{ id: "monthly" }}
       />

@@ -3,7 +3,8 @@
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import { useColorScheme } from "nativewind";
+import { isDevice } from "expo-device";
+import { Platform } from "react-native";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -30,34 +31,14 @@ export const msToTime = (ms: number, keepMs = false): string => {
 
 export const msToDate = (ms: number) => dayjs(ms).format("MM/DD/YYYY");
 
-export const uuidToHead = (uuid: string): string => {
-  const endpoint = "https://api.mineatar.io/face/";
-  return `${endpoint}${uuid}`;
-};
+export const formatDurationForTwitchVodOffset = (seconds: number): string => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
 
-export const uuidToSkin = (uuid: string): string => {
-  const endpoint = "https://mc-heads.net/body/";
-  return `${endpoint}${uuid}`;
-};
+  const minuteString = minutes > 0 ? `${minutes}m` : "";
+  const secondString = remainingSeconds > 0 ? `${remainingSeconds}s` : "";
 
-export const tintColor = () => {
-  const { colorScheme } = useColorScheme();
-  colorScheme === "dark" ? "white" : "black";
-};
-
-export const backgroundColor = () => {
-  const { colorScheme } = useColorScheme();
-  colorScheme === "dark" ? "#FFFFFF" : "#1f2937";
-};
-
-// https://stackoverflow.com/questions/13627308/add-st-nd-rd-and-th-ordinal-suffix-to-a-number
-export const ordinalSuffix = (i: number): string => {
-  const j = i % 10,
-    k = i % 100;
-  if (j === 1 && k !== 11) return i + "st";
-  if (j === 2 && k !== 12) return i + "nd";
-  if (j === 3 && k !== 13) return i + "rd";
-  return i + "th";
+  return `${minuteString}${secondString}`;
 };
 
 export const EVENT_ID_NAME = [
@@ -70,28 +51,6 @@ export const EVENT_ID_NAME = [
   "Enter End",
   "Finish",
 ];
-
-export const lastUpdatedDifference = (lastUpdated: number, latestSplit: number) => {
-  const now = dayjs().tz("America/Toronto").valueOf();
-  return msToTime(latestSplit + now - lastUpdated);
-};
-
-export const createDateFromInput = (date: dayjs.Dayjs) => {
-  date = date ?? dayjs();
-
-  const [d, m, y] = [date.get("date"), date.get("month"), date.get("year")];
-
-  const newDate = date.tz("America/Toronto");
-  newDate.set("date", d);
-  newDate.set("month", m);
-  newDate.set("year", y);
-
-  return newDate.valueOf();
-};
-
-export const isUserLive = (liveAccount: string | null) => liveAccount !== null;
-
-export const fracToPerc = (frac: number) => `${Math.round(frac * 10000) / 100}%`;
 
 export const eventIdToName = new Map<string, string>([
   ["rsg.enter_nether", "Enter Nether"],
@@ -187,3 +146,6 @@ export const getSortedEventsWithTimes = (completedEvents: Map<string, number>): 
 
   return sortedEvents;
 };
+
+// Physical Mobile Devices Check
+export const isDeviceEligibleForNotifications = isDevice && (Platform.OS === "ios" || Platform.OS === "android");

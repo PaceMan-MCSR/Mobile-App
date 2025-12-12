@@ -1,80 +1,38 @@
-import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { isLiquidGlassAvailable } from "expo-glass-effect";
+import { useScreenOptions } from "@/hooks/use-screen-options";
+import { isDeviceEligibleForNotifications } from "@/lib/utils/frontend-converters";
 import { Stack } from "expo-router";
-import { useColorScheme } from "nativewind";
-import { Platform } from "react-native";
 
-export default function StatsLayout() {
-  const { colorScheme } = useColorScheme();
+export default function SettingsLayout() {
+  const screenOptions = useScreenOptions();
 
-  const { backgroundColor } = useColorsForUI();
   return (
-    <Stack>
+    <Stack screenOptions={screenOptions}>
       <Stack.Screen
         name="index"
         options={{
           headerTitle: "Settings",
-          headerShadowVisible: false,
-          headerTransparent: Platform.select({
-            ios: true,
-            android: false,
-          }),
-          headerStyle: {
-            backgroundColor: Platform.select({
-              android: backgroundColor,
-            }),
-          },
-          headerBlurEffect: !isLiquidGlassAvailable()
-            ? colorScheme === "light"
-              ? "systemChromeMaterialLight"
-              : "systemChromeMaterialDark"
-            : "none",
         }}
       />
-      <Stack.Screen
-        name="notifications"
-        options={{
-          headerTitle: "Notifications Settings",
-          headerShadowVisible: false,
-          headerTransparent: Platform.select({
-            ios: true,
-            android: false,
-          }),
-          headerStyle: {
-            backgroundColor: Platform.select({
-              android: backgroundColor,
-            }),
-          },
-          headerBlurEffect: !isLiquidGlassAvailable()
-            ? colorScheme === "light"
-              ? "systemChromeMaterialLight"
-              : "systemChromeMaterialDark"
-            : "none",
-          headerBackButtonDisplayMode: "minimal",
-        }}
-      />
-      <Stack.Screen
-        name="runners"
-        options={{
-          headerTitle: "Runners Settings",
-          headerShadowVisible: false,
-          headerTransparent: Platform.select({
-            ios: true,
-            android: false,
-          }),
-          headerStyle: {
-            backgroundColor: Platform.select({
-              android: backgroundColor,
-            }),
-          },
-          headerBlurEffect: !isLiquidGlassAvailable()
-            ? colorScheme === "light"
-              ? "systemChromeMaterialLight"
-              : "systemChromeMaterialDark"
-            : "none",
-          headerBackButtonDisplayMode: "minimal",
-        }}
-      />
+      <Stack.Protected guard={isDeviceEligibleForNotifications}>
+        <Stack.Screen
+          name="notifications"
+          options={{
+            headerTitle: "Notifications Settings",
+          }}
+        />
+        <Stack.Screen
+          name="runners"
+          options={{
+            headerTitle: "Manage Speedrunners",
+          }}
+        />
+        <Stack.Screen
+          name="notifications/runners/[id]"
+          options={{
+            headerTitle: "Runners Settings",
+          }}
+        />
+      </Stack.Protected>
     </Stack>
   );
 }

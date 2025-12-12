@@ -1,13 +1,19 @@
-import { registerForPushNotifications } from "@/providers/notifications/helpers/register-for-push-notifications";
-import { useRegisterToken } from "@/providers/notifications/hooks/api/use-push-tokens";
+import { prepareAndroidIntegrityTokenProvider } from "@/providers/notifications/helpers/android-integrity-provider";
+import { useRegisterToken } from "@/providers/notifications/hooks/api/use-register-token";
+import { registerForPushNotifications } from "@/providers/notifications/register-for-push-notifications";
+import { useQueryClient } from "@tanstack/react-query";
 import * as Notifications from "expo-notifications";
+import { usePathname } from "expo-router";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
-import { Platform } from "react-native";
+import { handleNotificationWhenBackgroundedAndTapped } from "./helpers/handle-notification-when-backgrounded-and-tapped";
+import { handleNotificationWhenForegrounded } from "./helpers/handle-notification-when-foregrounded";
 
 interface NotificationContextType {
-  expoPushToken: string | null;
+  expoToken: string | null;
+  deviceToken: string | null;
   notification: Notifications.Notification | null;
   error: Error | null;
+  permission: string | null;
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
@@ -25,34 +31,46 @@ interface NotificationsProviderProps {
 }
 
 export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ children }) => {
-  const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
+  const [expoToken, setExpoToken] = useState<string | null>(null);
+  const [deviceToken, setDeviceToken] = useState<string | null>(null);
+  const [permission, setPermission] = useState<string | null>(null);
   const [notification, setNotification] = useState<Notifications.Notification | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   const { registerTokenMutation } = useRegisterToken();
 
-  const notificationListener = useRef<Notifications.EventSubscription>(null);
+  const queryClient = useQueryClient();
   const responseListener = useRef<Notifications.EventSubscription>(null);
+  const notificationListener = useRef<Notifications.EventSubscription>(null);
+
+  const currentPath = usePathname();
+  const currentPathRef = useRef(currentPath);
 
   useEffect(() => {
-    registerForPushNotifications(registerTokenMutation).then(
-      (token) => setExpoPushToken(token),
+    currentPathRef.current = currentPath;
+  }, [currentPath]);
+
+  const tappedNotification = Notifications.useLastNotificationResponse();
+
+  useEffect(() => {
+    prepareAndroidIntegrityTokenProvider();
+
+    Notifications.getPermissionsAsync().then(({ status }) => {
+      setPermission(status);
+    });
+
+    registerForPushNotifications(registerTokenMutation, queryClient).then(
+      ({ expoToken, deviceToken }) => {
+        setExpoToken(expoToken);
+        setDeviceToken(deviceToken);
+      },
       (error) => setError(error)
     );
 
     // HANDLE NOTIFICATIONS WHEN INSIDE APP
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-      console.log(`[${Platform.OS}] - Received: ${JSON.stringify(notification)}`);
+      handleNotificationWhenForegrounded(notification, currentPathRef.current);
       setNotification(notification);
-    });
-
-    // HANDLE NOTIFICATIONS WHEN OUTSIDE APP, AND NOTIFICATION CLICKED ON
-    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log(
-        `[${Platform.OS}] - Response:
-        ${JSON.stringify(response, null, 2)},
-        ${JSON.stringify(response.notification.request.content.data, null, 2)}`
-      );
     });
 
     return () => {
@@ -65,8 +83,13 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
     };
   }, []);
 
+  // HANDLE NOTIFICATIONS WHEN OUTSIDE APP, AND NOTIFICATION CLICKED ON
+  useEffect(() => {
+    handleNotificationWhenBackgroundedAndTapped(tappedNotification);
+  }, [tappedNotification]);
+
   return (
-    <NotificationContext.Provider value={{ expoPushToken, notification, error }}>
+    <NotificationContext.Provider value={{ expoToken, deviceToken, notification, error, permission }}>
       {children}
     </NotificationContext.Provider>
   );

@@ -24,7 +24,7 @@ export default {
   expo: {
     name: appName,
     slug: "PaceManGG",
-    version: "1.1.0",
+    version: "1.2.0",
     orientation: "portrait",
     newArchEnabled: true,
     icon: "./assets/images/icon.png",
@@ -60,6 +60,7 @@ export default {
       "expo-router",
       "expo-font",
       "expo-notifications",
+      "expo-secure-store",
       "expo-web-browser",
       "react-native-bottom-tabs",
       [

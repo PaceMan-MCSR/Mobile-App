@@ -1,6 +1,6 @@
 import Completion from "@/lib/types/Completion";
-import Event from "@/lib/types/Event";
-import { Pace } from "@/lib/types/Pace";
+import { Event, Pace } from "@/lib/types/Pace";
+import { World, WorldData } from "@/lib/types/World";
 
 export const eventIdToName = new Map<string, string>([
   ["rsg.enter_nether", "Enter Nether"],
@@ -44,23 +44,42 @@ export const goodPaceSplits = new Map([
   ["rsg.credits", 600000], // 10:00
 ]);
 
-export const apiToPace = async (paceItems: any[]): Promise<Pace[]> => {
+export const worldFieldToEventName = new Map<string, string>([
+  ["nether", "Enter Nether"],
+  ["bastion", "Enter Bastion"],
+  ["fortress", "Enter Fortress"],
+  ["first_portal", "First Portal"],
+  ["stronghold", "Enter Stronghold"],
+  ["end", "Enter End"],
+  ["finish", "Finish"],
+]);
+
+export const isHighQualityPace = (
+  gameVersion: string,
+  eventList: { eventId: string; igt: number }[],
+  latestEvent: { eventId: string; igt: number }
+): boolean => {
+  if (gameVersion !== "1.16.1") return false;
+
+  if (eventList.length === 3) {
+    return latestEvent.igt <= goodPaceSplits.get("s2")!;
+  }
+
+  // Check if the latest event has a "good pace" threshold
+  if (goodPaceSplits.has(latestEvent.eventId)) {
+    return latestEvent.igt <= goodPaceSplits.get(latestEvent.eventId)!;
+  }
+
+  return false;
+};
+
+export const liverunsToPace = (paceItems: any[]): Pace[] => {
   const filteredPace = paceItems.filter((p) => !p.isCheated && !p.isHidden);
   const mappedPace: Pace[] = [];
   for (const p of filteredPace) {
     const latestEvent = p.eventList[p.eventList.length - 1];
     if (!eventIdToName.has(latestEvent.eventId)) {
       continue;
-    }
-
-    let isHighQuality = false;
-
-    if (p.gameVersion === "1.16.1") {
-      if (p.eventList.length === 3) {
-        isHighQuality = latestEvent.igt <= goodPaceSplits.get("s2")!; // 4:30
-      } else if (goodPaceSplits.has(latestEvent.eventId)) {
-        isHighQuality = latestEvent.igt <= goodPaceSplits.get(latestEvent.eventId)!;
-      }
     }
 
     const formattedEventList: Event[] = p.eventList.map((e: any) => ({
@@ -78,13 +97,82 @@ export const apiToPace = async (paceItems: any[]): Promise<Pace[]> => {
       uuid: p.user.uuid,
       twitch: p.user.liveAccount,
       lastUpdated: p.lastUpdated,
-      isHighQuality,
-      itemEstimates: p.itemData ? p.itemData.estimatedCounts : null,
+      isHighQuality: isHighQualityPace(p.gameVersion, p.eventList, latestEvent),
+      isLive: true,
       gameVersion: p.gameVersion,
     });
   }
 
   return mappedPace;
+};
+
+export const worldToPace = (worldItems: World): Pace | null => {
+  if (!worldItems) return null;
+  const { data, time: lastUpdated, isLive } = worldItems;
+  const { nickname, worldId, uuid, twitch, vodId, vodOffset } = data;
+
+  // Create event list from worldItems data
+  const eventFields: (keyof WorldData)[] = [
+    "nether",
+    "bastion",
+    "fortress",
+    "first_portal",
+    "stronghold",
+    "end",
+    "finish",
+  ];
+  const eventList: Event[] = eventFields
+    .map((field) => {
+      const time = data[field];
+
+      if (time === null || time === undefined) {
+        return null;
+      }
+
+      const name = worldFieldToEventName.get(field);
+      if (!name) {
+        return null;
+      }
+
+      return {
+        name,
+        time,
+      };
+    })
+    .filter((event): event is Event => event !== null)
+    .sort((a, b) => a.time - b.time);
+
+  const isHighQuality = isHighQualityPace(
+    "1.16.1",
+    eventList.map((e, _) => ({
+      eventId: Array.from(worldFieldToEventName.entries()).find(([_, name]) => name === e.name)?.[0] || "",
+      igt: e.time,
+    })),
+    {
+      eventId:
+        Array.from(worldFieldToEventName.entries()).find(
+          ([_, name]) => name === eventList[eventList.length - 1].name
+        )?.[0] || "",
+      igt: eventList[eventList.length - 1].time,
+    }
+  );
+
+  return {
+    nickname,
+    worldId,
+    split: eventList.length - 1,
+    splitName: eventList[eventList.length - 1].name,
+    time: eventList[eventList.length - 1].time,
+    eventList,
+    uuid,
+    twitch,
+    lastUpdated,
+    isHighQuality,
+    gameVersion: "1.16.1",
+    isLive,
+    vodId,
+    vodOffset,
+  };
 };
 
 export const paceSort = (a: Pace, b: Pace) => {

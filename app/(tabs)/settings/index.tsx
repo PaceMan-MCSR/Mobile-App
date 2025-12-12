@@ -1,19 +1,28 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
+import { isDeviceEligibleForNotifications } from "@/lib/utils/frontend-converters";
 import { storage } from "@/lib/utils/mmkv";
+import { useNotification } from "@/providers/notifications";
+import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
 import { useRouter } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useColorScheme } from "nativewind";
-import { Linking, Platform, Pressable, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Linking, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
 
 const SettingsPage = () => {
-  const { setColorScheme } = useColorScheme();
   const [theme, setTheme] = useMMKVString("settings-theme", storage);
   const [haptics, setHaptics] = useMMKVBoolean("settings-haptics", storage);
+
+  const { permission } = useNotification();
+  const { setColorScheme } = useColorScheme();
   const { tintColor, checkboxColor } = useColorsForUI();
+  const { data: tokenSettings, isLoading: isTokenSettingsLoading } = useSettingsForToken();
+
+  const isNotificationsSettingsAvailable = !isTokenSettingsLoading && !!tokenSettings;
   const router = useRouter();
+
   return (
     <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
       <ScrollView contentInsetAdjustmentBehavior="automatic" className="px-4" contentContainerClassName="gap-4">
@@ -64,27 +73,47 @@ const SettingsPage = () => {
               <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">Tab Bar Haptics</Text>
               <Checkbox value={haptics} onValueChange={setHaptics} color={checkboxColor} />
             </View>
-            <Text className="flex flex-1 text-sm text-black dark:text-[#ECEDEE]">
-              Toggle haptic feedback effect on the bottom tab bar.
-            </Text>
           </View>
         </View>
         {/* NOTIFICATIONS SETTINGS */}
-        <View>
-          <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">Push Notifications</Text>
-          <Pressable
-            onPress={() => router.push("/(tabs)/settings/notifications")}
-            className="gap-2 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
-          >
-            <View className="flex flex-row items-center">
-              <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
-                Notifications Settings
-              </Text>
-              {Platform.OS === "ios" && <SymbolView name="chevron.right" size={18} />}
-              {Platform.OS === "android" && <MaterialCommunityIcons name="chevron-right" size={24} color={tintColor} />}
-            </View>
-          </Pressable>
-        </View>
+        {isDeviceEligibleForNotifications && (
+          <View className="gap-3">
+            <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">Push Notifications</Text>
+            {permission === "denied" ? (
+              <View className="gap-2 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
+                <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
+                  Notification permissions not granted
+                </Text>
+                <Text className="text-md text-black/70 dark:text-[#ECEDEE]/70">
+                  Enable notification permissions for the PaceMan.gg app in your device settings, if you wish to receive
+                  push notifications.
+                </Text>
+              </View>
+            ) : (
+              <Pressable
+                disabled={!isNotificationsSettingsAvailable}
+                onPress={() => router.push("/settings/notifications")}
+                className="gap-2 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
+              >
+                <View className="flex flex-row items-center">
+                  <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
+                    {isNotificationsSettingsAvailable ? `Notifications Settings ` : `Syncing Notifications Settings`}
+                  </Text>
+                  {isNotificationsSettingsAvailable ? (
+                    <>
+                      {Platform.OS === "ios" && <SymbolView name="chevron.right" size={18} />}
+                      {Platform.OS === "android" && (
+                        <MaterialCommunityIcons name="chevron-right" size={24} color={tintColor} />
+                      )}
+                    </>
+                  ) : (
+                    <ActivityIndicator />
+                  )}
+                </View>
+              </Pressable>
+            )}
+          </View>
+        )}
         {/* ABOUT SECTION */}
         <View>
           <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">About</Text>

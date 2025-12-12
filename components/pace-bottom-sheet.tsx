@@ -76,7 +76,7 @@ const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
                 {selectedPace.nickname}
               </Text>
             </TouchableOpacity>
-            {selectedPace.twitch && <TwitchButton href={selectedPace.twitch} />}
+            <TwitchButton twitch={selectedPace.twitch} />
           </View>
 
           {/* CURRENT PACE SPLIT */}
