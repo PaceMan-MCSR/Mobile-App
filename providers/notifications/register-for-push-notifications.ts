@@ -85,7 +85,7 @@ export const registerForPushNotifications = async (
             }
           }
         }
-        return { expoToken, deviceToken };
+        return { expoToken, deviceToken, finalStatus };
       } catch (e: unknown) {
         throw new Error(`${e}`);
       }
