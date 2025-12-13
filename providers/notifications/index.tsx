@@ -56,14 +56,11 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
   useEffect(() => {
     prepareAndroidIntegrityTokenProvider();
 
-    Notifications.getPermissionsAsync().then(({ status }) => {
-      setPermission(status);
-    });
-
     registerForPushNotifications(registerTokenMutation, queryClient).then(
-      ({ expoToken, deviceToken }) => {
+      ({ expoToken, deviceToken, finalStatus }) => {
         setExpoToken(expoToken);
         setDeviceToken(deviceToken);
+        setPermission(finalStatus);
       },
       (error) => {
         setError(error);
