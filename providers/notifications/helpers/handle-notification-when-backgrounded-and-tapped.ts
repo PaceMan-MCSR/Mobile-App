@@ -17,7 +17,8 @@ export const handleNotificationWhenBackgroundedAndTapped = async (
   if (!tappedNotification) return;
 
   if (
-    tappedNotification.notification.request.content.data &&
+    tappedNotification.notification.request.content.data.worldId &&
+    tappedNotification.notification.request.content.data.nickname &&
     tappedNotification.actionIdentifier === DEFAULT_ACTION_IDENTIFIER
   ) {
     const { worldId, nickname } = tappedNotification.notification.request.content.data as {
