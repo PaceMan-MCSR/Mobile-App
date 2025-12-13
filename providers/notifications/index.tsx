@@ -14,7 +14,7 @@ interface NotificationContextType {
   deviceToken: string | null;
   notification: Notifications.Notification | null;
   error: Error | null;
-  permission: string | null;
+  permission: `${Notifications.PermissionStatus}` | null;
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
@@ -34,7 +34,7 @@ interface NotificationsProviderProps {
 export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ children }) => {
   const [expoToken, setExpoToken] = useState<string | null>(null);
   const [deviceToken, setDeviceToken] = useState<string | null>(null);
-  const [permission, setPermission] = useState<string | null>(null);
+  const [permission, setPermission] = useState<`${Notifications.PermissionStatus}` | null>(null);
   const [notification, setNotification] = useState<Notifications.Notification | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
@@ -65,7 +65,12 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
         setExpoToken(expoToken);
         setDeviceToken(deviceToken);
       },
-      (error) => setError(error)
+      (error) => {
+        setError(error);
+        if (error.message === "Permission not granted to get push token for push notification!") {
+          setPermission("denied");
+        }
+      }
     );
 
     // HANDLE NOTIFICATIONS WHEN INSIDE APP
