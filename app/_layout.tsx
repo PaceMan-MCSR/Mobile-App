@@ -5,6 +5,7 @@ import { useScreenOptions } from "@/hooks/use-screen-options";
 import { storage } from "@/lib/utils/mmkv";
 import { NotificationsProvider } from "@/providers/notifications";
 import { PrefetcherProvider } from "@/providers/prefetcher";
+import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -50,6 +51,9 @@ export default function RootLayout() {
 
   // Update Theme
   useEffect(() => setColorScheme(theme as "light" | "dark" | "system"), [theme]);
+
+  // React Query DevTools
+  useReactQueryDevTools(queryClient);
 
   return (
     <GestureHandlerRootView>
