@@ -36,7 +36,7 @@ export default function TabsLayout() {
           tabBarIcon: Platform.select({
             ios: () => ({ sfSymbol: "stopwatch" }),
             android: ({ focused }: { focused: boolean }) =>
-              focused ? require("@/assets/icons/stopwatch.svg") : require("@/assets/icons/stopwatch-outline.svg"),
+              focused ? require("@/assets/svgs/stopwatch.svg") : require("@/assets/svgs/stopwatch-outline.svg"),
           }),
         }}
       />
@@ -49,7 +49,7 @@ export default function TabsLayout() {
           tabBarIcon: Platform.select({
             ios: () => ({ sfSymbol: "medal" }),
             android: ({ focused }: { focused: boolean }) =>
-              focused ? require("@/assets/icons/trophy.svg") : require("@/assets/icons/trophy-outline.svg"),
+              focused ? require("@/assets/svgs/trophy.svg") : require("@/assets/svgs/trophy-outline.svg"),
           }),
         }}
         initialParams={{ id: "monthly" }}
@@ -63,7 +63,7 @@ export default function TabsLayout() {
           tabBarIcon: Platform.select({
             ios: () => ({ sfSymbol: "chart.bar" }),
             android: ({ focused }: { focused: boolean }) =>
-              focused ? require("@/assets/icons/stats-chart.svg") : require("@/assets/icons/stats-chart-outline.svg"),
+              focused ? require("@/assets/svgs/stats-chart.svg") : require("@/assets/svgs/stats-chart-outline.svg"),
           }),
         }}
       />
@@ -75,7 +75,7 @@ export default function TabsLayout() {
           tabBarIcon: Platform.select({
             ios: () => ({ sfSymbol: "gear" }),
             android: ({ focused }: { focused: boolean }) =>
-              focused ? require("@/assets/icons/cog.svg") : require("@/assets/icons/cog-outline.svg"),
+              focused ? require("@/assets/svgs/cog.svg") : require("@/assets/svgs/cog-outline.svg"),
           }),
         }}
       />

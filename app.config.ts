@@ -16,9 +16,23 @@ const getGoogleServicesFile = () => {
   if (process.env.APP_VARIANT === "preview") return "./.google-services/preview.json";
 };
 
+const getIOSIcon = () => {
+  if (process.env.APP_VARIANT === "production") return "./assets/icons/ios/production.icon";
+  if (process.env.APP_VARIANT === "development") return "./assets/icons/ios/development.icon";
+  if (process.env.APP_VARIANT === "preview") return "./assets/icons/ios/preview.icon";
+};
+
+const getAndroidIcon = () => {
+  if (process.env.APP_VARIANT === "production") return "./assets/icons/android/production.png";
+  if (process.env.APP_VARIANT === "development") return "./assets/icons/android/development.png";
+  if (process.env.APP_VARIANT === "preview") return "./assets/icons/android/preview.png";
+};
+
 const appName = getAppName();
 const bundleIdentifier = getBundleIdentifier();
 const googleServicesFile = getGoogleServicesFile();
+const iOSIcon = getIOSIcon();
+const androidIcon = getAndroidIcon();
 
 export default {
   expo: {
@@ -27,7 +41,7 @@ export default {
     version: "1.2.0",
     orientation: "portrait",
     newArchEnabled: true,
-    icon: "./assets/images/icon.png",
+    icon: "./assets/icons/icon.png",
     scheme: "myapp",
     userInterfaceStyle: "automatic",
     splash: {
@@ -41,11 +55,11 @@ export default {
       config: {
         usesNonExemptEncryption: false,
       },
-      icon: "./assets/images/ios.icon",
+      icon: iOSIcon,
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/images/adaptive-icon.png",
+        foregroundImage: androidIcon,
         backgroundColor: "#ffffff",
       },
       package: bundleIdentifier,
@@ -54,7 +68,7 @@ export default {
     web: {
       bundler: "metro",
       output: "static",
-      favicon: "./assets/images/favicon.png",
+      favicon: "./assets/icons/favicon.png",
     },
     plugins: [
       "expo-router",

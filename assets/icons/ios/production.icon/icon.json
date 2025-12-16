@@ -6,7 +6,16 @@
     {
       "layers" : [
         {
-          "image-name" : "icon-dark.png",
+          "glass-specializations" : [
+            {
+              "value" : false
+            },
+            {
+              "appearance" : "tinted",
+              "value" : true
+            }
+          ],
+          "image-name" : "pauseman.png",
           "name" : "pauseman"
         }
       ],
