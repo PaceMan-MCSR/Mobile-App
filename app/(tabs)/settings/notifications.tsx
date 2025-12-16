@@ -335,7 +335,7 @@ const NotificationsPage = () => {
           </Text>
           <Pressable
             onPress={() => router.push("/(tabs)/settings/runners")}
-            className="flex flex-row gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
+            className="flex flex-row items-center gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
           >
             <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
               Manage Speedrunners
