@@ -5,6 +5,7 @@ import { useScreenOptions } from "@/hooks/use-screen-options";
 import { storage } from "@/lib/utils/mmkv";
 import { NotificationsProvider } from "@/providers/notifications";
 import { PrefetcherProvider } from "@/providers/prefetcher";
+import { useMMKVDevTools } from "@dev-plugins/react-native-mmkv";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
@@ -54,6 +55,7 @@ export default function RootLayout() {
 
   // React Query DevTools
   useReactQueryDevTools(queryClient);
+  useMMKVDevTools({ storage });
 
   return (
     <GestureHandlerRootView>

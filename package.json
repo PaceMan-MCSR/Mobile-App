@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@bottom-tabs/react-navigation": "^1.1.0",
+    "@dev-plugins/react-native-mmkv": "^0.4.0",
     "@dev-plugins/react-query": "^0.4.0",
     "@expo/app-integrity": "^0.1.9",
     "@expo/metro-runtime": "~6.1.2",
