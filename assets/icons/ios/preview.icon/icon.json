@@ -1,57 +1,66 @@
 {
-  "fill": {
-    "automatic-gradient": "extended-gray:1.00000,1.00000"
+  "fill" : {
+    "automatic-gradient" : "extended-gray:1.00000,1.00000"
   },
-  "groups": [
+  "groups" : [
     {
-      "layers": [
+      "layers" : [
         {
-          "glass-specializations": [
+          "glass-specializations" : [
             {
-              "value": false
+              "value" : false
             },
             {
-              "appearance": "dark",
-              "value": false
+              "appearance" : "dark",
+              "value" : false
             },
             {
-              "appearance": "tinted",
-              "value": true
+              "appearance" : "tinted",
+              "value" : true
             }
           ],
-          "image-name": "preview-badge.png",
-          "name": "preview-badge",
-          "position": {
-            "scale": 2,
-            "translation-in-points": [0, 0]
+          "image-name" : "preview-badge.png",
+          "name" : "preview-badge",
+          "position" : {
+            "scale" : 2,
+            "translation-in-points" : [
+              0,
+              0
+            ]
           }
         },
         {
-          "glass-specializations": [
+          "glass-specializations" : [
             {
-              "value": false
+              "value" : false
             },
             {
-              "appearance": "tinted",
-              "value": true
+              "appearance" : "dark",
+              "value" : true
+            },
+            {
+              "appearance" : "tinted",
+              "value" : true
             }
           ],
-          "image-name": "pauseman.png",
-          "name": "pauseman"
+          "image-name" : "pauseman.png",
+          "name" : "pauseman"
         }
       ],
-      "shadow": {
-        "kind": "neutral",
-        "opacity": 0.5
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
       },
-      "translucency": {
-        "enabled": true,
-        "value": 0.5
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
       }
     }
   ],
-  "supported-platforms": {
-    "circles": ["watchOS"],
-    "squares": "shared"
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
   }
 }

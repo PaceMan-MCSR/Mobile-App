@@ -11,6 +11,10 @@
               "value" : false
             },
             {
+              "appearance" : "dark",
+              "value" : true
+            },
+            {
               "appearance" : "tinted",
               "value" : true
             }
