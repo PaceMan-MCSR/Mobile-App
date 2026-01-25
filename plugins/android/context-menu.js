@@ -4,18 +4,16 @@ const path = require("node:path");
 
 // interface ContextMenuPluginProps {
 //   radius: number;
-//   lightBackgroundColor: string;
-//   darkBackgroundColor: string;
-//   paddingVertical: number;
-//   paddingHorizontal: number;
+//   padding: { vertical: number; horizontal: number };
+//   backgroundColor: { light: string; dark: string };
 // }
 
 const withRoundedPopupMenu = (config, options) => {
   const radius = options.radius;
-  const lightBackgroundColor = options.lightBackgroundColor;
-  const darkBackgroundColor = options.darkBackgroundColor;
-  const paddingVertical = options.paddingVertical;
-  const paddingHorizontal = options.paddingHorizontal;
+  const paddingVertical = options.padding.vertical;
+  const paddingHorizontal = options.padding.horizontal;
+  const lightBackgroundColor = options.backgroundColor.light;
+  const darkBackgroundColor = options.backgroundColor.dark;
 
   let modifiedConfig = withDangerousMod(config, [
     "android",

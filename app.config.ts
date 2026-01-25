@@ -106,19 +106,14 @@ export default {
         "./plugins/android/context-menu",
         {
           radius: 14,
-          lightBackgroundColor: "#FFFFFF",
-          darkBackgroundColor: "#1F2937",
-          paddingVertical: 8,
-          paddingHorizontal: 1,
+          padding: { vertical: 8, horizontal: 1 },
+          backgroundColor: { light: "#FFFFFF", dark: "#1F2937" },
         },
       ],
       [
         "./plugins/android/alert",
         {
-          lightTextColor: "#000000",
-          darkTextColor: "#FFFFFF",
-          lightPrimaryColor: "#000000",
-          darkPrimaryColor: "#FFFFFF",
+          textColor: { light: "#000000", dark: "#FFFFFF" },
         },
       ],
     ],

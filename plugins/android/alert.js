@@ -3,17 +3,12 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 // interface AlertDialogPluginProps {
-//   lightTextColor: string;
-//   darkTextColor: string;
-//   lightPrimaryColor: string;
-//   darkPrimaryColor: string;
+//   textColor: { light: string; dark: string };
 // }
 
 const withAlertDialogFix = (config, options) => {
-  const lightTextColor = options.lightTextColor;
-  const darkTextColor = options.darkTextColor;
-  const lightPrimaryColor = options.lightPrimaryColor;
-  const darkPrimaryColor = options.darkPrimaryColor;
+  const lightTextColor = options.textColor.light;
+  const darkTextColor = options.textColor.dark;
 
   // Step 1: Create values/colors.xml (light mode) and values-night/colors.xml (dark mode)
   let modifiedConfig = withDangerousMod(config, [
@@ -35,13 +30,13 @@ const withAlertDialogFix = (config, options) => {
       const lightColorsXml = `<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="textColor">${lightTextColor}</color>
-    <color name="colorPrimary">${lightPrimaryColor}</color>
+    <color name="colorPrimary">${lightTextColor}</color>
 </resources>`;
 
       const darkColorsXml = `<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="textColor">${darkTextColor}</color>
-    <color name="colorPrimary">${darkPrimaryColor}</color>
+    <color name="colorPrimary">${darkTextColor}</color>
 </resources>`;
 
       fs.writeFileSync(path.join(valuesDir, "colors.xml"), lightColorsXml);
