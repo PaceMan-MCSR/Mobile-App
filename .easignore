@@ -1,7 +1,7 @@
 node_modules/
 
-android/
-ios/
+/android/
+/ios/
 
 .expo/
 testdata/
@@ -15,7 +15,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-# macOS
 .DS_Store
 
 expo-env.d.ts
