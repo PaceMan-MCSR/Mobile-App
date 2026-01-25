@@ -102,6 +102,16 @@ export default {
           },
         },
       ],
+      [
+        "./plugins/android/context-menu",
+        {
+          radius: 14,
+          lightBackgroundColor: "#FFFFFF",
+          darkBackgroundColor: "#1F2937",
+          paddingVertical: 8,
+          paddingHorizontal: 1,
+        },
+      ],
     ],
     experiments: {
       typedRoutes: true,
