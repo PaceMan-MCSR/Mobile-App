@@ -112,6 +112,15 @@ export default {
           paddingHorizontal: 1,
         },
       ],
+      [
+        "./plugins/android/alert",
+        {
+          lightTextColor: "#000000",
+          darkTextColor: "#FFFFFF",
+          lightPrimaryColor: "#000000",
+          darkPrimaryColor: "#FFFFFF",
+        },
+      ],
     ],
     experiments: {
       typedRoutes: true,
