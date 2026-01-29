@@ -107,7 +107,7 @@ export default {
         {
           radius: 14,
           padding: { vertical: 8, horizontal: 1 },
-          backgroundColor: { light: "#FFFFFF", dark: "#1F2937" },
+          backgroundColor: { light: "#FFFFFF", dark: "#374151" },
         },
       ],
       [
