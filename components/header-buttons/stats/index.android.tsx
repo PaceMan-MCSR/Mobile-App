@@ -9,7 +9,8 @@ import {
 } from "@/components/header-buttons/stats/options";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Ionicons } from "@expo/vector-icons";
-import { MenuView } from "@react-native-menu/menu";
+// TODO: @react-native-menu/menu not in package.json — temporarily disabled, restore when re-implemented
+// import { MenuView } from "@react-native-menu/menu";
 import { View } from "react-native";
 
 const HeaderButtonStats = ({
@@ -22,6 +23,9 @@ const HeaderButtonStats = ({
 }: HeaderButtonStatsProps) => {
   const { tintColor } = useColorsForUI();
 
+  return null;
+
+  /* react-native-menu temporarily disabled
   return (
     <View className="flex flex-row-reverse items-center">
       <MenuView
@@ -79,6 +83,7 @@ const HeaderButtonStats = ({
       </MenuView>
     </View>
   );
+  */
 };
 
 export default HeaderButtonStats;

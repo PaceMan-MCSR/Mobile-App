@@ -1,12 +1,16 @@
 import { gameVersionFilters, HeaderButtonHomeProps } from "@/components/header-buttons/home/options";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Ionicons } from "@expo/vector-icons";
-import { MenuView } from "@react-native-menu/menu";
+// TODO: @react-native-menu/menu not in package.json — temporarily disabled, restore when re-implemented
+// import { MenuView } from "@react-native-menu/menu";
 import { View } from "react-native";
 
 const HeaderButtonHome = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOnlyToggle }: HeaderButtonHomeProps) => {
   const { tintColor } = useColorsForUI();
 
+  return null;
+
+  /* react-native-menu temporarily disabled
   return (
     <View className="flex flex-row-reverse items-center">
       <MenuView
@@ -46,6 +50,7 @@ const HeaderButtonHome = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOn
       </MenuView>
     </View>
   );
+  */
 };
 
 export default HeaderButtonHome;

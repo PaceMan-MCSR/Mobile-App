@@ -1,10 +1,14 @@
 import { HeaderButtonLBProps, leaderboardFilters } from "@/components/header-buttons/lb/options";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { SymbolView } from "expo-symbols";
-import * as DropdownMenu from "zeego/dropdown-menu";
+// TODO: zeego not in package.json — temporarily disabled, restore when re-implemented
+// import * as DropdownMenu from "zeego/dropdown-menu";
 
 const HeaderButtonLB = ({ leaderboard, onSelect }: HeaderButtonLBProps) => {
   const { tintColor } = useColorsForUI();
+  return null;
+
+  /* zeego dropdown temporarily disabled
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -32,6 +36,7 @@ const HeaderButtonLB = ({ leaderboard, onSelect }: HeaderButtonLBProps) => {
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
+  */
 };
 
 export default HeaderButtonLB;

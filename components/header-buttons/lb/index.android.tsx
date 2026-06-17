@@ -1,12 +1,16 @@
 import { HeaderButtonLBProps, leaderboardFilters, LeaderboardType } from "@/components/header-buttons/lb/options";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Ionicons } from "@expo/vector-icons";
-import { MenuView } from "@react-native-menu/menu";
+// TODO: @react-native-menu/menu not in package.json — temporarily disabled, restore when re-implemented
+// import { MenuView } from "@react-native-menu/menu";
 import { View } from "react-native";
 
 const HeaderButtonLB = ({ leaderboard, onSelect }: HeaderButtonLBProps) => {
   const { tintColor } = useColorsForUI();
 
+  return null;
+
+  /* react-native-menu temporarily disabled
   return (
     <View className="flex flex-row-reverse items-center">
       <MenuView
@@ -30,6 +34,7 @@ const HeaderButtonLB = ({ leaderboard, onSelect }: HeaderButtonLBProps) => {
       </MenuView>
     </View>
   );
+  */
 };
 
 export default HeaderButtonLB;

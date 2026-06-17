@@ -6,7 +6,8 @@ import {
 } from "@/components/header-buttons/stats/options";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { SymbolView } from "expo-symbols";
-import * as DropdownMenu from "zeego/dropdown-menu";
+// TODO: zeego not in package.json — temporarily disabled, restore when re-implemented
+// import * as DropdownMenu from "zeego/dropdown-menu";
 
 const HeaderButtonStats = ({
   sortBy,
@@ -18,6 +19,9 @@ const HeaderButtonStats = ({
 }: HeaderButtonStatsProps) => {
   const { tintColor } = useColorsForUI();
 
+  return null;
+
+  /* zeego dropdown temporarily disabled
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -89,6 +93,7 @@ const HeaderButtonStats = ({
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
+  */
 };
 
 export default HeaderButtonStats;

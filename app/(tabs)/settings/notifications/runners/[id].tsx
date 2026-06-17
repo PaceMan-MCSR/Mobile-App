@@ -11,7 +11,8 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useEffect, useMemo } from "react";
 import { Alert, Platform, Pressable, ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
-import * as DropdownMenu from "zeego/dropdown-menu";
+// TODO: zeego not in package.json — temporarily disabled, restore when re-implemented
+// import * as DropdownMenu from "zeego/dropdown-menu";
 import { z } from "zod";
 
 // Default values in milliseconds
@@ -326,6 +327,7 @@ const RunnerSettingsPage = () => {
                                         <Text className="text-lg font-semibold text-black dark:text-[#ECEDEE]">
                                           {setting.label}
                                         </Text>
+                                        {/* zeego dropdown temporarily disabled (zeego not in package.json)
                                         <DropdownMenu.Root>
                                           <DropdownMenu.Trigger>
                                             <TouchableOpacity className="flex flex-row items-center gap-1">
@@ -358,6 +360,7 @@ const RunnerSettingsPage = () => {
                                             ))}
                                           </DropdownMenu.Content>
                                         </DropdownMenu.Root>
+                                        */}
                                       </View>
                                     </View>
                                   );
