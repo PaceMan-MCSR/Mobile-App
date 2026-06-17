@@ -1,14 +1,15 @@
-import HeaderButtonStats from "@/components/header-buttons/stats";
-import { CategoriesType, DaysType, SortByType } from "@/components/header-buttons/stats/options";
+import { buildStatsMenuItems, CategoriesType, DaysType, SortByType } from "@/components/header-buttons/stats/options";
+import HeaderMenu from "@/components/header-menu";
 import PlayerCard from "@/components/player-card";
 import ErrorScreen from "@/components/screens/error-screen";
 import LoadingScreen from "@/components/screens/loading-screen";
 import { useAllUsersData } from "@/hooks/api/use-all-users-data";
 import { useStatsData } from "@/hooks/api/use-stats-data";
 import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontend-converters";
+import MenuIcon from "@expo/material-symbols/menu.xml";
 import { Stack } from "expo-router";
 import { useMemo, useState } from "react";
-import { FlatList, Platform, RefreshControl, Text, View } from "react-native";
+import { FlatList, RefreshControl, Text, View } from "react-native";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -48,54 +49,37 @@ const StatsPage = () => {
     setSearchQuery(event.nativeEvent.text);
   };
 
-  const Header = () => {
-    return (
+  // TOP HEADER — search bar via Stack.Screen options, filter menu via Stack.Toolbar (HeaderMenu).
+  const header = (
+    <>
       <Stack.Screen
-        options={Platform.select({
-          ios: {
-            headerLeft: () => (
-              <HeaderButtonStats
-                sortBy={params.type}
-                category={params.category}
-                days={params.days}
-                onSortSelect={handleTypeSelect}
-                onCategorySelect={handleCategorySelect}
-                onDaysSelect={handleDaysSelect}
-              />
-            ),
-            headerSearchBarOptions: {
-              placeholder: "Search for Speedrunners",
-              onChangeText: handleSearch,
-              placement: "automatic",
-            },
+        options={{
+          headerSearchBarOptions: {
+            placeholder: "Search for Speedrunners",
+            onChangeText: handleSearch,
+            placement: "automatic",
           },
-          android: {
-            headerRight: () => (
-              <HeaderButtonStats
-                sortBy={params.type}
-                category={params.category}
-                days={params.days}
-                onSortSelect={handleTypeSelect}
-                onCategorySelect={handleCategorySelect}
-                onDaysSelect={handleDaysSelect}
-              />
-            ),
-            headerSearchBarOptions: {
-              placeholder: "Search for Speedrunners",
-              onChangeText: handleSearch,
-              placement: "automatic",
-            },
-          },
+        }}
+      />
+      <HeaderMenu
+        icon={{ ios: "line.3.horizontal", android: MenuIcon }}
+        items={buildStatsMenuItems({
+          sortBy: params.type,
+          category: params.category,
+          days: params.days,
+          onSortSelect: handleTypeSelect,
+          onCategorySelect: handleCategorySelect,
+          onDaysSelect: handleDaysSelect,
         })}
       />
-    );
-  };
+    </>
+  );
 
   // LOADING
   if (isStatsLoading || (searchQuery.trim() && isUsersLoading)) {
     return (
       <>
-        <Header />
+        {header}
         <LoadingScreen />
       </>
     );
@@ -105,7 +89,7 @@ const StatsPage = () => {
   if (isStatsError || (searchQuery.trim() && isUsersError)) {
     return (
       <>
-        <Header />
+        {header}
         <ErrorScreen />
       </>
     );
@@ -115,7 +99,7 @@ const StatsPage = () => {
   if (!stats!.length) {
     return (
       <>
-        <Header />
+        {header}
         <ErrorScreen message={`No stats available for this category yet...`} />
       </>
     );
@@ -125,7 +109,7 @@ const StatsPage = () => {
   if (searchQuery.trim())
     return (
       <>
-        <Header />
+        {header}
         <FlatList
           data={filteredUsers}
           className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
@@ -141,7 +125,7 @@ const StatsPage = () => {
   // MAIN SCREEN
   return (
     <>
-      <Header />
+      {header}
       <FlatList
         data={stats}
         className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"

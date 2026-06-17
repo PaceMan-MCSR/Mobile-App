@@ -1,14 +1,15 @@
-import HeaderButtonHome from "@/components/header-buttons/home";
+import { buildHomeMenuItems } from "@/components/header-buttons/home/options";
+import HeaderMenu from "@/components/header-menu";
 import PaceBottomSheet from "@/components/pace-bottom-sheet";
 import PaceCard from "@/components/pace-card";
 import ErrorScreen from "@/components/screens/error-screen";
 import LoadingScreen from "@/components/screens/loading-screen";
 import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
 import { Pace } from "@/lib/types/Pace";
+import MenuIcon from "@expo/material-symbols/menu.xml";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
-import { Tabs } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FlatList, Platform, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 const HomePage = () => {
   const [params, setParams] = useState({
@@ -65,40 +66,23 @@ const HomePage = () => {
   }, []);
 
   // TOP HEADER
-  const Header = () => {
-    return (
-      <Tabs.Screen
-        options={Platform.select({
-          ios: {
-            headerLeft: () => (
-              <HeaderButtonHome
-                gameVersion={params.gameVersion}
-                liveOnly={params.liveOnly}
-                onGameVersionSelect={handleGameVersionSelect}
-                onLiveOnlyToggle={handleLiveOnlyToggle}
-              />
-            ),
-          },
-          android: {
-            headerRight: () => (
-              <HeaderButtonHome
-                gameVersion={params.gameVersion}
-                liveOnly={params.liveOnly}
-                onGameVersionSelect={handleGameVersionSelect}
-                onLiveOnlyToggle={handleLiveOnlyToggle}
-              />
-            ),
-          },
-        })}
-      />
-    );
-  };
+  const headerMenu = (
+    <HeaderMenu
+      icon={{ ios: "line.3.horizontal", android: MenuIcon }}
+      items={buildHomeMenuItems({
+        gameVersion: params.gameVersion,
+        liveOnly: params.liveOnly,
+        onGameVersionSelect: handleGameVersionSelect,
+        onLiveOnlyToggle: handleLiveOnlyToggle,
+      })}
+    />
+  );
 
   // LOADING
   if (isLoading)
     return (
       <>
-        <Header />
+        {headerMenu}
         <LoadingScreen />
       </>
     );
@@ -107,7 +91,7 @@ const HomePage = () => {
   if (isError)
     return (
       <>
-        <Header />
+        {headerMenu}
         <ErrorScreen />
       </>
     );
@@ -116,7 +100,7 @@ const HomePage = () => {
   if (!liveruns!.length)
     return (
       <>
-        <Header />
+        {headerMenu}
         <ErrorScreen message="No one is currently on pace..." />
       </>
     );
@@ -124,7 +108,7 @@ const HomePage = () => {
   // MAIN SCREEN
   return (
     <>
-      <Header />
+      {headerMenu}
       <View className={`flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]`}>
         {/* PACE LIST */}
         <FlatList

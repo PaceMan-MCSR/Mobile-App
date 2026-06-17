@@ -1,14 +1,15 @@
-import HeaderButtonLB from "@/components/header-buttons/lb";
-import { LeaderboardType } from "@/components/header-buttons/lb/options";
+import { buildLeaderboardMenuItems, LeaderboardType } from "@/components/header-buttons/lb/options";
+import HeaderMenu from "@/components/header-menu";
 import PlayerCard from "@/components/player-card";
 import ErrorScreen from "@/components/screens/error-screen";
 import LoadingScreen from "@/components/screens/loading-screen";
 import { useLeaderboardData } from "@/hooks/api/use-leaderboard-data";
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { lbIdToName } from "@/lib/utils/frontend-converters";
-import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
+import MenuIcon from "@expo/material-symbols/menu.xml";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Platform, RefreshControl, Text, View } from "react-native";
+import { FlatList, RefreshControl, Text, View } from "react-native";
 
 const filters = Array.from(lbIdToName.keys());
 
@@ -45,30 +46,21 @@ const LeaderboardPage = () => {
   }, [id]);
 
   // TOP HEADER
-  const Header = () => {
-    return (
-      <Tabs.Screen
-        options={Platform.select({
-          ios: {
-            headerLeft: () => (
-              <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
-            ),
-          },
-          android: {
-            headerRight: () => (
-              <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
-            ),
-          },
-        })}
-      />
-    );
-  };
+  const headerMenu = (
+    <HeaderMenu
+      icon={{ ios: "line.3.horizontal", android: MenuIcon }}
+      items={buildLeaderboardMenuItems({
+        leaderboard: (id as LeaderboardType) ?? "monthly",
+        onSelect: handleSelect,
+      })}
+    />
+  );
 
   // LOADING
   if (isLoading) {
     return (
       <>
-        <Header />
+        {headerMenu}
         <LoadingScreen />
       </>
     );
@@ -78,7 +70,7 @@ const LeaderboardPage = () => {
   if (isError) {
     return (
       <>
-        <Header />
+        {headerMenu}
         <ErrorScreen />
       </>
     );
@@ -88,7 +80,7 @@ const LeaderboardPage = () => {
   if (!leaderboard!.length) {
     return (
       <>
-        <Header />
+        {headerMenu}
         <View className="flex flex-1 items-center justify-center bg-white dark:bg-[#111827]">
           <Text className="text-lg text-black dark:text-white">There are no completions yet...</Text>
         </View>
@@ -99,7 +91,7 @@ const LeaderboardPage = () => {
   // MAIN SCREEN
   return (
     <>
-      <Header />
+      {headerMenu}
       <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
         <FlatList
           contentInsetAdjustmentBehavior="automatic"

@@ -1,3 +1,5 @@
+import type { HeaderMenuItem } from "@/components/header-menu";
+
 export const sortByFilters = [
   { key: "count", label: "Count" },
   { key: "average", label: "Average" },
@@ -29,11 +31,59 @@ export type SortByType = (typeof sortByFilters)[number]["key"];
 export type CategoriesType = (typeof categoriesFilters)[number]["key"];
 export type DaysType = (typeof daysFilters)[number]["key"];
 
-export interface HeaderButtonStatsProps {
+export interface StatsMenuParams {
   sortBy: SortByType;
   category: CategoriesType;
   days: DaysType;
   onSortSelect: (sortBy: SortByType) => void;
   onCategorySelect: (category: CategoriesType) => void;
   onDaysSelect: (days: DaysType) => void;
+}
+
+export function buildStatsMenuItems({
+  sortBy,
+  category,
+  days,
+  onSortSelect,
+  onCategorySelect,
+  onDaysSelect,
+}: StatsMenuParams): HeaderMenuItem[] {
+  return [
+    {
+      type: "submenu",
+      key: "sort-by",
+      title: "Sort By",
+      items: sortByFilters.map((filter) => ({
+        type: "action",
+        key: filter.key,
+        title: filter.label,
+        isOn: sortBy === filter.key,
+        onPress: () => onSortSelect(filter.key),
+      })),
+    },
+    {
+      type: "submenu",
+      key: "category",
+      title: "Category",
+      items: categoriesFilters.map((filter) => ({
+        type: "action",
+        key: filter.key,
+        title: filter.label,
+        isOn: category === filter.key,
+        onPress: () => onCategorySelect(filter.key),
+      })),
+    },
+    {
+      type: "submenu",
+      key: "days",
+      title: "Time Period",
+      items: daysFilters.map((filter) => ({
+        type: "action",
+        key: String(filter.key),
+        title: filter.label,
+        isOn: days === filter.key,
+        onPress: () => onDaysSelect(filter.key),
+      })),
+    },
+  ];
 }
