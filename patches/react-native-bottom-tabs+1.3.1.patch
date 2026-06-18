@@ -1,0 +1,147 @@
+diff --git a/node_modules/react-native-bottom-tabs/ios/RCTTabViewComponentView.mm b/node_modules/react-native-bottom-tabs/ios/RCTTabViewComponentView.mm
+index bd8edce..1a3f4c1 100644
+--- a/node_modules/react-native-bottom-tabs/ios/RCTTabViewComponentView.mm
++++ b/node_modules/react-native-bottom-tabs/ios/RCTTabViewComponentView.mm
+@@ -35,6 +35,7 @@
+   return lhs.key == rhs.key &&
+   lhs.title == rhs.title &&
+   lhs.sfSymbol == rhs.sfSymbol &&
++  lhs.selectedSfSymbol == rhs.selectedSfSymbol &&
+   lhs.badge == rhs.badge &&
+   lhs.activeTintColor == rhs.activeTintColor &&
+   lhs.hidden == rhs.hidden &&
+@@ -196,6 +197,7 @@ - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &
+                                           title:RCTNSStringFromString(item.title)
+                                           badge:RCTNSStringFromStringNilIfEmpty(item.badge)
+                                        sfSymbol:RCTNSStringFromStringNilIfEmpty(item.sfSymbol)
++                               selectedSfSymbol:RCTNSStringFromStringNilIfEmpty(item.selectedSfSymbol)
+                                 activeTintColor:RCTUIColorFromSharedColor(item.activeTintColor)
+                                          hidden:item.hidden
+                                          testID:RCTNSStringFromStringNilIfEmpty(item.testID)
+diff --git a/node_modules/react-native-bottom-tabs/ios/TabViewImpl.swift b/node_modules/react-native-bottom-tabs/ios/TabViewImpl.swift
+index 14732fd..5be6cf2 100644
+--- a/node_modules/react-native-bottom-tabs/ios/TabViewImpl.swift
++++ b/node_modules/react-native-bottom-tabs/ios/TabViewImpl.swift
+@@ -136,10 +136,44 @@ struct TabViewImpl: View {
+ 
+     if props.scrollEdgeAppearance == "transparent" {
+       configureTransparentAppearance(tabBar: tabBar, props: props)
++      applySelectedSymbolImages(props: props, tabBar: tabBar)
+       return
+     }
+ 
+     configureStandardAppearance(tabBar: tabBar, props: props)
++    applySelectedSymbolImages(props: props, tabBar: tabBar)
++  }
++
++  // Sets a distinct `image` (unfocused) and `selectedImage` (focused) on each SF Symbol
++  // tab so iOS can morph between the two variants when the selection moves (Liquid Glass
++  // cross-fade on iOS 26). Mirrors the experimental baked-tint pass, including the async
++  // re-apply, since SwiftUI repopulates the item image after building the bar.
++  private func applySelectedSymbolImages(props: TabViewProps, tabBar: UITabBar) {
++    // The experimental baked-tint path renders its own item images; don't fight it.
++    if shouldUseExperimentalBakedTintColors(props: props) { return }
++
++    applySymbolImagesIfNeeded(props: props, tabBar: tabBar)
++
++    DispatchQueue.main.async { [weak tabBar] in
++      guard let tabBar else { return }
++      applySymbolImagesIfNeeded(props: props, tabBar: tabBar)
++    }
++  }
++
++  private func applySymbolImagesIfNeeded(props: TabViewProps, tabBar: UITabBar) {
++    guard let items = tabBar.items else { return }
++
++    for (tabBarIndex, item) in items.enumerated() {
++      guard let tabData = props.filteredItems[safe: tabBarIndex],
++        !tabData.sfSymbol.isEmpty
++      else { continue }
++
++      let selectedName =
++        tabData.selectedSfSymbol.isEmpty ? tabData.sfSymbol : tabData.selectedSfSymbol
++
++      item.image = UIImage(systemName: tabData.sfSymbol)
++      item.selectedImage = UIImage(systemName: selectedName)
++    }
+   }
+ #endif
+ 
+diff --git a/node_modules/react-native-bottom-tabs/ios/TabViewProvider.swift b/node_modules/react-native-bottom-tabs/ios/TabViewProvider.swift
+index 799f3c0..4ba42d9 100644
+--- a/node_modules/react-native-bottom-tabs/ios/TabViewProvider.swift
++++ b/node_modules/react-native-bottom-tabs/ios/TabViewProvider.swift
+@@ -8,6 +8,7 @@ public final class TabInfo: NSObject {
+   public let title: String
+   public let badge: String?
+   public let sfSymbol: String
++  public let selectedSfSymbol: String
+   public let activeTintColor: PlatformColor?
+   public let hidden: Bool
+   public let testID: String?
+@@ -19,6 +20,7 @@ public final class TabInfo: NSObject {
+     title: String,
+     badge: String?,
+     sfSymbol: String,
++    selectedSfSymbol: String = "",
+     activeTintColor: PlatformColor?,
+     hidden: Bool,
+     testID: String?,
+@@ -29,6 +31,7 @@ public final class TabInfo: NSObject {
+     self.title = title
+     self.badge = badge
+     self.sfSymbol = sfSymbol
++    self.selectedSfSymbol = selectedSfSymbol
+     self.activeTintColor = activeTintColor
+     self.hidden = hidden
+     self.testID = testID
+diff --git a/node_modules/react-native-bottom-tabs/lib/module/TabView.js b/node_modules/react-native-bottom-tabs/lib/module/TabView.js
+index b19ce30..7b2e84a 100644
+--- a/node_modules/react-native-bottom-tabs/lib/module/TabView.js
++++ b/node_modules/react-native-bottom-tabs/lib/module/TabView.js
+@@ -107,12 +107,23 @@ const TabView = ({
+     if (Platform.OS === 'android' && isSfSymbol) {
+       console.warn('SF Symbols are not supported on Android. Use require() or pass uri to load an image instead.');
+     }
++    const unfocusedIcon = getIcon({
++      route,
++      focused: false
++    });
++    const focusedIcon = getIcon({
++      route,
++      focused: true
++    });
++    const unfocusedSfSymbol = isAppleSymbol(unfocusedIcon) ? unfocusedIcon.sfSymbol : undefined;
++    const focusedSfSymbol = isAppleSymbol(focusedIcon) ? focusedIcon.sfSymbol : undefined;
+     return {
+       key: route.key,
+       title: getLabelText({
+         route
+       }) ?? route.key,
+-      sfSymbol: isSfSymbol ? icon.sfSymbol : undefined,
++      sfSymbol: unfocusedSfSymbol ?? (isSfSymbol ? icon.sfSymbol : undefined),
++      selectedSfSymbol: focusedSfSymbol,
+       badge: getBadge?.({
+         route
+       }),
+@@ -138,7 +149,7 @@ const TabView = ({
+         route
+       })
+     };
+-  }), [trimmedRoutes, icons, getLabelText, getBadge, getBadgeBackgroundColor, getBadgeTextColor, getActiveTintColor, getHidden, getTestID, getRole, getPreventsDefault]);
++  }), [trimmedRoutes, icons, getIcon, getLabelText, getBadge, getBadgeBackgroundColor, getBadgeTextColor, getActiveTintColor, getHidden, getTestID, getRole, getPreventsDefault]);
+   const resolvedIconAssets = React.useMemo(() =>
+   // Pass empty object for icons that are not provided to avoid index mismatch on native side.
+   icons.map(icon => icon && !isAppleSymbol(icon) ?
+diff --git a/node_modules/react-native-bottom-tabs/src/TabViewNativeComponent.ts b/node_modules/react-native-bottom-tabs/src/TabViewNativeComponent.ts
+index 4a4e81a..e3f089f 100644
+--- a/node_modules/react-native-bottom-tabs/src/TabViewNativeComponent.ts
++++ b/node_modules/react-native-bottom-tabs/src/TabViewNativeComponent.ts
+@@ -26,6 +26,7 @@ export type TabViewItems = ReadonlyArray<{
+   key: string;
+   title: string;
+   sfSymbol?: string;
++  selectedSfSymbol?: string;
+   badge?: string;
+   badgeBackgroundColor?: ProcessedColorValue | null;
+   badgeTextColor?: ProcessedColorValue | null;
