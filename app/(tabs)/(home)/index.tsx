@@ -7,8 +7,7 @@ import LoadingScreen from "@/components/screens/loading-screen";
 import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
 import { Pace } from "@/lib/types/Pace";
 import MenuIcon from "@expo/material-symbols/menu.xml";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { FlatList, View } from "react-native";
 
 const HomePage = () => {
@@ -18,19 +17,12 @@ const HomePage = () => {
   });
   const { data: liveruns, isLoading, isError } = useLiverunsData(params);
 
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const [selected, setSelected] = useState<string | null>(null);
-
-  // CLOSE BOTTOM SHEET IF PACE RESET
-  useEffect(() => {
-    if (!liveruns?.some((run) => run.worldId === selected)) {
-      bottomSheetRef.current?.close();
-    }
-  }, [selected, liveruns]);
+  const [selectedWorldId, setSelectedWorldId] = useState<string | null>(null);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   // HEADER RIGHT FUNCTIONS
   const handleLiveOnlyToggle = () => {
-    setSelected(null);
+    setIsSheetOpen(false);
     setParams((prevParams) => ({
       ...prevParams,
       liveOnly: !prevParams.liveOnly,
@@ -38,7 +30,7 @@ const HomePage = () => {
   };
 
   const handleGameVersionSelect = (version: string) => {
-    setSelected(null);
+    setIsSheetOpen(false);
     setParams((prevParams) => ({
       ...prevParams,
       gameVersion: version,
@@ -46,24 +38,7 @@ const HomePage = () => {
   };
 
   // BOTTOM SHEET FUNCTIONS
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-        onPress={() => bottomSheetRef.current?.close()}
-        opacity={0.5}
-      />
-    ),
-    []
-  );
-
-  const handleSheetChanges = useCallback((index: number) => {
-    if (index === -1) {
-      setSelected(null);
-    }
-  }, []);
+  const handleDismiss = useCallback(() => setIsSheetOpen(false), []);
 
   // TOP HEADER
   const headerMenu = (
@@ -120,8 +95,8 @@ const HomePage = () => {
           renderItem={({ item }) => (
             <PaceCard
               onPress={() => {
-                setSelected(item.worldId);
-                bottomSheetRef.current?.expand();
+                setSelectedWorldId(item.worldId);
+                setIsSheetOpen(true);
               }}
               worldId={item.worldId}
               splitName={item.splitName}
@@ -141,12 +116,10 @@ const HomePage = () => {
 
       {/* BOTTOM SHEET */}
       <PaceBottomSheet
-        ref={bottomSheetRef}
-        selected={selected}
-        params={params}
-        onBackdropPress={() => setSelected(null)}
-        renderBackdrop={renderBackdrop}
-        onSheetChanges={handleSheetChanges}
+        liveruns={liveruns}
+        selectedWorldId={selectedWorldId}
+        isPresented={isSheetOpen}
+        onDismiss={handleDismiss}
       />
     </>
   );
