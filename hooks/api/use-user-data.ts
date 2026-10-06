@@ -1,14 +1,13 @@
 import { UserData } from "@/lib/types/User";
 import { useQuery } from "@tanstack/react-query";
-import { useSegments } from "expo-router";
+import { useIsFocused } from "expo-router";
 
 interface UserProps {
   name: string;
 }
 
 export const useUserData = ({ name }: UserProps) => {
-  const [, page] = useSegments();
-  const isFocusedOnPlayerPage = page === "player";
+  const isFocusedOnPlayerPage = useIsFocused();
   return useQuery<UserData>({
     queryKey: ["user", { name }],
     queryFn: () => fetch(`https://paceman.gg/api/us/user?name=${name}&sortByTime=1`).then((res) => res.json()),

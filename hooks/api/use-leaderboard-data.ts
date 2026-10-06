@@ -1,6 +1,6 @@
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { useQuery } from "@tanstack/react-query";
-import { useSegments } from "expo-router";
+import { useIsFocused } from "expo-router";
 
 interface LeaderboardParams {
   filter: number;
@@ -10,8 +10,7 @@ interface LeaderboardParams {
 }
 
 export const useLeaderboardData = ({ filter, removeDuplicates, date, season = "current" }: LeaderboardParams) => {
-  const [, page] = useSegments();
-  const isFocusedOnLBPage = page === "lb";
+  const isFocusedOnLBPage = useIsFocused();
 
   if (filter >= 4) {
     return useQuery<TrophyEntry[]>({

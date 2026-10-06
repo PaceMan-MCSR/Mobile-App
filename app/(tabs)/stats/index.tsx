@@ -22,7 +22,7 @@ const StatsPage = () => {
     type: "count",
   });
 
-  const { data: stats, refetch, isLoading: isStatsLoading, isError: isStatsError, isRefetching } = useStatsData(params);
+  const { data: stats, refetch, isPending: isStatsPending, isError: isStatsError, isRefetching } = useStatsData(params);
   const { data: users, isLoading: isUsersLoading, isError: isUsersError } = useAllUsersData();
 
   const filteredUsers = useMemo(() => {
@@ -72,16 +72,6 @@ const StatsPage = () => {
     );
   };
 
-  // LOADING
-  if (isStatsLoading || (searchQuery.trim() && isUsersLoading)) {
-    return (
-      <>
-        <Header />
-        <LoadingScreen />
-      </>
-    );
-  }
-
   // ERROR
   if (isStatsError || (searchQuery.trim() && isUsersError)) {
     return (
@@ -92,8 +82,19 @@ const StatsPage = () => {
     );
   }
 
+  // A query can be pending without fetching while this tab is unfocused.
+  // Render a loading state until data exists instead of assuming it is an array.
+  if (isStatsPending || stats == null || (searchQuery.trim() && isUsersLoading)) {
+    return (
+      <>
+        <Header />
+        <LoadingScreen />
+      </>
+    );
+  }
+
   // NO ENTRIES
-  if (!stats!.length) {
+  if (!stats.length) {
     return (
       <>
         <Header />

@@ -22,7 +22,7 @@ const LeaderboardPage = () => {
     season: filters.includes(id) && id.startsWith("season") ? id : "current",
   });
 
-  const { data: leaderboard, refetch, isLoading, isError, isRefetching } = useLeaderboardData(params);
+  const { data: leaderboard, refetch, isPending, isError, isRefetching } = useLeaderboardData(params);
 
   const handleSelect = (key: string) => {
     const isTrophy = !["daily", "weekly", "monthly", "all"].includes(key);
@@ -50,15 +50,6 @@ const LeaderboardPage = () => {
   };
 
   // LOADING
-  if (isLoading) {
-    return (
-      <>
-        <Header />
-        <LoadingScreen />
-      </>
-    );
-  }
-
   // ERROR
   if (isError) {
     return (
@@ -69,8 +60,19 @@ const LeaderboardPage = () => {
     );
   }
 
+  // A query can be pending without fetching while this tab is unfocused.
+  // Keep the screen safe in that state instead of assuming data exists.
+  if (isPending || leaderboard == null) {
+    return (
+      <>
+        <Header />
+        <LoadingScreen />
+      </>
+    );
+  }
+
   // NO ENTRIES
-  if (!leaderboard!.length) {
+  if (!leaderboard.length) {
     return (
       <>
         <Header />

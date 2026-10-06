@@ -1,11 +1,10 @@
 import { Pace, PaceSettings } from "@/lib/types/Pace";
 import { liverunsToPace, paceSort } from "@/lib/utils/converters";
 import { useQuery } from "@tanstack/react-query";
-import { useSegments } from "expo-router";
+import { useIsFocused } from "expo-router";
 
 export const useLiverunsData = ({ gameVersion, liveOnly }: PaceSettings) => {
-  const [, page] = useSegments();
-  const shouldRefetchLiveruns = page === "(home)" || page === "run";
+  const shouldRefetchLiveruns = useIsFocused();
   return useQuery<Pace[]>({
     queryKey: ["liveruns", gameVersion, liveOnly],
     queryFn: () =>

@@ -1,6 +1,6 @@
 import { Stats } from "@/lib/types/Stats";
 import { useQuery } from "@tanstack/react-query";
-import { useSegments } from "expo-router";
+import { useIsFocused } from "expo-router";
 interface StatsProps {
   days: number;
   category: string;
@@ -8,8 +8,7 @@ interface StatsProps {
 }
 
 export const useStatsData = ({ days, category, type }: StatsProps) => {
-  const [, page] = useSegments();
-  const isFocusedOnStatsPage = page === "stats";
+  const isFocusedOnStatsPage = useIsFocused();
   return useQuery<Stats[]>({
     queryKey: ["stats", { days, category, type }],
     queryFn: () =>

@@ -14,7 +14,7 @@ const HomePage = () => {
     gameVersion: "1.16.1",
     liveOnly: false,
   });
-  const { data: liveruns, isLoading, isError } = useLiverunsData(params);
+  const { data: liveruns, isPending, isError } = useLiverunsData(params);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [selected, setSelected] = useState<string | null>(null);
@@ -75,15 +75,6 @@ const HomePage = () => {
     );
   };
 
-  // LOADING
-  if (isLoading)
-    return (
-      <>
-        <Header />
-        <LoadingScreen />
-      </>
-    );
-
   // ERROR
   if (isError)
     return (
@@ -93,8 +84,18 @@ const HomePage = () => {
       </>
     );
 
+  // A query can be pending without fetching while this tab is unfocused.
+  // Keep the screen safe until it has data instead of assuming an array exists.
+  if (isPending || liveruns == null)
+    return (
+      <>
+        <Header />
+        <LoadingScreen />
+      </>
+    );
+
   // NO ONE ON PACE
-  if (!liveruns!.length)
+  if (!liveruns.length)
     return (
       <>
         <Header />
