@@ -21,7 +21,7 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 
 ### Native Dependencies
 
-- `zeego` - Native Dropdown and Context Menus
+- `@expo/ui` - Native UI components for Jetpack Compose and SwiftUI
 - `nativewind` Tailwind CSS for React Native
 - `expo-router` File-based routing
 - `react-native-mmkv` Key-Value Storage for User Preferences
