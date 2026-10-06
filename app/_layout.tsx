@@ -7,7 +7,6 @@ import { NotificationsProvider } from "@/providers/notifications";
 import { PrefetcherProvider } from "@/providers/prefetcher";
 import { useMMKVDevTools } from "@dev-plugins/react-native-mmkv";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "expo-router/react-navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
@@ -59,31 +58,29 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
-      <BottomSheetModalProvider>
-        <QueryClientProvider client={queryClient}>
-          <NotificationsProvider>
-            <PrefetcherProvider>
-              <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-                <SystemBars style={colorScheme === "dark" ? "light" : "dark"} />
-                <Stack screenOptions={screenOptions}>
-                  <Stack.Screen
-                    name="(tabs)"
-                    options={{
-                      headerTitle: "Home",
-                      headerShown: false,
-                    }}
-                    initialParams={{ lbType: "monthly" }}
-                  />
-                  <Stack.Screen name="stats/player/[id]" />
-                  <Stack.Screen name="stats/run/[worldId]" />
-                  <Stack.Screen name="+not-found" />
-                </Stack>
-                <NotificationsToastComponent />
-              </ThemeProvider>
-            </PrefetcherProvider>
-          </NotificationsProvider>
-        </QueryClientProvider>
-      </BottomSheetModalProvider>
+      <QueryClientProvider client={queryClient}>
+        <NotificationsProvider>
+          <PrefetcherProvider>
+            <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+              <SystemBars style={colorScheme === "dark" ? "light" : "dark"} />
+              <Stack screenOptions={screenOptions}>
+                <Stack.Screen
+                  name="(tabs)"
+                  options={{
+                    headerTitle: "Home",
+                    headerShown: false,
+                  }}
+                  initialParams={{ lbType: "monthly" }}
+                />
+                <Stack.Screen name="stats/player/[id]" />
+                <Stack.Screen name="stats/run/[worldId]" />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+              <NotificationsToastComponent />
+            </ThemeProvider>
+          </PrefetcherProvider>
+        </NotificationsProvider>
+      </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }

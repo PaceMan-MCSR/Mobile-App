@@ -25,7 +25,6 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 - `nativewind` Tailwind CSS for React Native
 - `expo-router` File-based routing
 - `react-native-mmkv` Key-Value Storage for User Preferences
-- `@gorhom/bottom-sheet` Bottom Sheet component
 - `@tanstack/react-query` Managing fetched data from API Endpoints
 - `react-native-reanimated` App Animations
 - Expo Router Native Tabs for Android and iOS

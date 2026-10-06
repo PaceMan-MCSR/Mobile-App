@@ -5,8 +5,7 @@ import ErrorScreen from "@/components/screens/error-screen";
 import LoadingScreen from "@/components/screens/loading-screen";
 import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
 import { Pace } from "@/lib/types/Pace";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 
 const HomePage = () => {
@@ -16,13 +15,13 @@ const HomePage = () => {
   });
   const { data: liveruns, isPending, isError } = useLiverunsData(params);
 
-  const bottomSheetRef = useRef<BottomSheet>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const selectedPace = liveruns?.find((run) => run.worldId === selected) ?? null;
 
-  // CLOSE BOTTOM SHEET IF PACE RESET
+  // CLOSE THE SHEET IF THE SELECTED PACE DISAPPEARS
   useEffect(() => {
-    if (!liveruns?.some((run) => run.worldId === selected)) {
-      bottomSheetRef.current?.close();
+    if (selected && !liveruns?.some((run) => run.worldId === selected)) {
+      setSelected(null);
     }
   }, [selected, liveruns]);
 
@@ -42,26 +41,6 @@ const HomePage = () => {
       gameVersion: version,
     }));
   };
-
-  // BOTTOM SHEET FUNCTIONS
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-        onPress={() => bottomSheetRef.current?.close()}
-        opacity={0.5}
-      />
-    ),
-    []
-  );
-
-  const handleSheetChanges = useCallback((index: number) => {
-    if (index === -1) {
-      setSelected(null);
-    }
-  }, []);
 
   // TOP HEADER
   const Header = () => {
@@ -119,7 +98,6 @@ const HomePage = () => {
             <PaceCard
               onPress={() => {
                 setSelected(item.worldId);
-                bottomSheetRef.current?.expand();
               }}
               worldId={item.worldId}
               splitName={item.splitName}
@@ -138,14 +116,7 @@ const HomePage = () => {
       </View>
 
       {/* BOTTOM SHEET */}
-      <PaceBottomSheet
-        ref={bottomSheetRef}
-        selected={selected}
-        params={params}
-        onBackdropPress={() => setSelected(null)}
-        renderBackdrop={renderBackdrop}
-        onSheetChanges={handleSheetChanges}
-      />
+      <PaceBottomSheet selectedPace={selectedPace} onDismiss={() => setSelected(null)} />
     </>
   );
 };
