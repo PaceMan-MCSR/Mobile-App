@@ -4,7 +4,6 @@ import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { msToTime } from "@/lib/utils/frontend-converters";
 import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
 import { useUpdateToken } from "@/providers/notifications/hooks/api/use-update-token";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { revalidateLogic, useForm } from "@tanstack/react-form";
 import { Stack, useRouter } from "expo-router";
 import { SymbolView } from "expo-symbols";
@@ -260,16 +259,15 @@ const NotificationsPage = () => {
                                               <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
                                                 {formatTimeDisplay(currentValue)}
                                               </Text>
-                                              {Platform.OS === "ios" && (
-                                                <SymbolView
-                                                  name="chevron.up.chevron.down"
-                                                  tintColor={tintColor}
-                                                  size={16}
-                                                />
-                                              )}
-                                              {Platform.OS === "android" && (
-                                                <Ionicons name="chevron-expand-outline" color={tintColor} size={16} />
-                                              )}
+                                              <SymbolView
+                                                name={{
+                                                  ios: "chevron.up.chevron.down",
+                                                  android: "unfold_more",
+                                                  web: "unfold_more",
+                                                }}
+                                                tintColor={tintColor}
+                                                size={16}
+                                              />
                                             </View>
                                           }
                                           options={allOptions.map((value) => ({
@@ -333,8 +331,11 @@ const NotificationsPage = () => {
             <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
               Manage Speedrunners
             </Text>
-            {Platform.OS === "ios" && <SymbolView name="chevron.right" size={18} />}
-            {Platform.OS === "android" && <MaterialCommunityIcons name="chevron-right" size={24} color={tintColor} />}
+            <SymbolView
+              name={{ ios: "chevron.right", android: "chevron_right", web: "chevron_right" }}
+              size={24}
+              tintColor={tintColor}
+            />
           </Pressable>
           <View>
             <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">About</Text>

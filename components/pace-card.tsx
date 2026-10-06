@@ -1,8 +1,8 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Pace } from "@/lib/types/Pace";
 import { msToTime } from "@/lib/utils/frontend-converters";
-import { FontAwesome6 } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { SymbolView } from "expo-symbols";
 import { Text, TouchableOpacity, View } from "react-native";
 interface PaceCardProps extends Pace {
   onPress: () => void;
@@ -28,7 +28,13 @@ const PaceCard = ({ splitName, nickname, uuid, twitch, time, onPress }: PaceCard
           <Text numberOfLines={1} className="max-w-full truncate text-2xl font-bold text-black dark:text-white">
             {nickname}{" "}
           </Text>
-          {twitch && <FontAwesome6 name="display" size={16} color={tintColor} />}
+          {twitch && (
+            <SymbolView
+              name={{ ios: "display", android: "desktop_windows", web: "desktop_windows" }}
+              size={16}
+              tintColor={tintColor}
+            />
+          )}
         </View>
         <Text className="text-black dark:text-white">{splitName}</Text>
       </View>

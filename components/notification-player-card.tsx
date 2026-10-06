@@ -1,10 +1,9 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { memo } from "react";
-import { Platform, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 interface NotificationPlayerCardProps {
   uuid: string;
@@ -35,8 +34,11 @@ const NotificationPlayerCard = ({ uuid, nickname, route }: NotificationPlayerCar
         </View>
 
         {/* CHEVRON ARROW */}
-        {Platform.OS === "ios" && <SymbolView name="chevron.right" size={18} />}
-        {Platform.OS === "android" && <MaterialCommunityIcons name="chevron-right" size={24} color={tintColor} />}
+        <SymbolView
+          name={{ ios: "chevron.right", android: "chevron_right", web: "chevron_right" }}
+          size={24}
+          tintColor={tintColor}
+        />
       </TouchableOpacity>
     </Link>
   );

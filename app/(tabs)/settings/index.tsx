@@ -3,7 +3,6 @@ import { isDeviceEligibleForNotifications } from "@/lib/utils/frontend-converter
 import { storage } from "@/lib/utils/mmkv";
 import { useNotification } from "@/providers/notifications";
 import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
 import { useRouter } from "expo-router";
 import { SymbolView } from "expo-symbols";
@@ -101,10 +100,11 @@ const SettingsPage = () => {
                   </Text>
                   {isNotificationsSettingsAvailable ? (
                     <>
-                      {Platform.OS === "ios" && <SymbolView name="chevron.right" size={18} />}
-                      {Platform.OS === "android" && (
-                        <MaterialCommunityIcons name="chevron-right" size={24} color={tintColor} />
-                      )}
+                      <SymbolView
+                        name={{ ios: "chevron.right", android: "chevron_right", web: "chevron_right" }}
+                        size={24}
+                        tintColor={tintColor}
+                      />
                     </>
                   ) : (
                     <ActivityIndicator />

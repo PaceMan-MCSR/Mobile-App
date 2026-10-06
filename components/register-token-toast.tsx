@@ -1,9 +1,8 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { Ionicons } from "@expo/vector-icons";
 import { SymbolView } from "expo-symbols";
 import { useColorScheme } from "nativewind";
 import { useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Platform, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -132,11 +131,12 @@ const RegisterTokenToast = ({ isPending, isSuccess, isError }: RegisterTokenToas
         {isPending ? (
           <ActivityIndicator size="small" color={textColor} style={{ marginLeft: 12 }} />
         ) : isSuccess ? (
-          Platform.OS === "ios" ? (
-            <SymbolView name="checkmark.circle.fill" size={20} tintColor={textColor} style={{ marginLeft: 12 }} />
-          ) : (
-            <Ionicons name="checkmark-circle" size={20} color={textColor} style={{ marginLeft: 12 }} />
-          )
+          <SymbolView
+            name={{ ios: "checkmark.circle.fill", android: "check_circle", web: "check_circle" }}
+            size={20}
+            tintColor={textColor}
+            style={{ marginLeft: 12 }}
+          />
         ) : null}
       </View>
     </Animated.View>

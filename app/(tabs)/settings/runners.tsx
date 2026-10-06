@@ -7,11 +7,10 @@ import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { useAddRunner } from "@/providers/notifications/hooks/api/use-add-runner";
 import { useDeleteRunner } from "@/providers/notifications/hooks/api/use-delete-runner";
 import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
-import { Ionicons } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useMemo, useState } from "react";
-import { Alert, FlatList, Platform, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Text, TouchableOpacity, View } from "react-native";
 
 const RunnersPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -154,16 +153,15 @@ const RunnersPage = () => {
                   activeOpacity={0.6}
                   className="p-2"
                 >
-                  {Platform.OS === "ios" && (
-                    <SymbolView name={isEnabled ? "bell.fill" : "bell.slash"} tintColor={tintColor} />
-                  )}
-                  {Platform.OS === "android" && (
-                    <Ionicons
-                      name={isEnabled ? "notifications" : "notifications-off-outline"}
-                      size={24}
-                      color={tintColor}
-                    />
-                  )}
+                  <SymbolView
+                    name={
+                      isEnabled
+                        ? { ios: "bell.fill", android: "notifications", web: "notifications" }
+                        : { ios: "bell.slash", android: "notifications_off", web: "notifications_off" }
+                    }
+                    size={24}
+                    tintColor={tintColor}
+                  />
                 </TouchableOpacity>
               </View>
             );

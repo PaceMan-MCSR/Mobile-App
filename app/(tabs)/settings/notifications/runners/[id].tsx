@@ -6,7 +6,6 @@ import { msToTime } from "@/lib/utils/frontend-converters";
 import { useDeleteRunner } from "@/providers/notifications/hooks/api/use-delete-runner";
 import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
 import { useUpdateRunner } from "@/providers/notifications/hooks/api/use-update-runner";
-import { Ionicons } from "@expo/vector-icons";
 import { revalidateLogic, useForm } from "@tanstack/react-form";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { SymbolView } from "expo-symbols";
@@ -332,16 +331,15 @@ const RunnerSettingsPage = () => {
                                               <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
                                                 {formatTimeDisplay(currentValue)}
                                               </Text>
-                                              {Platform.OS === "ios" && (
-                                                <SymbolView
-                                                  name="chevron.up.chevron.down"
-                                                  tintColor={tintColor}
-                                                  size={16}
-                                                />
-                                              )}
-                                              {Platform.OS === "android" && (
-                                                <Ionicons name="chevron-expand-outline" color={tintColor} size={16} />
-                                              )}
+                                              <SymbolView
+                                                name={{
+                                                  ios: "chevron.up.chevron.down",
+                                                  android: "unfold_more",
+                                                  web: "unfold_more",
+                                                }}
+                                                tintColor={tintColor}
+                                                size={16}
+                                              />
                                             </View>
                                           }
                                           options={allOptions.map((value) => ({
