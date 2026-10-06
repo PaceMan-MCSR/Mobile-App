@@ -1,4 +1,5 @@
 import NotificationsSaveCard from "@/components/notifications-save-card";
+import ContextMenu from "@/components/primitives/context-menu";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { msToTime } from "@/lib/utils/frontend-converters";
 import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
@@ -8,8 +9,7 @@ import { revalidateLogic, useForm } from "@tanstack/react-form";
 import { Stack, useRouter } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useEffect, useMemo } from "react";
-import { Alert, Platform, Pressable, ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
-import * as DropdownMenu from "zeego/dropdown-menu";
+import { Alert, Platform, Pressable, ScrollView, Switch, Text, View } from "react-native";
 import { z } from "zod";
 
 // Default values in milliseconds
@@ -254,9 +254,9 @@ const NotificationsPage = () => {
                                         <Text className="text-lg font-semibold text-black dark:text-[#ECEDEE]">
                                           {setting.label}
                                         </Text>
-                                        <DropdownMenu.Root>
-                                          <DropdownMenu.Trigger>
-                                            <TouchableOpacity className="flex flex-row items-center gap-1">
+                                        <ContextMenu
+                                          trigger={
+                                            <View className="flex flex-row items-center gap-1">
                                               <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
                                                 {formatTimeDisplay(currentValue)}
                                               </Text>
@@ -270,22 +270,15 @@ const NotificationsPage = () => {
                                               {Platform.OS === "android" && (
                                                 <Ionicons name="chevron-expand-outline" color={tintColor} size={16} />
                                               )}
-                                            </TouchableOpacity>
-                                          </DropdownMenu.Trigger>
-                                          <DropdownMenu.Content>
-                                            {allOptions.map((value) => (
-                                              <DropdownMenu.Item
-                                                key={String(value)}
-                                                onSelect={() => timingField.handleChange(value)}
-                                              >
-                                                <DropdownMenu.ItemTitle>
-                                                  {formatTimeDisplay(value)}
-                                                </DropdownMenu.ItemTitle>
-                                                {currentValue === value && <DropdownMenu.ItemIndicator />}
-                                              </DropdownMenu.Item>
-                                            ))}
-                                          </DropdownMenu.Content>
-                                        </DropdownMenu.Root>
+                                            </View>
+                                          }
+                                          options={allOptions.map((value) => ({
+                                            value,
+                                            label: formatTimeDisplay(value),
+                                          }))}
+                                          selectedValue={currentValue}
+                                          onSelect={timingField.handleChange}
+                                        />
                                       </View>
                                     </View>
                                   );
