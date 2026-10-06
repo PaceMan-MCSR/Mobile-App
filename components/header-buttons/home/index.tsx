@@ -1,51 +1,30 @@
 import { gameVersionFilters, HeaderButtonHomeProps } from "@/components/header-buttons/home/options";
-import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { SymbolView } from "expo-symbols";
-import * as DropdownMenu from "zeego/dropdown-menu";
+import MenuIcon from "@expo/material-symbols/menu.xml";
+import { Stack } from "expo-router";
 
 const HeaderButtonHome = ({ liveOnly, gameVersion, onGameVersionSelect, onLiveOnlyToggle }: HeaderButtonHomeProps) => {
-  const { tintColor } = useColorsForUI();
-
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <SymbolView
-          name="line.3.horizontal"
-          style={{
-            width: 25,
-            height: 25,
-            margin: 5,
-          }}
-          tintColor={tintColor}
-          type="hierarchical"
-        />
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content>
-        <DropdownMenu.Sub>
-          <DropdownMenu.SubTrigger key="game-version">
-            <DropdownMenu.ItemTitle>Select Version</DropdownMenu.ItemTitle>
-          </DropdownMenu.SubTrigger>
-          <DropdownMenu.SubContent>
-            {gameVersionFilters.map((filter) => (
-              <DropdownMenu.CheckboxItem
-                key={filter}
-                value={gameVersion === filter}
-                onValueChange={(nextValue) => {
-                  if (nextValue) onGameVersionSelect(filter);
-                }}
-              >
-                <DropdownMenu.ItemTitle>{filter}</DropdownMenu.ItemTitle>
-                <DropdownMenu.ItemIndicator />
-              </DropdownMenu.CheckboxItem>
-            ))}
-          </DropdownMenu.SubContent>
-        </DropdownMenu.Sub>
-        <DropdownMenu.CheckboxItem key="live-only" value={liveOnly} onValueChange={onLiveOnlyToggle}>
-          <DropdownMenu.ItemTitle>Live Only</DropdownMenu.ItemTitle>
-          <DropdownMenu.ItemIndicator />
-        </DropdownMenu.CheckboxItem>
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+    <Stack.Toolbar placement="right">
+      <Stack.Toolbar.Menu
+        icon={process.env.EXPO_OS === "ios" ? "line.3.horizontal" : MenuIcon}
+        accessibilityLabel="Home filters"
+      >
+        <Stack.Toolbar.Menu title="Select Version">
+          {gameVersionFilters.map((filter) => (
+            <Stack.Toolbar.MenuAction
+              key={filter}
+              isOn={gameVersion === filter}
+              onPress={() => onGameVersionSelect(filter)}
+            >
+              {filter}
+            </Stack.Toolbar.MenuAction>
+          ))}
+        </Stack.Toolbar.Menu>
+        <Stack.Toolbar.MenuAction isOn={liveOnly} onPress={onLiveOnlyToggle}>
+          Live Only
+        </Stack.Toolbar.MenuAction>
+      </Stack.Toolbar.Menu>
+    </Stack.Toolbar>
   );
 };
 

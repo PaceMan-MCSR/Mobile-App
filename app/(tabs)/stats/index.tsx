@@ -8,7 +8,7 @@ import { useStatsData } from "@/hooks/api/use-stats-data";
 import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontend-converters";
 import { Stack } from "expo-router";
 import { useMemo, useState } from "react";
-import { FlatList, Platform, RefreshControl, Text, View } from "react-native";
+import { FlatList, RefreshControl, Text, View } from "react-native";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -50,44 +50,25 @@ const StatsPage = () => {
 
   const Header = () => {
     return (
-      <Stack.Screen
-        options={Platform.select({
-          ios: {
-            headerLeft: () => (
-              <HeaderButtonStats
-                sortBy={params.type}
-                category={params.category}
-                days={params.days}
-                onSortSelect={handleTypeSelect}
-                onCategorySelect={handleCategorySelect}
-                onDaysSelect={handleDaysSelect}
-              />
-            ),
+      <>
+        <Stack.Screen
+          options={{
             headerSearchBarOptions: {
               placeholder: "Search for Speedrunners",
               onChangeText: handleSearch,
               placement: "automatic",
             },
-          },
-          android: {
-            headerRight: () => (
-              <HeaderButtonStats
-                sortBy={params.type}
-                category={params.category}
-                days={params.days}
-                onSortSelect={handleTypeSelect}
-                onCategorySelect={handleCategorySelect}
-                onDaysSelect={handleDaysSelect}
-              />
-            ),
-            headerSearchBarOptions: {
-              placeholder: "Search for Speedrunners",
-              onChangeText: handleSearch,
-              placement: "automatic",
-            },
-          },
-        })}
-      />
+          }}
+        />
+        <HeaderButtonStats
+          sortBy={params.type}
+          category={params.category}
+          days={params.days}
+          onSortSelect={handleTypeSelect}
+          onCategorySelect={handleCategorySelect}
+          onDaysSelect={handleDaysSelect}
+        />
+      </>
     );
   };
 

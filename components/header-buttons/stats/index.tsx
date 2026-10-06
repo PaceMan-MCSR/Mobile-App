@@ -4,9 +4,8 @@ import {
   HeaderButtonStatsProps,
   sortByFilters,
 } from "@/components/header-buttons/stats/options";
-import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { SymbolView } from "expo-symbols";
-import * as DropdownMenu from "zeego/dropdown-menu";
+import MenuIcon from "@expo/material-symbols/menu.xml";
+import { Stack } from "expo-router";
 
 const HeaderButtonStats = ({
   sortBy,
@@ -16,78 +15,49 @@ const HeaderButtonStats = ({
   onCategorySelect,
   onDaysSelect,
 }: HeaderButtonStatsProps) => {
-  const { tintColor } = useColorsForUI();
-
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <SymbolView
-          name="line.3.horizontal"
-          style={{
-            width: 25,
-            height: 25,
-            margin: 5,
-          }}
-          tintColor={tintColor}
-          type="hierarchical"
-        />
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content>
-        <DropdownMenu.Sub>
-          <DropdownMenu.SubTrigger key="sort-by">
-            <DropdownMenu.ItemTitle>Sort By</DropdownMenu.ItemTitle>
-          </DropdownMenu.SubTrigger>
-          <DropdownMenu.SubContent>
-            {sortByFilters.map(({ key, label }) => (
-              <DropdownMenu.CheckboxItem
-                key={key}
-                value={sortBy === key}
-                onValueChange={(next) => next && onSortSelect(key)}
-              >
-                <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-                <DropdownMenu.ItemIndicator />
-              </DropdownMenu.CheckboxItem>
-            ))}
-          </DropdownMenu.SubContent>
-        </DropdownMenu.Sub>
+    <Stack.Toolbar placement="right">
+      <Stack.Toolbar.Menu
+        icon={process.env.EXPO_OS === "ios" ? "line.3.horizontal" : MenuIcon}
+        accessibilityLabel="Stats filters"
+      >
+        <Stack.Toolbar.Menu title="Sort By">
+          {sortByFilters.map(({ key, label }) => (
+            <Stack.Toolbar.MenuAction
+              key={key}
+              isOn={sortBy === key}
+              onPress={() => onSortSelect(key)}
+            >
+              {label}
+            </Stack.Toolbar.MenuAction>
+          ))}
+        </Stack.Toolbar.Menu>
 
-        <DropdownMenu.Sub>
-          <DropdownMenu.SubTrigger key="category">
-            <DropdownMenu.ItemTitle>Category</DropdownMenu.ItemTitle>
-          </DropdownMenu.SubTrigger>
-          <DropdownMenu.SubContent>
-            {categoriesFilters.map(({ key, label }) => (
-              <DropdownMenu.CheckboxItem
-                key={key}
-                value={category === key}
-                onValueChange={(next) => next && onCategorySelect(key)}
-              >
-                <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-                <DropdownMenu.ItemIndicator />
-              </DropdownMenu.CheckboxItem>
-            ))}
-          </DropdownMenu.SubContent>
-        </DropdownMenu.Sub>
+        <Stack.Toolbar.Menu title="Category">
+          {categoriesFilters.map(({ key, label }) => (
+            <Stack.Toolbar.MenuAction
+              key={key}
+              isOn={category === key}
+              onPress={() => onCategorySelect(key)}
+            >
+              {label}
+            </Stack.Toolbar.MenuAction>
+          ))}
+        </Stack.Toolbar.Menu>
 
-        <DropdownMenu.Sub>
-          <DropdownMenu.SubTrigger key="days">
-            <DropdownMenu.ItemTitle>Time Period</DropdownMenu.ItemTitle>
-          </DropdownMenu.SubTrigger>
-          <DropdownMenu.SubContent>
-            {daysFilters.map(({ key, label }) => (
-              <DropdownMenu.CheckboxItem
-                key={key.toString()}
-                value={days === key}
-                onValueChange={(next) => next && onDaysSelect(key)}
-              >
-                <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-                <DropdownMenu.ItemIndicator />
-              </DropdownMenu.CheckboxItem>
-            ))}
-          </DropdownMenu.SubContent>
-        </DropdownMenu.Sub>
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+        <Stack.Toolbar.Menu title="Time Period">
+          {daysFilters.map(({ key, label }) => (
+            <Stack.Toolbar.MenuAction
+              key={key.toString()}
+              isOn={days === key}
+              onPress={() => onDaysSelect(key)}
+            >
+              {label}
+            </Stack.Toolbar.MenuAction>
+          ))}
+        </Stack.Toolbar.Menu>
+      </Stack.Toolbar.Menu>
+    </Stack.Toolbar>
   );
 };
 

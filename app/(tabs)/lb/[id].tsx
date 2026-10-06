@@ -6,9 +6,9 @@ import LoadingScreen from "@/components/screens/loading-screen";
 import { useLeaderboardData } from "@/hooks/api/use-leaderboard-data";
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { lbIdToName } from "@/lib/utils/frontend-converters";
-import { Tabs, useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Platform, RefreshControl, Text, View } from "react-native";
+import { FlatList, RefreshControl, Text, View } from "react-native";
 
 const filters = Array.from(lbIdToName.keys());
 
@@ -46,22 +46,7 @@ const LeaderboardPage = () => {
 
   // TOP HEADER
   const Header = () => {
-    return (
-      <Tabs.Screen
-        options={Platform.select({
-          ios: {
-            headerLeft: () => (
-              <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
-            ),
-          },
-          android: {
-            headerRight: () => (
-              <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />
-            ),
-          },
-        })}
-      />
-    );
+    return <HeaderButtonLB onSelect={handleSelect} leaderboard={(id as LeaderboardType) ?? "monthly"} />;
   };
 
   // LOADING

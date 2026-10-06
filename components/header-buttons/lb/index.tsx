@@ -1,36 +1,25 @@
 import { HeaderButtonLBProps, leaderboardFilters } from "@/components/header-buttons/lb/options";
-import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { SymbolView } from "expo-symbols";
-import * as DropdownMenu from "zeego/dropdown-menu";
+import MenuIcon from "@expo/material-symbols/menu.xml";
+import { Stack } from "expo-router";
 
 const HeaderButtonLB = ({ leaderboard, onSelect }: HeaderButtonLBProps) => {
-  const { tintColor } = useColorsForUI();
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <SymbolView
-          name="line.3.horizontal"
-          style={{
-            width: 25,
-            height: 25,
-            margin: 5,
-          }}
-          tintColor={tintColor}
-          type="hierarchical"
-        />
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content>
+    <Stack.Toolbar placement="right">
+      <Stack.Toolbar.Menu
+        icon={process.env.EXPO_OS === "ios" ? "line.3.horizontal" : MenuIcon}
+        accessibilityLabel="Leaderboard filters"
+      >
         {leaderboardFilters.map(({ key, label }) => (
-          <DropdownMenu.CheckboxItem
+          <Stack.Toolbar.MenuAction
             key={key}
-            value={leaderboard === key}
-            onValueChange={(next) => next && onSelect(key)}
+            isOn={leaderboard === key}
+            onPress={() => onSelect(key)}
           >
-            <DropdownMenu.ItemTitle>{label}</DropdownMenu.ItemTitle>
-          </DropdownMenu.CheckboxItem>
+            {label}
+          </Stack.Toolbar.MenuAction>
         ))}
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+      </Stack.Toolbar.Menu>
+    </Stack.Toolbar>
   );
 };
 

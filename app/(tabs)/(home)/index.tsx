@@ -6,9 +6,8 @@ import LoadingScreen from "@/components/screens/loading-screen";
 import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
 import { Pace } from "@/lib/types/Pace";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
-import { Tabs } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FlatList, Platform, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 const HomePage = () => {
   const [params, setParams] = useState({
@@ -67,29 +66,11 @@ const HomePage = () => {
   // TOP HEADER
   const Header = () => {
     return (
-      <Tabs.Screen
-        options={Platform.select({
-          ios: {
-            headerLeft: () => (
-              <HeaderButtonHome
-                gameVersion={params.gameVersion}
-                liveOnly={params.liveOnly}
-                onGameVersionSelect={handleGameVersionSelect}
-                onLiveOnlyToggle={handleLiveOnlyToggle}
-              />
-            ),
-          },
-          android: {
-            headerRight: () => (
-              <HeaderButtonHome
-                gameVersion={params.gameVersion}
-                liveOnly={params.liveOnly}
-                onGameVersionSelect={handleGameVersionSelect}
-                onLiveOnlyToggle={handleLiveOnlyToggle}
-              />
-            ),
-          },
-        })}
+      <HeaderButtonHome
+        gameVersion={params.gameVersion}
+        liveOnly={params.liveOnly}
+        onGameVersionSelect={handleGameVersionSelect}
+        onLiveOnlyToggle={handleLiveOnlyToggle}
       />
     );
   };
