@@ -1,84 +1,58 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
-import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
-import { withLayoutContext } from "expo-router";
+import * as Haptics from "expo-haptics";
+import { NativeTabs } from "expo-router/unstable-native-tabs";
 import { Platform } from "react-native";
 import { useMMKVBoolean } from "react-native-mmkv";
-const Tabs = withLayoutContext(createNativeBottomTabNavigator().Navigator);
 
 export default function TabsLayout() {
   const [haptics] = useMMKVBoolean("settings-haptics", storage);
   const { tintColor, backgroundColor, tabBarTintColor } = useColorsForUI();
 
   return (
-    <Tabs
-      labeled
-      hapticFeedbackEnabled={haptics}
-      tabBarActiveTintColor={tintColor}
-      activeIndicatorColor={tabBarTintColor}
-      disablePageAnimations={Platform.select({
-        ios: false,
-        android: true,
-      })}
-      tabBarStyle={{
-        backgroundColor: Platform.select({
-          ios: undefined,
-          android: backgroundColor,
-        }),
+    <NativeTabs
+      labelVisibilityMode="labeled"
+      tintColor={tintColor}
+      indicatorColor={tabBarTintColor}
+      backgroundColor={Platform.select({ ios: undefined, android: backgroundColor })}
+      screenListeners={{
+        tabPress: () => {
+          if (haptics) void Haptics.selectionAsync();
+        },
       }}
     >
-      {/* HOME SCREEN - PACE */}
-      <Tabs.Screen
-        name="(home)"
-        options={{
-          headerShown: false,
-          tabBarLabel: "PaceMan.gg",
-          tabBarIcon: Platform.select({
-            ios: () => ({ sfSymbol: "stopwatch" }),
-            android: ({ focused }: { focused: boolean }) =>
-              focused ? require("@/assets/svgs/stopwatch.svg") : require("@/assets/svgs/stopwatch-outline.svg"),
-          }),
-        }}
-      />
-      {/* LEADERBOARD SCREEN */}
-      <Tabs.Screen
-        name="lb"
-        options={{
-          headerShown: false,
-          tabBarLabel: "Leaderboard",
-          tabBarIcon: Platform.select({
-            ios: () => ({ sfSymbol: "medal" }),
-            android: ({ focused }: { focused: boolean }) =>
-              focused ? require("@/assets/svgs/trophy.svg") : require("@/assets/svgs/trophy-outline.svg"),
-          }),
-        }}
-        initialParams={{ id: "monthly" }}
-      />
-      {/* STATS SCREEN */}
-      <Tabs.Screen
-        name="stats"
-        options={{
-          headerShown: false,
-          tabBarLabel: "Stats",
-          tabBarIcon: Platform.select({
-            ios: () => ({ sfSymbol: "chart.bar" }),
-            android: ({ focused }: { focused: boolean }) =>
-              focused ? require("@/assets/svgs/stats-chart.svg") : require("@/assets/svgs/stats-chart-outline.svg"),
-          }),
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          headerShown: false,
-          tabBarLabel: "Settings",
-          tabBarIcon: Platform.select({
-            ios: () => ({ sfSymbol: "gear" }),
-            android: ({ focused }: { focused: boolean }) =>
-              focused ? require("@/assets/svgs/cog.svg") : require("@/assets/svgs/cog-outline.svg"),
-          }),
-        }}
-      />
-    </Tabs>
+      {/* HOME PAGE */}
+      <NativeTabs.Trigger name="(home)">
+        <NativeTabs.Trigger.Label>PaceMan.gg</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon
+          sf={{ default: "stopwatch", selected: "stopwatch.fill" }}
+          md={{ default: "timer", selected: "timer_play" }}
+        />
+      </NativeTabs.Trigger>
+      {/* LEADERBOARD  PAGE */}
+      <NativeTabs.Trigger name="lb">
+        <NativeTabs.Trigger.Label>Leaderboard</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon
+          sf={{ default: "medal", selected: "medal.fill" }}
+          md={{ default: "military_tech", selected: "workspace_premium" }}
+        />
+      </NativeTabs.Trigger>
+      {/* STATS PAGE */}
+      <NativeTabs.Trigger name="stats">
+        <NativeTabs.Trigger.Label>Stats</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon
+          sf={{ default: "chart.bar", selected: "chart.bar.fill" }}
+          md={{ default: "bar_chart", selected: "stacked_bar_chart" }}
+        />
+      </NativeTabs.Trigger>
+      {/* SETTINGS PAGE */}
+      <NativeTabs.Trigger name="settings">
+        <NativeTabs.Trigger.Label>Settings</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon
+          sf={{ default: "gearshape", selected: "gearshape.fill" }}
+          md={{ default: "settings", selected: "settings_suggest" }}
+        />
+      </NativeTabs.Trigger>
+    </NativeTabs>
   );
 }

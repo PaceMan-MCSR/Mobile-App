@@ -28,6 +28,6 @@ The PaceMan App is a React Native, Expo Project, and works on Android and iOS. T
 - `@gorhom/bottom-sheet` Bottom Sheet component
 - `@tanstack/react-query` Managing fetched data from API Endpoints
 - `react-native-reanimated` App Animations
-- `react-native-bottom-tabs` Native Bottom Tabs for Android and iOS
+- Expo Router Native Tabs for Android and iOS
 - `react-native-edge-to-edge` Edge-to-Edge support on Android.
 - `react-native-gesture-handler` Gesture Handling

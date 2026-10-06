@@ -7,7 +7,7 @@ import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { forwardRef, useCallback, useMemo } from "react";
 import { Platform, Text, TouchableOpacity, View } from "react-native";
-import { useBottomTabBarHeight } from "react-native-bottom-tabs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface PaceBottomSheetProps {
   selected: string | null;
@@ -20,7 +20,10 @@ interface PaceBottomSheetProps {
 const PaceBottomSheet = forwardRef<BottomSheet, PaceBottomSheetProps>(
   ({ selected, params, renderBackdrop, onSheetChanges }, ref) => {
     const router = useRouter();
-    const bottomTabBarHeight = useBottomTabBarHeight();
+    const insets = useSafeAreaInsets();
+    // Native tabs do not expose a JS tab-bar height; use the standard iOS bar
+    // height together with the safe-area region below it.
+    const bottomTabBarHeight = 49 + insets.bottom;
     const { data: liveruns } = useLiverunsData(params);
     const selectedPace = liveruns?.find((liveruns) => liveruns.worldId === selected);
 

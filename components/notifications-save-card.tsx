@@ -2,7 +2,6 @@ import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { useColorScheme } from "nativewind";
 import { useEffect } from "react";
 import { ActivityIndicator, Platform, Pressable, Text, View } from "react-native";
-import { useBottomTabBarHeight } from "react-native-bottom-tabs";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -45,8 +44,9 @@ const NotificationsSaveCard = ({ message, actionButtons, visible = true }: Notif
     };
   });
 
-  // Tab bar is typically ~49px + safe area bottom
-  const tabBarHeight = useBottomTabBarHeight();
+  // Native tabs do not expose a JS tab-bar height. Account for the standard
+  // iOS tab bar plus its safe-area region when positioning this floating card.
+  const tabBarHeight = 49 + insets.bottom;
   const bottomOffset = Platform.select({
     ios: tabBarHeight + insets.bottom / 2,
     android: insets.bottom,

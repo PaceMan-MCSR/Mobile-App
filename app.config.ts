@@ -76,7 +76,6 @@ export default {
       "expo-notifications",
       "expo-secure-store",
       "expo-web-browser",
-      "react-native-bottom-tabs",
       [
         "expo-build-properties",
         {
