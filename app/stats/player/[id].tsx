@@ -4,9 +4,10 @@ import LoadingScreen from "@/components/screens/loading-screen";
 import { useUserData } from "@/hooks/api/use-user-data";
 import { msToTime } from "@/lib/utils/frontend-converters";
 
+import { LegendList } from "@legendapp/list/react-native";
 import { Image } from "expo-image";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { FlatList, RefreshControl, Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 
 const StatsPlayerPage = () => {
   const { id: name } = useLocalSearchParams<{ id: string }>();
@@ -50,7 +51,7 @@ const StatsPlayerPage = () => {
         }}
       />
       <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
-        <FlatList
+        <LegendList
           contentInsetAdjustmentBehavior="automatic"
           showsVerticalScrollIndicator={false}
           data={completions}

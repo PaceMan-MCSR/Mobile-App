@@ -6,9 +6,10 @@ import LoadingScreen from "@/components/screens/loading-screen";
 import { useAllUsersData } from "@/hooks/api/use-all-users-data";
 import { useStatsData } from "@/hooks/api/use-stats-data";
 import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontend-converters";
+import { LegendList } from "@legendapp/list/react-native";
 import { Stack } from "expo-router";
 import { useMemo, useState } from "react";
-import { FlatList, RefreshControl, Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 
 const StatsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -108,12 +109,13 @@ const StatsPage = () => {
     return (
       <>
         <Header />
-        <FlatList
+        <LegendList
           data={filteredUsers}
           className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
           keyExtractor={(item) => item.id}
           keyboardDismissMode="on-drag"
-          contentContainerClassName={`px-4 py-3 gap-8`}
+          contentContainerClassName="px-4 py-3"
+          contentContainerStyle={{ gap: 32 }}
           showsVerticalScrollIndicator={false}
           contentInsetAdjustmentBehavior="automatic"
           renderItem={({ item }) => <PlayerCard uuid={item.id} nickname={item.nick} type="search" />}
@@ -124,12 +126,13 @@ const StatsPage = () => {
   return (
     <>
       <Header />
-      <FlatList
+      <LegendList
         data={stats}
         className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
         keyExtractor={(item, index) => `${item.uuid}-${index}`}
         keyboardDismissMode="on-drag"
-        contentContainerClassName={`px-4 py-3 gap-8`}
+        contentContainerClassName="px-4 py-3"
+        contentContainerStyle={{ gap: 32 }}
         showsVerticalScrollIndicator={false}
         contentInsetAdjustmentBehavior="automatic"
         refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}

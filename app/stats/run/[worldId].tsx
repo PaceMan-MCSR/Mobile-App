@@ -3,10 +3,11 @@ import LoadingScreen from "@/components/screens/loading-screen";
 import TwitchButton from "@/components/twitch-button";
 import { useRunData } from "@/hooks/api/use-run-data";
 import { getSortedEventsWithTimes, msToTime } from "@/lib/utils/frontend-converters";
+import { LegendList } from "@legendapp/list/react-native";
 import { Image } from "expo-image";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useMemo } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 const StatsRunPage = () => {
   const { worldId, searchQueriedNickname } = useLocalSearchParams<{ worldId: string; searchQueriedNickname: string }>();
@@ -56,7 +57,7 @@ const StatsRunPage = () => {
         }}
       />
       <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
-        <FlatList
+        <LegendList
           contentInsetAdjustmentBehavior="automatic"
           showsVerticalScrollIndicator={false}
           data={splits}

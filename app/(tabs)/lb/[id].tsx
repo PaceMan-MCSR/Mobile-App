@@ -6,9 +6,10 @@ import LoadingScreen from "@/components/screens/loading-screen";
 import { useLeaderboardData } from "@/hooks/api/use-leaderboard-data";
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import { lbIdToName } from "@/lib/utils/frontend-converters";
+import { LegendList } from "@legendapp/list/react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, RefreshControl, Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 
 const filters = Array.from(lbIdToName.keys());
 
@@ -88,11 +89,12 @@ const LeaderboardPage = () => {
     <>
       <Header />
       <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
-        <FlatList
+        <LegendList
           contentInsetAdjustmentBehavior="automatic"
           data={params.filter >= 4 ? (leaderboard as TrophyEntry[]) : (leaderboard as LeaderboardEntry[])}
           showsVerticalScrollIndicator={false}
-          contentContainerClassName={`px-4 py-3 gap-8`}
+          contentContainerClassName="px-4 py-3"
+          contentContainerStyle={{ gap: 32 }}
           refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
           ListHeaderComponent={() => (
             <View>

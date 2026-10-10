@@ -7,10 +7,11 @@ import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { useAddRunner } from "@/providers/notifications/hooks/api/use-add-runner";
 import { useDeleteRunner } from "@/providers/notifications/hooks/api/use-delete-runner";
 import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
+import { LegendList } from "@legendapp/list/react-native";
 import { Stack } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useMemo, useState } from "react";
-import { Alert, FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 
 const RunnersPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -133,12 +134,13 @@ const RunnersPage = () => {
       <>
         <Header />
 
-        <FlatList
+        <LegendList
           data={filteredUsers}
           className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
           keyExtractor={(item) => item.id}
           keyboardDismissMode="on-drag"
-          contentContainerClassName="px-4 py-3 gap-4"
+          contentContainerClassName="px-4 py-3"
+          contentContainerStyle={{ gap: 16 }}
           showsVerticalScrollIndicator={false}
           contentInsetAdjustmentBehavior="automatic"
           renderItem={({ item }) => {
@@ -175,12 +177,13 @@ const RunnersPage = () => {
   return (
     <>
       <Header />
-      <FlatList
+      <LegendList
         data={enabledRunners}
         className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
         keyExtractor={(item) => item.id}
         keyboardDismissMode="on-drag"
-        contentContainerClassName="px-4 py-3 gap-4"
+        contentContainerClassName="px-4 py-3"
+        contentContainerStyle={{ gap: 16 }}
         showsVerticalScrollIndicator={false}
         contentInsetAdjustmentBehavior="automatic"
         renderItem={({ item }) => {

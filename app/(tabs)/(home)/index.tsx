@@ -5,8 +5,9 @@ import ErrorScreen from "@/components/screens/error-screen";
 import LoadingScreen from "@/components/screens/loading-screen";
 import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
 import { Pace } from "@/lib/types/Pace";
+import { LegendList } from "@legendapp/list/react-native";
 import { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 
 const HomePage = () => {
   const [params, setParams] = useState({
@@ -88,9 +89,10 @@ const HomePage = () => {
       <Header />
       <View className={`flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]`}>
         {/* PACE LIST */}
-        <FlatList
+        <LegendList
           contentInsetAdjustmentBehavior="automatic"
-          contentContainerClassName={`p-4 gap-4`}
+          contentContainerClassName="p-4"
+          contentContainerStyle={{ gap: 16 }}
           data={liveruns}
           keyExtractor={(item: Pace) => item.worldId}
           showsVerticalScrollIndicator={false}
