@@ -1,5 +1,1 @@
-import ErrorScreen from "@/components/screens/error-screen";
-
-export default function NotFoundScreen() {
-  return <ErrorScreen />;
-}
+export { NotFoundScreen as default } from "@/screens/not-found";
