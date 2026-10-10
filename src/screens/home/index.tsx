@@ -3,10 +3,11 @@ import PaceBottomSheet from "@/components/pace-bottom-sheet";
 import PaceCard from "@/components/pace-card";
 import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
 import { Pace } from "@/lib/types/Pace";
+import { useSelectedPace } from "@/providers/selected-pace";
 import ErrorScreen from "@/screens/+error";
 import LoadingScreen from "@/screens/+loading";
 import { LegendList } from "@legendapp/list/react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 
 export const HomeScreen = () => {
@@ -14,21 +15,21 @@ export const HomeScreen = () => {
     gameVersion: "1.16.1",
     liveOnly: false,
   });
-  const { data: liveruns, isPending, isError } = useLiverunsData(params);
+  const { data: liveruns, isPending, isError, isSuccess } = useLiverunsData(params);
+  const { selectedPace, isPresented, selectionId, selectPace, syncWithRuns, requestDismiss, finishDismiss } =
+    useSelectedPace();
 
-  const [selected, setSelected] = useState<string | null>(null);
-  const selectedPace = liveruns?.find((run) => run.worldId === selected) ?? null;
-
-  // CLOSE THE SHEET IF THE SELECTED PACE DISAPPEARS
+  // Missing or failed query data is not evidence that a run disappeared.
+  // Also reconcile a new selection against the latest successful response.
   useEffect(() => {
-    if (selected && !liveruns?.some((run) => run.worldId === selected)) {
-      setSelected(null);
-    }
-  }, [selected, liveruns]);
+    if (isSuccess && liveruns) syncWithRuns(liveruns);
+  }, [isSuccess, liveruns, selectionId, syncWithRuns]);
+
+  const handleDismiss = useCallback(() => finishDismiss(selectionId), [finishDismiss, selectionId]);
 
   // HEADER RIGHT FUNCTIONS
   const handleLiveOnlyToggle = () => {
-    setSelected(null);
+    requestDismiss();
     setParams((prevParams) => ({
       ...prevParams,
       liveOnly: !prevParams.liveOnly,
@@ -36,89 +37,67 @@ export const HomeScreen = () => {
   };
 
   const handleGameVersionSelect = (version: string) => {
-    setSelected(null);
+    requestDismiss();
     setParams((prevParams) => ({
       ...prevParams,
       gameVersion: version,
     }));
   };
 
-  // TOP HEADER
-  const Header = () => {
-    return (
+  return (
+    <>
       <HeaderButtonHome
         gameVersion={params.gameVersion}
         liveOnly={params.liveOnly}
         onGameVersionSelect={handleGameVersionSelect}
         onLiveOnlyToggle={handleLiveOnlyToggle}
       />
-    );
-  };
-
-  // ERROR
-  if (isError)
-    return (
-      <>
-        <Header />
+      {isError ? (
         <ErrorScreen />
-      </>
-    );
-
-  // A query can be pending without fetching while this tab is unfocused.
-  // Keep the screen safe until it has data instead of assuming an array exists.
-  if (isPending || liveruns == null)
-    return (
-      <>
-        <Header />
+      ) : isPending || liveruns == null ? (
         <LoadingScreen />
-      </>
-    );
-
-  // NO ONE ON PACE
-  if (!liveruns.length)
-    return (
-      <>
-        <Header />
+      ) : !liveruns.length ? (
         <ErrorScreen message="No one is currently on pace..." />
-      </>
-    );
+      ) : (
+        <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
+          {/* PACE LIST */}
+          <LegendList
+            contentInsetAdjustmentBehavior="automatic"
+            contentContainerClassName="p-4"
+            contentContainerStyle={{ gap: 16 }}
+            data={liveruns}
+            keyExtractor={(item: Pace) => item.worldId}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <PaceCard
+                onPress={() => selectPace(item)}
+                worldId={item.worldId}
+                splitName={item.splitName}
+                time={item.time}
+                isHighQuality={item.isHighQuality}
+                split={item.split}
+                gameVersion={item.gameVersion}
+                twitch={item.twitch}
+                uuid={item.uuid}
+                eventList={item.eventList}
+                nickname={item.nickname}
+                lastUpdated={item.lastUpdated}
+              />
+            )}
+          />
+        </View>
+      )}
 
-  // MAIN SCREEN
-  return (
-    <>
-      <Header />
-      <View className={`flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]`}>
-        {/* PACE LIST */}
-        <LegendList
-          contentInsetAdjustmentBehavior="automatic"
-          contentContainerClassName="p-4"
-          contentContainerStyle={{ gap: 16 }}
-          data={liveruns}
-          keyExtractor={(item: Pace) => item.worldId}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <PaceCard
-              onPress={() => {
-                setSelected(item.worldId);
-              }}
-              worldId={item.worldId}
-              splitName={item.splitName}
-              time={item.time}
-              isHighQuality={item.isHighQuality}
-              split={item.split}
-              gameVersion={item.gameVersion}
-              twitch={item.twitch}
-              uuid={item.uuid}
-              eventList={item.eventList}
-              nickname={item.nickname}
-              lastUpdated={item.lastUpdated}
-            />
-          )}
+      {/* Retain the sheet across query states and only unmount after native dismissal. */}
+      {selectedPace ? (
+        <PaceBottomSheet
+          key={selectionId}
+          selectedPace={selectedPace}
+          isPresented={isPresented}
+          onDismissRequest={requestDismiss}
+          onDismiss={handleDismiss}
         />
-      </View>
-
-      {/* BOTTOM SHEET */}
-      <PaceBottomSheet selectedPace={selectedPace} onDismiss={() => setSelected(null)} />
+      ) : null}
     </>
   );
 };

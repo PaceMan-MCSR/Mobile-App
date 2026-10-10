@@ -1,25 +1,48 @@
 import PaceBottomSheetContent from "@/components/pace-bottom-sheet-content";
+import { PaceBottomSheetProps } from "@/components/pace-bottom-sheet.types";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
-import { Pace } from "@/lib/types/Pace";
 import { Host, RNHostView } from "@expo/ui";
-import { ModalBottomSheet } from "@expo/ui/jetpack-compose";
+import { ModalBottomSheet, ModalBottomSheetRef } from "@expo/ui/jetpack-compose";
+import { useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 
-interface PaceBottomSheetProps {
-  selectedPace: Pace | null;
-  onDismiss: () => void;
-}
-
-export default function PaceBottomSheet({ selectedPace, onDismiss }: PaceBottomSheetProps) {
+export default function PaceBottomSheet({
+  selectedPace,
+  isPresented,
+  onDismissRequest,
+  onDismiss,
+}: PaceBottomSheetProps) {
   const { backgroundColor } = useColorsForUI();
+  const sheetRef = useRef<ModalBottomSheetRef>(null);
 
-  if (!selectedPace) return null;
+  useEffect(() => {
+    if (isPresented) return;
+    let cancelled = false;
+    const sheet = sheetRef.current;
+    if (!sheet) {
+      onDismiss();
+      return;
+    }
+    // Retain both the modal and its content until the native hide animation completes.
+    void sheet
+      .hide()
+      .then(() => {
+        if (!cancelled) onDismiss();
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) console.error("Failed to dismiss the selected pace sheet", error);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isPresented, onDismiss]);
 
   return (
     <Host pointerEvents="none" style={StyleSheet.absoluteFill}>
       <ModalBottomSheet
+        ref={sheetRef}
         containerColor={backgroundColor}
-        onDismissRequest={onDismiss}
+        onDismissRequest={onDismissRequest}
         showDragHandle={false}
         sheetGesturesEnabled={false}
         properties={{ shouldDismissOnBackPress: true, shouldDismissOnClickOutside: true }}
