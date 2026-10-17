@@ -1,16 +1,14 @@
 import { formatDurationForTwitchVodOffset } from "@/lib/utils/frontend-converters";
-import { Linking, Text, TouchableOpacity } from "react-native";
-
-interface TwitchButtonProps {
-  twitch: string | null;
-  vodId?: number | null;
-  vodOffset?: number | null;
-}
+import { Button, Host } from "@expo/ui/swift-ui";
+import { buttonStyle, tint } from "@expo/ui/swift-ui/modifiers";
+import { Linking } from "react-native";
+import type { TwitchButtonProps } from "./types";
 
 const TwitchButton = ({ twitch, vodId, vodOffset }: TwitchButtonProps) => {
   if (!twitch) return null;
 
   const isVod = !!vodId && !!vodOffset;
+  const label = `${twitch} ${isVod ? "(VOD)" : ""}`;
 
   const getTwitchUrl = () => {
     if (isVod) {
@@ -25,15 +23,9 @@ const TwitchButton = ({ twitch, vodId, vodOffset }: TwitchButtonProps) => {
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.5}
-      onPress={handlePress}
-      className={`flex flex-row items-center gap-2 rounded-xl bg-[#9146FF] p-3`}
-    >
-      <Text numberOfLines={1} className="text-lg font-bold text-white">
-        {`${twitch}${isVod ? " (VOD)" : ""}`}
-      </Text>
-    </TouchableOpacity>
+    <Host matchContents>
+      <Button onPress={handlePress} label={label} modifiers={[buttonStyle("glassProminent"), tint("#9146FF")]} />
+    </Host>
   );
 };
 
