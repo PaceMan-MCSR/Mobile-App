@@ -82,7 +82,6 @@ export default {
           ios: {
             useFrameworks: "static",
             deploymentTarget: "16.4",
-            enableSceneSupport: true,
           },
         },
       ],
