@@ -1,11 +1,11 @@
-export const sortByFilters = [
+export const SORT_BY_FILTERS = [
   { key: "count", label: "Count" },
   { key: "average", label: "Average" },
   { key: "fastest", label: "Fastest" },
   { key: "conversion", label: "Conversion" },
 ] as const;
 
-export const categoriesFilters = [
+export const CATEGORIES_FILTERS = [
   { key: "nether", label: "Nether Enter" },
   { key: "bastion", label: "Bastion Enter" },
   { key: "fortress", label: "Fortress Enter" },
@@ -18,22 +18,13 @@ export const categoriesFilters = [
   { key: "finish", label: "Completion" },
 ] as const;
 
-export const daysFilters = [
+export const DAYS_FILTERS = [
   { key: 1, label: "Daily" },
   { key: 7, label: "Weekly" },
   { key: 30, label: "Monthly" },
   { key: 9999, label: "All Time" },
 ] as const;
 
-export type SortByType = (typeof sortByFilters)[number]["key"];
-export type CategoriesType = (typeof categoriesFilters)[number]["key"];
-export type DaysType = (typeof daysFilters)[number]["key"];
-
-export interface HeaderButtonStatsProps {
-  sortBy: SortByType;
-  category: CategoriesType;
-  days: DaysType;
-  onSortSelect: (sortBy: SortByType) => void;
-  onCategorySelect: (category: CategoriesType) => void;
-  onDaysSelect: (days: DaysType) => void;
-}
+export type SortByType = (typeof SORT_BY_FILTERS)[number]["key"];
+export type CategoriesType = (typeof CATEGORIES_FILTERS)[number]["key"];
+export type DaysType = (typeof DAYS_FILTERS)[number]["key"];
