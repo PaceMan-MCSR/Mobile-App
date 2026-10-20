@@ -46,6 +46,11 @@ export const HomeScreen = () => {
 
   return (
     <>
+      <Stack.Screen
+        options={{
+          headerTitle: `PaceMan.gg (${params.gameVersion})`,
+        }}
+      />
       {/* HEADER */}
       <Stack.Toolbar placement="right">
         <Stack.Toolbar.Menu icon={"line.3.horizontal"} accessibilityLabel="Home filters">
