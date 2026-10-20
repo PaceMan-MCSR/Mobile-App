@@ -88,43 +88,40 @@ export const LeaderboardScreen = () => {
   return (
     <>
       <Header />
-      <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
-        <LegendList
-          contentInsetAdjustmentBehavior="automatic"
-          data={params.filter >= 4 ? (leaderboard as TrophyEntry[]) : (leaderboard as LeaderboardEntry[])}
-          showsVerticalScrollIndicator={false}
-          contentContainerClassName="px-4 py-3"
-          contentContainerStyle={{ gap: 32 }}
-          refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
-          ListHeaderComponent={() => (
-            <View>
-              <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">{`PaceMan.gg Leaderboard`}</Text>
-              <Text className="pb-8 text-2xl font-bold text-black dark:text-[#ECEDEE]">{`(${lbIdToName.get(
-                id
-              )})`}</Text>
-              <View className="flex w-full flex-row items-center gap-3">
-                <Text className="flex min-w-10 text-xl font-black text-black dark:text-[#ECEDEE]">#</Text>
-                <Text className="flex flex-1 text-xl font-black text-black dark:text-[#ECEDEE]">Player</Text>
-                <Text className="text-xl font-black text-black dark:text-[#ECEDEE]">Time</Text>
-              </View>
+      <LegendList
+        className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
+        contentInsetAdjustmentBehavior="automatic"
+        data={params.filter >= 4 ? (leaderboard as TrophyEntry[]) : (leaderboard as LeaderboardEntry[])}
+        showsVerticalScrollIndicator={false}
+        contentContainerClassName="px-4 py-3"
+        contentContainerStyle={{ gap: 32 }}
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
+        ListHeaderComponent={() => (
+          <View>
+            <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">{`PaceMan.gg Leaderboard`}</Text>
+            <Text className="pb-8 text-2xl font-bold text-black dark:text-[#ECEDEE]">{`(${lbIdToName.get(id)})`}</Text>
+            <View className="flex w-full flex-row items-center gap-3">
+              <Text className="flex min-w-10 text-xl font-black text-black dark:text-[#ECEDEE]">#</Text>
+              <Text className="flex flex-1 text-xl font-black text-black dark:text-[#ECEDEE]">Player</Text>
+              <Text className="text-xl font-black text-black dark:text-[#ECEDEE]">Time</Text>
             </View>
-          )}
-          renderItem={({ item, index }) =>
-            params.filter >= 4 ? (
-              <PlayerCard
-                type="trophy"
-                index={index}
-                score={item.score}
-                uuid={item.uuid}
-                nickname={item.nickname}
-                time={item.pb}
-              />
-            ) : (
-              <PlayerCard type="leaderboard" index={index} uuid={item.uuid} nickname={item.nickname} time={item.time} />
-            )
-          }
-        />
-      </View>
+          </View>
+        )}
+        renderItem={({ item, index }) =>
+          params.filter >= 4 ? (
+            <PlayerCard
+              type="trophy"
+              index={index}
+              score={item.score}
+              uuid={item.uuid}
+              nickname={item.nickname}
+              time={item.pb}
+            />
+          ) : (
+            <PlayerCard type="leaderboard" index={index} uuid={item.uuid} nickname={item.nickname} time={item.time} />
+          )
+        }
+      />
     </>
   );
 };

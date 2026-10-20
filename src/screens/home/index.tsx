@@ -8,7 +8,6 @@ import ErrorScreen from "@/screens/+error";
 import LoadingScreen from "@/screens/+loading";
 import { LegendList } from "@legendapp/list/react-native";
 import { useCallback, useEffect, useState } from "react";
-import { View } from "react-native";
 
 export const HomeScreen = () => {
   const [params, setParams] = useState({
@@ -59,33 +58,31 @@ export const HomeScreen = () => {
       ) : !liveruns.length ? (
         <ErrorScreen message="No one is currently on pace..." />
       ) : (
-        <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
-          {/* PACE LIST */}
-          <LegendList
-            contentInsetAdjustmentBehavior="automatic"
-            contentContainerClassName="p-4"
-            contentContainerStyle={{ gap: 16 }}
-            data={liveruns}
-            keyExtractor={(item: Pace) => item.worldId}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <PaceCard
-                onPress={() => selectPace(item)}
-                worldId={item.worldId}
-                splitName={item.splitName}
-                time={item.time}
-                isHighQuality={item.isHighQuality}
-                split={item.split}
-                gameVersion={item.gameVersion}
-                twitch={item.twitch}
-                uuid={item.uuid}
-                eventList={item.eventList}
-                nickname={item.nickname}
-                lastUpdated={item.lastUpdated}
-              />
-            )}
-          />
-        </View>
+        <LegendList
+          className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
+          contentInsetAdjustmentBehavior="automatic"
+          contentContainerClassName="p-4 flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
+          contentContainerStyle={{ gap: 16 }}
+          data={liveruns}
+          keyExtractor={(item: Pace) => item.worldId}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <PaceCard
+              onPress={() => selectPace(item)}
+              worldId={item.worldId}
+              splitName={item.splitName}
+              time={item.time}
+              isHighQuality={item.isHighQuality}
+              split={item.split}
+              gameVersion={item.gameVersion}
+              twitch={item.twitch}
+              uuid={item.uuid}
+              eventList={item.eventList}
+              nickname={item.nickname}
+              lastUpdated={item.lastUpdated}
+            />
+          )}
+        />
       )}
 
       {/* Retain the sheet across query states and only unmount after native dismissal. */}

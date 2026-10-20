@@ -175,7 +175,7 @@ export const NotificationsScreen = () => {
           headerRight: undefined,
         }}
       />
-      <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
+      <View collapsable={false} className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
         <form.Subscribe
           selector={(state) => {
             const currentValues = state.values;
@@ -350,4 +350,3 @@ export const NotificationsScreen = () => {
     </>
   );
 };
-

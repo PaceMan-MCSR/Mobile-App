@@ -7,7 +7,7 @@ import { Checkbox } from "expo-checkbox";
 import { useRouter } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useColorScheme } from "nativewind";
-import { ActivityIndicator, Linking, Platform, Pressable, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Linking, Pressable, ScrollView, Text, View } from "react-native";
 import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
 
 export const SettingsScreen = () => {
@@ -23,7 +23,7 @@ export const SettingsScreen = () => {
   const router = useRouter();
 
   return (
-    <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
+    <View collapsable={false} className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
       <ScrollView contentInsetAdjustmentBehavior="automatic" className="px-4" contentContainerClassName="gap-4">
         {/* APPEARANCE SETTINGS */}
         <View>
@@ -138,4 +138,3 @@ export const SettingsScreen = () => {
     </View>
   );
 };
-

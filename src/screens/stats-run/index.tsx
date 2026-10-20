@@ -56,96 +56,95 @@ export const StatsRunScreen = () => {
           headerTitle: nickname ?? searchQueriedNickname ?? "Unknown Run",
         }}
       />
-      <View className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
-        <LegendList
-          contentInsetAdjustmentBehavior="automatic"
-          showsVerticalScrollIndicator={false}
-          data={splits}
-          contentContainerClassName="m-4"
-          ListHeaderComponent={() => (
-            <>
-              {/* PLAYER AVATAR + NAME + TWITCH BUTTON */}
-              <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
-                <View className="flex flex-row items-center gap-4">
-                  <TouchableOpacity activeOpacity={0.5} onPress={() => router.push(`/stats/player/${nickname}`)}>
-                    <Image
-                      cachePolicy={"memory"}
-                      source={{ uri: `https://mc-heads.net/avatar/${uuid}` }}
-                      style={{ height: 50, width: 50 }}
-                    />
-                  </TouchableOpacity>
-                  <View className="flex flex-1">
+      <LegendList
+        className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}
+        data={splits}
+        contentContainerClassName="m-4"
+        ListHeaderComponent={() => (
+          <>
+            {/* PLAYER AVATAR + NAME + TWITCH BUTTON */}
+            <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
+              <View className="flex flex-row items-center gap-4">
+                <TouchableOpacity activeOpacity={0.5} onPress={() => router.push(`/stats/player/${nickname}`)}>
+                  <Image
+                    cachePolicy={"memory"}
+                    source={{ uri: `https://mc-heads.net/avatar/${uuid}` }}
+                    style={{ height: 50, width: 50 }}
+                  />
+                </TouchableOpacity>
+                <View className="flex flex-1">
+                  <View className="flex flex-row items-center gap-2">
+                    <TouchableOpacity activeOpacity={0.5} onPress={() => router.push(`/stats/player/${nickname}`)}>
+                      <Text
+                        numberOfLines={1}
+                        className="max-w-full truncate text-2xl font-bold text-black dark:text-white"
+                      >
+                        {nickname}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  {isLive && !hasFinished && (
                     <View className="flex flex-row items-center gap-2">
-                      <TouchableOpacity activeOpacity={0.5} onPress={() => router.push(`/stats/player/${nickname}`)}>
-                        <Text
-                          numberOfLines={1}
-                          className="max-w-full truncate text-2xl font-bold text-black dark:text-white"
-                        >
-                          {nickname}
-                        </Text>
-                      </TouchableOpacity>
+                      <Text className="text-sm font-semibold text-red-500">In Progress</Text>
                     </View>
-                    {isLive && !hasFinished && (
-                      <View className="flex flex-row items-center gap-2">
-                        <Text className="text-sm font-semibold text-red-500">In Progress</Text>
-                      </View>
-                    )}
-                    {!isLive && !hasFinished && (
-                      <View className="flex flex-row items-center gap-2">
-                        <Text className="text-sm font-semibold text-black dark:text-white">Reset</Text>
-                      </View>
-                    )}
-                    {hasFinished && (
-                      <View className="flex flex-row items-center gap-2">
-                        <Text className="text-sm font-semibold text-green-500">Completed</Text>
-                      </View>
-                    )}
-                  </View>
-                  <TwitchButton twitch={twitch} vodId={!isLive ? vodId : null} vodOffset={!isLive ? vodOffset : null} />
+                  )}
+                  {!isLive && !hasFinished && (
+                    <View className="flex flex-row items-center gap-2">
+                      <Text className="text-sm font-semibold text-black dark:text-white">Reset</Text>
+                    </View>
+                  )}
+                  {hasFinished && (
+                    <View className="flex flex-row items-center gap-2">
+                      <Text className="text-sm font-semibold text-green-500">Completed</Text>
+                    </View>
+                  )}
                 </View>
+                <TwitchButton twitch={twitch} vodId={!isLive ? vodId : null} vodOffset={!isLive ? vodOffset : null} />
               </View>
+            </View>
 
-              <Text className="py-4 text-2xl font-bold text-black dark:text-[#ECEDEE]">Splits</Text>
-            </>
-          )}
-          renderItem={({ item, index }) => {
-            const { splitName, splitTime } = item;
-            const isCompleted = splitTime !== "N/A";
-            const isLastCompleted = lastCompletedSplit?.splitName === splitName;
-            const isFirst = index === 0;
-            const isLast = index === splits.length - 1;
+            <Text className="py-4 text-2xl font-bold text-black dark:text-[#ECEDEE]">Splits</Text>
+          </>
+        )}
+        renderItem={({ item, index }) => {
+          const { splitName, splitTime } = item;
+          const isCompleted = splitTime !== "N/A";
+          const isLastCompleted = lastCompletedSplit?.splitName === splitName;
+          const isFirst = index === 0;
+          const isLast = index === splits.length - 1;
 
-            return (
+          return (
+            <View
+              className={`bg-[#DBDEE3] dark:bg-[#1F2937] ${isFirst ? "rounded-t-xl" : isLast ? "rounded-b-xl" : ""}`}
+            >
               <View
-                className={`bg-[#DBDEE3] dark:bg-[#1F2937] ${isFirst ? "rounded-t-xl" : isLast ? "rounded-b-xl" : ""}`}
+                className={`flex flex-row items-center justify-between border-b border-gray-300 px-4 py-3 dark:border-gray-700 ${
+                  isLastCompleted && isLive ? "bg-green-500/20 dark:bg-green-500/10" : ""
+                } ${isLast ? "border-b-0" : ""}`}
               >
-                <View
-                  className={`flex flex-row items-center justify-between border-b border-gray-300 px-4 py-3 dark:border-gray-700 ${
-                    isLastCompleted && isLive ? "bg-green-500/20 dark:bg-green-500/10" : ""
-                  } ${isLast ? "border-b-0" : ""}`}
-                >
-                  <View className="flex flex-1">
-                    <Text
-                      className={`text-lg font-semibold ${
-                        isCompleted ? "text-black dark:text-white" : "text-gray-400 dark:text-gray-500"
-                      }`}
-                    >
-                      {splitName}
-                    </Text>
-                  </View>
+                <View className="flex flex-1">
                   <Text
-                    className={`text-xl font-bold ${
+                    className={`text-lg font-semibold ${
                       isCompleted ? "text-black dark:text-white" : "text-gray-400 dark:text-gray-500"
                     }`}
                   >
-                    {isCompleted ? msToTime(splitTime) : "--:--"}
+                    {splitName}
                   </Text>
                 </View>
+                <Text
+                  className={`text-xl font-bold ${
+                    isCompleted ? "text-black dark:text-white" : "text-gray-400 dark:text-gray-500"
+                  }`}
+                >
+                  {isCompleted ? msToTime(splitTime) : "--:--"}
+                </Text>
               </View>
-            );
-          }}
-        />
-      </View>
+            </View>
+          );
+        }}
+      />
     </>
   );
 };
