@@ -1,1 +1,1 @@
-export { NotFoundScreen as default } from "@/screens/not-found";
+export { default } from "@/screens/+error";
