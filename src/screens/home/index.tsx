@@ -1,13 +1,14 @@
-import HeaderButtonHome from "@/components/header-buttons/home";
 import PaceBottomSheet from "@/components/pace-bottom-sheet";
-import PaceCard from "@/components/pace-card";
 import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
 import { Pace } from "@/lib/types/Pace";
 import { useSelectedPace } from "@/providers/selected-pace";
 import ErrorScreen from "@/screens/+error";
 import LoadingScreen from "@/screens/+loading";
+import PaceCard from "@/screens/home/components/pace-card";
 import { LegendList } from "@legendapp/list/react-native";
+import { Stack } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
+import { GAME_VERSIONS } from "./constants/game-versions";
 
 export const HomeScreen = () => {
   const [params, setParams] = useState({
@@ -45,12 +46,26 @@ export const HomeScreen = () => {
 
   return (
     <>
-      <HeaderButtonHome
-        gameVersion={params.gameVersion}
-        liveOnly={params.liveOnly}
-        onGameVersionSelect={handleGameVersionSelect}
-        onLiveOnlyToggle={handleLiveOnlyToggle}
-      />
+      {/* HEADER */}
+      <Stack.Toolbar placement="right">
+        <Stack.Toolbar.Menu icon={"line.3.horizontal"} accessibilityLabel="Home filters">
+          <Stack.Toolbar.Menu title="Select Version">
+            {GAME_VERSIONS.map((filter) => (
+              <Stack.Toolbar.MenuAction
+                key={filter}
+                isOn={params.gameVersion === filter}
+                onPress={() => handleGameVersionSelect(filter)}
+              >
+                {filter}
+              </Stack.Toolbar.MenuAction>
+            ))}
+          </Stack.Toolbar.Menu>
+          <Stack.Toolbar.MenuAction isOn={params.liveOnly} onPress={handleLiveOnlyToggle}>
+            Live Only
+          </Stack.Toolbar.MenuAction>
+        </Stack.Toolbar.Menu>
+      </Stack.Toolbar>
+      {/* SCREEN */}
       {isError ? (
         <ErrorScreen />
       ) : isPending || liveruns == null ? (
