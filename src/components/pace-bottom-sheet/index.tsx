@@ -18,7 +18,7 @@ import {
 } from "@expo/ui/swift-ui/modifiers";
 import { Image as ExpoImage } from "expo-image";
 import { useRouter } from "expo-router";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Linking, StyleSheet, useWindowDimensions } from "react-native";
 
 export default function PaceBottomSheet({
@@ -28,6 +28,7 @@ export default function PaceBottomSheet({
   onDismiss,
 }: PaceBottomSheetProps) {
   const router = useRouter();
+  const pendingProfileRoute = useRef<string | null>(null);
   const { width } = useWindowDimensions();
   const [nativeWidth, setNativeWidth] = useState(0);
   const { tintColor } = useColorsForUI();
@@ -38,6 +39,16 @@ export default function PaceBottomSheet({
     [selectedPace.eventList]
   );
   const contentWidth = Math.max(0, (nativeWidth || width) - 32);
+  const handleDismiss = useCallback(() => {
+    onDismiss();
+    const route = pendingProfileRoute.current;
+    pendingProfileRoute.current = null;
+    if (route) router.push(route as any);
+  }, [onDismiss, router]);
+  const openProfile = useCallback(() => {
+    pendingProfileRoute.current = `/stats/player/${selectedPace.nickname}`;
+    onDismissRequest();
+  }, [onDismissRequest, selectedPace.nickname]);
 
   const titleColor = dark ? "#FFFFFF" : "#000000";
   const completedColor = dark ? "#ECEDEE" : "#000000";
@@ -51,7 +62,7 @@ export default function PaceBottomSheet({
         onIsPresentedChange={(presented) => {
           if (!presented) onDismissRequest();
         }}
-        onDismiss={onDismiss}
+        onDismiss={handleDismiss}
       >
         <Group modifiers={[presentationDragIndicator("hidden"), presentationBackground("#1F293788")]}>
           <VStack
@@ -68,7 +79,7 @@ export default function PaceBottomSheet({
           >
             <HStack spacing={8} alignment="center" modifiers={[frame({ width: contentWidth })]}>
               <Button
-                onPress={() => router.push(`/stats/player/${selectedPace.nickname}`)}
+                onPress={openProfile}
                 modifiers={[
                   buttonStyle("plain"),
                   frame({ maxWidth: contentWidth - (selectedPace.twitch ? 128 : 0), alignment: "leading" }),
