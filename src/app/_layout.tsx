@@ -21,7 +21,7 @@ import { useMMKVBoolean, useMMKVString } from "react-native-mmkv";
 const queryClient = new QueryClient();
 
 export const unstable_settings = {
-  initialRouteName: "(tabs)",
+  anchor: "(tabs)",
 };
 
 export default function RootLayout() {
@@ -57,7 +57,7 @@ export default function RootLayout() {
   useMMKVDevTools({ storage });
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <NotificationsProvider>
           <PrefetcherProvider>

@@ -1,7 +1,7 @@
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { storage } from "@/lib/utils/mmkv";
 import * as Haptics from "expo-haptics";
-import { NativeTabs } from "expo-router/unstable-native-tabs";
+import { NativeTabs } from "expo-router/native-tabs";
 import { Platform } from "react-native";
 import { useMMKVBoolean } from "react-native-mmkv";
 
