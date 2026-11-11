@@ -72,7 +72,6 @@ export default function RootLayout() {
                   }}
                   initialParams={{ lbType: "monthly" }}
                 />
-                <Stack.Screen name="stats/player/[id]" />
                 <Stack.Screen name="stats/run/[worldId]" />
                 <Stack.Screen name="settings" options={{ headerShown: false }} />
                 <Stack.Screen name="+not-found" />

@@ -17,8 +17,7 @@ import {
   tint,
 } from "@expo/ui/swift-ui/modifiers";
 import { Image as ExpoImage } from "expo-image";
-import { useRouter } from "expo-router";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { Linking, StyleSheet, useWindowDimensions } from "react-native";
 
 export default function PaceBottomSheet({
@@ -27,8 +26,6 @@ export default function PaceBottomSheet({
   onDismissRequest,
   onDismiss,
 }: PaceBottomSheetProps) {
-  const router = useRouter();
-  const pendingProfileRoute = useRef<string | null>(null);
   const { width } = useWindowDimensions();
   const [nativeWidth, setNativeWidth] = useState(0);
   const { tintColor } = useColorsForUI();
@@ -39,16 +36,6 @@ export default function PaceBottomSheet({
     [selectedPace.eventList]
   );
   const contentWidth = Math.max(0, (nativeWidth || width) - 32);
-  const handleDismiss = useCallback(() => {
-    onDismiss();
-    const route = pendingProfileRoute.current;
-    pendingProfileRoute.current = null;
-    if (route) router.push(route as any);
-  }, [onDismiss, router]);
-  const openProfile = useCallback(() => {
-    pendingProfileRoute.current = `/stats/player/${selectedPace.nickname}`;
-    onDismissRequest();
-  }, [onDismissRequest, selectedPace.nickname]);
 
   const titleColor = dark ? "#FFFFFF" : "#000000";
   const completedColor = dark ? "#ECEDEE" : "#000000";
@@ -62,7 +49,7 @@ export default function PaceBottomSheet({
         onIsPresentedChange={(presented) => {
           if (!presented) onDismissRequest();
         }}
-        onDismiss={handleDismiss}
+        onDismiss={onDismiss}
       >
         <Group modifiers={[presentationDragIndicator("hidden"), presentationBackground("#1F293788")]}>
           <VStack
@@ -78,22 +65,18 @@ export default function PaceBottomSheet({
             ]}
           >
             <HStack spacing={8} alignment="center" modifiers={[frame({ width: contentWidth })]}>
-              <Button
-                onPress={openProfile}
-                modifiers={[
-                  buttonStyle("plain"),
-                  frame({ maxWidth: contentWidth - (selectedPace.twitch ? 128 : 0), alignment: "leading" }),
-                ]}
+              <HStack
+                spacing={8}
+                alignment="center"
+                modifiers={[frame({ maxWidth: contentWidth - (selectedPace.twitch ? 128 : 0), alignment: "leading" })]}
               >
-                <HStack spacing={8} alignment="center">
-                  <RNHostView matchContents>
-                    <ExpoImage source={{ uri: avatarUrl }} style={{ width: 50, height: 50 }} />
-                  </RNHostView>
-                  <Text modifiers={[font({ size: 24, weight: "bold" }), foregroundColor(titleColor), lineLimit(1)]}>
-                    {selectedPace.nickname}
-                  </Text>
-                </HStack>
-              </Button>
+                <RNHostView matchContents>
+                  <ExpoImage source={{ uri: avatarUrl }} style={{ width: 50, height: 50 }} />
+                </RNHostView>
+                <Text modifiers={[font({ size: 24, weight: "bold" }), foregroundColor(titleColor), lineLimit(1)]}>
+                  {selectedPace.nickname}
+                </Text>
+              </HStack>
               <Spacer />
               {selectedPace.twitch ? (
                 <Button

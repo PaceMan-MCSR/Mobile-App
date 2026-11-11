@@ -5,9 +5,9 @@ import ErrorScreen from "@/screens/+error";
 import LoadingScreen from "@/screens/+loading";
 import { LegendList } from "@legendapp/list/react-native";
 import { Image } from "expo-image";
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 
 export const StatsRunScreen = () => {
   const { worldId, searchQueriedNickname } = useLocalSearchParams<{ worldId: string; searchQueriedNickname: string }>();
@@ -18,8 +18,6 @@ export const StatsRunScreen = () => {
     const completedEvents = new Map(data.eventList.map((event) => [event.name, event.time]));
     return getSortedEventsWithTimes(completedEvents);
   }, [data]);
-
-  const router = useRouter();
 
   if (isLoading)
     return (
@@ -67,23 +65,16 @@ export const StatsRunScreen = () => {
             {/* PLAYER AVATAR + NAME + TWITCH BUTTON */}
             <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
               <View className="flex flex-row items-center gap-4">
-                <TouchableOpacity activeOpacity={0.5} onPress={() => router.push(`/stats/player/${nickname}`)}>
-                  <Image
-                    cachePolicy={"memory"}
-                    source={{ uri: `https://mc-heads.net/avatar/${uuid}` }}
-                    style={{ height: 50, width: 50 }}
-                  />
-                </TouchableOpacity>
+                <Image
+                  cachePolicy={"memory"}
+                  source={{ uri: `https://mc-heads.net/avatar/${uuid}` }}
+                  style={{ height: 50, width: 50 }}
+                />
                 <View className="flex flex-1">
                   <View className="flex flex-row items-center gap-2">
-                    <TouchableOpacity activeOpacity={0.5} onPress={() => router.push(`/stats/player/${nickname}`)}>
-                      <Text
-                        numberOfLines={1}
-                        className="max-w-full truncate text-2xl font-bold text-black dark:text-white"
-                      >
-                        {nickname}
-                      </Text>
-                    </TouchableOpacity>
+                    <Text numberOfLines={1} className="max-w-full truncate text-2xl font-bold text-black dark:text-white">
+                      {nickname}
+                    </Text>
                   </View>
                   {isLive && !hasFinished && (
                     <View className="flex flex-row items-center gap-2">

@@ -12,10 +12,9 @@ import {
   Row,
   Text,
 } from "@expo/ui/jetpack-compose";
-import { clickable, fillMaxWidth, padding, weight } from "@expo/ui/jetpack-compose/modifiers";
+import { fillMaxWidth, padding, weight } from "@expo/ui/jetpack-compose/modifiers";
 import { Image as ExpoImage } from "expo-image";
-import { useRouter } from "expo-router";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { StyleSheet } from "react-native";
 
 export default function PaceBottomSheet({
@@ -26,19 +25,7 @@ export default function PaceBottomSheet({
 }: PaceBottomSheetProps) {
   const { backgroundColor, tintColor } = useColorsForUI();
   const dark = tintColor === "#FFFFFF";
-  const router = useRouter();
   const sheetRef = useRef<ModalBottomSheetRef>(null);
-  const pendingProfileRoute = useRef<string | null>(null);
-  const handleDismiss = useCallback(() => {
-    onDismiss();
-    const route = pendingProfileRoute.current;
-    pendingProfileRoute.current = null;
-    if (route) router.push(route as any);
-  }, [onDismiss, router]);
-  const openProfile = useCallback(() => {
-    pendingProfileRoute.current = `/stats/player/${selectedPace.nickname}`;
-    onDismissRequest();
-  }, [onDismissRequest, selectedPace.nickname]);
   const splits = useMemo(
     () => getSortedEventsWithTimes(new Map(selectedPace.eventList.map((event) => [event.name, event.time]))),
     [selectedPace.eventList]
@@ -49,14 +36,14 @@ export default function PaceBottomSheet({
     let cancelled = false;
     const sheet = sheetRef.current;
     if (!sheet) {
-      handleDismiss();
+      onDismiss();
       return;
     }
     // Retain the modal until its native hide animation completes.
     void sheet
       .hide()
       .then(() => {
-        if (!cancelled) handleDismiss();
+        if (!cancelled) onDismiss();
       })
       .catch((error: unknown) => {
         if (!cancelled) console.error("Failed to dismiss the selected pace sheet", error);
@@ -64,7 +51,7 @@ export default function PaceBottomSheet({
     return () => {
       cancelled = true;
     };
-  }, [isPresented, handleDismiss, onDismiss]);
+  }, [isPresented, onDismiss]);
 
   const titleColor = dark ? "#FFFFFF" : "#000000";
   const completedColor = dark ? "#ECEDEE" : "#000000";
@@ -85,10 +72,7 @@ export default function PaceBottomSheet({
         <Box modifiers={[fillMaxWidth()]}>
           <Column modifiers={[fillMaxWidth(), padding(16, 28, 16, 32)]}>
             <Row horizontalArrangement="spaceBetween" verticalAlignment="center" modifiers={[fillMaxWidth()]}>
-              <Row
-                verticalAlignment="center"
-                modifiers={[weight(1), clickable(openProfile)]}
-              >
+              <Row verticalAlignment="center" modifiers={[weight(1)]}>
                 <RNHostView matchContents>
                   <ExpoImage
                     source={{ uri: `https://mc-heads.net/avatar/${selectedPace.uuid}` }}
