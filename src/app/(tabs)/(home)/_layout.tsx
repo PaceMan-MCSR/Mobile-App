@@ -6,7 +6,14 @@ export default function HomeLayout() {
   const screenOptions = useScreenOptions();
   return (
     <SelectedPaceProvider>
-      <Stack screenOptions={screenOptions} />
+      <Stack screenOptions={screenOptions}>
+        <Stack.Screen
+          name="index"
+          options={{
+            headerTitle: "PaceMan.gg",
+          }}
+        />
+      </Stack>
     </SelectedPaceProvider>
   );
 }

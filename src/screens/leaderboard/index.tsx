@@ -15,7 +15,6 @@ const LEADERBOARD_FILTERS = Array.from([...LEADERBOARDS.keys(), ...TROPHIES.keys
 export const LeaderboardScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const leaderboardId = id ?? "monthly";
-  const isTrophy = TROPHIES.has(leaderboardId);
   const router = useRouter();
   const [params, setParams] = useState({
     filter: LEADERBOARD_FILTERS.indexOf(leaderboardId) !== -1 ? LEADERBOARD_FILTERS.indexOf(leaderboardId) : 2,
@@ -43,14 +42,6 @@ export const LeaderboardScreen = () => {
 
   return (
     <>
-      <Stack.Screen
-        options={{
-          animation: "none",
-          headerTitle: isTrophy
-            ? TROPHIES.get(leaderboardId)!
-            : `Leaderboard (${LEADERBOARDS.get(leaderboardId) ?? LEADERBOARDS.get("monthly")})`,
-        }}
-      />
       {/* HEADER */}
       <Stack.Toolbar placement="right">
         <Stack.Toolbar.Menu icon={"line.3.horizontal"} accessibilityLabel="Leaderboard filters">
