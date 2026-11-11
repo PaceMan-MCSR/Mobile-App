@@ -9,7 +9,9 @@ export const useColorsForUI = () => {
   const tintColor = colorScheme === "dark" ? "#FFFFFF" : "#000000";
   const backgroundColor = colorScheme === "dark" ? "#1f2937" : "#FFFFFF";
   const checkboxColor = colorScheme === "dark" ? "#777777" : "#000000";
-  const tabBarTintColor = colorScheme === "dark" ? "#18202F" : "#F2F2F2";
+  const tabBarRippleColor = colorScheme === "dark" ? "#FFFFFF1F" : "#0000001F";
+  const tabBarInactiveColor = colorScheme === "dark" ? "#9CA3AF" : "#6B7280";
+  const tabBarIndicatorColor = colorScheme === "dark" ? "#374151" : "#E5E7EB";
 
-  return { tintColor, backgroundColor, checkboxColor, tabBarTintColor };
+  return { tintColor, backgroundColor, checkboxColor, tabBarRippleColor, tabBarInactiveColor, tabBarIndicatorColor };
 };
