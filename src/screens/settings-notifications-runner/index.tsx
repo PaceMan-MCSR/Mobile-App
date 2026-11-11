@@ -1,14 +1,12 @@
+import NotificationTimingMenu from "@/components/notification-timing-menu";
 import NotificationsSaveCard from "@/components/notifications-save-card";
-import ContextMenu from "@/components/primitives/context-menu";
 import { useAllUsersData } from "@/hooks/api/use-all-users-data";
-import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { msToTime } from "@/lib/utils/frontend-converters";
 import { useDeleteRunner } from "@/providers/notifications/hooks/api/use-delete-runner";
 import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
 import { useUpdateRunner } from "@/providers/notifications/hooks/api/use-update-runner";
 import { revalidateLogic, useForm } from "@tanstack/react-form";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { SymbolView } from "expo-symbols";
 import { useEffect, useMemo } from "react";
 import { Alert, Platform, Pressable, ScrollView, Switch, Text, View } from "react-native";
 import { z } from "zod";
@@ -131,7 +129,6 @@ type NotificationFormData = z.infer<typeof notificationFormSchema>;
 
 export const RunnerSettingsScreen = () => {
   const { id: runnerId } = useLocalSearchParams<{ id: string }>();
-  const { tintColor } = useColorsForUI();
   const { data: tokenSettings } = useSettingsForToken();
   const { data: users } = useAllUsersData();
   const router = useRouter();
@@ -328,29 +325,11 @@ export const RunnerSettingsScreen = () => {
                                           <Text className="text-lg font-semibold text-black dark:text-[#ECEDEE]">
                                             {setting.label}
                                           </Text>
-                                          <ContextMenu
-                                            trigger={
-                                              <View className="flex flex-row items-center gap-1">
-                                                <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
-                                                  {formatTimeDisplay(currentValue)}
-                                                </Text>
-                                                <SymbolView
-                                                  name={{
-                                                    ios: "chevron.up.chevron.down",
-                                                    android: "unfold_more",
-                                                    web: "unfold_more",
-                                                  }}
-                                                  tintColor={tintColor}
-                                                  size={16}
-                                                />
-                                              </View>
-                                            }
-                                            options={allOptions.map((value) => ({
-                                              value,
-                                              label: formatTimeDisplay(value),
-                                            }))}
-                                            selectedValue={currentValue}
-                                            onSelect={timingField.handleChange}
+                                          <NotificationTimingMenu
+                                            value={currentValue}
+                                            options={allOptions}
+                                            getLabel={formatTimeDisplay}
+                                            onChange={timingField.handleChange}
                                           />
                                         </View>
                                       </View>

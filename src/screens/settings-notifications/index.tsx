@@ -1,5 +1,5 @@
+import NotificationTimingMenu from "@/components/notification-timing-menu";
 import NotificationsSaveCard from "@/components/notifications-save-card";
-import ContextMenu from "@/components/primitives/context-menu";
 import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { msToTime } from "@/lib/utils/frontend-converters";
 import { useSettingsForToken } from "@/providers/notifications/hooks/api/use-settings-for-token";
@@ -256,29 +256,11 @@ export const NotificationsScreen = () => {
                                           <Text className="text-lg font-semibold text-black dark:text-[#ECEDEE]">
                                             {setting.label}
                                           </Text>
-                                          <ContextMenu
-                                            trigger={
-                                              <View className="flex flex-row items-center gap-1">
-                                                <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
-                                                  {formatTimeDisplay(currentValue)}
-                                                </Text>
-                                                <SymbolView
-                                                  name={{
-                                                    ios: "chevron.up.chevron.down",
-                                                    android: "unfold_more",
-                                                    web: "unfold_more",
-                                                  }}
-                                                  tintColor={tintColor}
-                                                  size={16}
-                                                />
-                                              </View>
-                                            }
-                                            options={allOptions.map((value) => ({
-                                              value,
-                                              label: formatTimeDisplay(value),
-                                            }))}
-                                            selectedValue={currentValue}
-                                            onSelect={timingField.handleChange}
+                                          <NotificationTimingMenu
+                                            value={currentValue}
+                                            options={allOptions}
+                                            getLabel={formatTimeDisplay}
+                                            onChange={timingField.handleChange}
                                           />
                                         </View>
                                       </View>
