@@ -74,7 +74,7 @@ export const LeaderboardScreen = () => {
           contentInsetAdjustmentBehavior="automatic"
           data={params.filter >= 4 ? (leaderboard as TrophyEntry[]) : (leaderboard as LeaderboardEntry[])}
           showsVerticalScrollIndicator={false}
-          contentContainerClassName="px-4 py-3"
+          contentContainerClassName="px-6 py-3"
           contentContainerStyle={{ gap: 32 }}
           refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
           renderItem={({ item, index }) =>

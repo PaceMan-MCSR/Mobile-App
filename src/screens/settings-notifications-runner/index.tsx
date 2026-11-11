@@ -279,115 +279,119 @@ export const RunnerSettingsScreen = () => {
             />
           )}
         </form.Subscribe>
-        <ScrollView contentInsetAdjustmentBehavior="automatic" className="px-4" contentContainerClassName="gap-4">
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          className="px-6"
+          contentContainerClassName="gap-6 pb-4 pt-3"
+        >
           {/* PACE NOTIFICATIONS */}
-          <View>
-            <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">Speedrunner Notifications</Text>
+          <View className="gap-3">
+            <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">Speedrunner Notifications</Text>
             <Text className="text-md text-black dark:text-[#ECEDEE]">
               Configure notifications for {runnerUser?.nick || "this runner"}&apos;s speedrun pace alerts.
             </Text>
-          </View>
-          <View>
-            <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
-              <form.Field name="v1_16_1_enabled">
-                {(field) => {
-                  const isEnabled = field.state.value === 1;
-                  return (
-                    <>
-                      <View className="flex flex-row items-center">
-                        <Text className="flex flex-1 text-2xl font-semibold text-black dark:text-[#ECEDEE]">
-                          1.16.1
-                        </Text>
-                        <Switch
-                          {...Platform.select({
-                            android: {
-                              thumbColor: "#FFFFFF",
-                              trackColor: { true: "#00FF00", false: "#AAAAAA" },
-                            },
-                          })}
-                          value={isEnabled}
-                          onValueChange={(value) => field.handleChange(value ? 1 : 0)}
-                        />
-                      </View>
-                      {isEnabled && (
-                        <View className="gap-2">
-                          {NOTIFICATION_SETTINGS.map((setting) => {
-                            const options = generateDropdownOptions(setting.minMs, setting.maxMs);
-                            const allOptions = [...options, ALL_OPTION_VALUE, OFF_OPTION_VALUE];
-
-                            return (
-                              <form.Field key={setting.key} name={setting.key as keyof NotificationFormData}>
-                                {(timingField) => {
-                                  const currentValue = timingField.state.value;
-                                  return (
-                                    <View>
-                                      <View className="flex flex-row items-center justify-between">
-                                        <Text className="text-lg font-semibold text-black dark:text-[#ECEDEE]">
-                                          {setting.label}
-                                        </Text>
-                                        <ContextMenu
-                                          trigger={
-                                            <View className="flex flex-row items-center gap-1">
-                                              <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
-                                                {formatTimeDisplay(currentValue)}
-                                              </Text>
-                                              <SymbolView
-                                                name={{
-                                                  ios: "chevron.up.chevron.down",
-                                                  android: "unfold_more",
-                                                  web: "unfold_more",
-                                                }}
-                                                tintColor={tintColor}
-                                                size={16}
-                                              />
-                                            </View>
-                                          }
-                                          options={allOptions.map((value) => ({
-                                            value,
-                                            label: formatTimeDisplay(value),
-                                          }))}
-                                          selectedValue={currentValue}
-                                          onSelect={timingField.handleChange}
-                                        />
-                                      </View>
-                                    </View>
-                                  );
-                                }}
-                              </form.Field>
-                            );
-                          })}
+            <View className="gap-4">
+              <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
+                <form.Field name="v1_16_1_enabled">
+                  {(field) => {
+                    const isEnabled = field.state.value === 1;
+                    return (
+                      <>
+                        <View className="flex flex-row items-center">
+                          <Text className="flex flex-1 text-2xl font-semibold text-black dark:text-[#ECEDEE]">
+                            1.16.1
+                          </Text>
+                          <Switch
+                            {...Platform.select({
+                              android: {
+                                thumbColor: "#FFFFFF",
+                                trackColor: { true: "#00FF00", false: "#AAAAAA" },
+                              },
+                            })}
+                            value={isEnabled}
+                            onValueChange={(value) => field.handleChange(value ? 1 : 0)}
+                          />
                         </View>
-                      )}
-                    </>
+                        {isEnabled && (
+                          <View className="gap-2">
+                            {NOTIFICATION_SETTINGS.map((setting) => {
+                              const options = generateDropdownOptions(setting.minMs, setting.maxMs);
+                              const allOptions = [...options, ALL_OPTION_VALUE, OFF_OPTION_VALUE];
+
+                              return (
+                                <form.Field key={setting.key} name={setting.key as keyof NotificationFormData}>
+                                  {(timingField) => {
+                                    const currentValue = timingField.state.value;
+                                    return (
+                                      <View>
+                                        <View className="flex flex-row items-center justify-between">
+                                          <Text className="text-lg font-semibold text-black dark:text-[#ECEDEE]">
+                                            {setting.label}
+                                          </Text>
+                                          <ContextMenu
+                                            trigger={
+                                              <View className="flex flex-row items-center gap-1">
+                                                <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
+                                                  {formatTimeDisplay(currentValue)}
+                                                </Text>
+                                                <SymbolView
+                                                  name={{
+                                                    ios: "chevron.up.chevron.down",
+                                                    android: "unfold_more",
+                                                    web: "unfold_more",
+                                                  }}
+                                                  tintColor={tintColor}
+                                                  size={16}
+                                                />
+                                              </View>
+                                            }
+                                            options={allOptions.map((value) => ({
+                                              value,
+                                              label: formatTimeDisplay(value),
+                                            }))}
+                                            selectedValue={currentValue}
+                                            onSelect={timingField.handleChange}
+                                          />
+                                        </View>
+                                      </View>
+                                    );
+                                  }}
+                                </form.Field>
+                              );
+                            })}
+                          </View>
+                        )}
+                      </>
+                    );
+                  }}
+                </form.Field>
+              </View>
+              <Pressable
+                className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
+                onPress={() => {
+                  // Show a native alert to confirm removal
+                  Alert.alert(
+                    `Remove ${runnerUser?.nick ?? "Runner"}`,
+                    `Are you sure you want to opt out of receiving notifications for ${runnerUser?.nick ?? "this runner"}'s speedruns?`,
+
+                    [
+                      { text: "Cancel", style: "cancel" },
+                      {
+                        text: "Remove",
+                        style: "destructive",
+                        onPress: () => {
+                          deleteTokenForRunnerMutation.mutate({ runnerId });
+                          router.back();
+                        },
+                      },
+                    ]
                   );
                 }}
-              </form.Field>
+              >
+                <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">{`Remove ${runnerUser?.nick ?? "Runner"}`}</Text>
+              </Pressable>
             </View>
           </View>
-          <Pressable
-            className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
-            onPress={() => {
-              // Show a native alert to confirm removal
-              Alert.alert(
-                `Remove ${runnerUser?.nick ?? "Runner"}`,
-                `Are you sure you want to opt out of receiving notifications for ${runnerUser?.nick ?? "this runner"}'s speedruns?`,
-
-                [
-                  { text: "Cancel", style: "cancel" },
-                  {
-                    text: "Remove",
-                    style: "destructive",
-                    onPress: () => {
-                      deleteTokenForRunnerMutation.mutate({ runnerId });
-                      router.back();
-                    },
-                  },
-                ]
-              );
-            }}
-          >
-            <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">{`Remove ${runnerUser?.nick ?? "Runner"}`}</Text>
-          </Pressable>
         </ScrollView>
       </View>
     </>

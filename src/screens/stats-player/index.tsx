@@ -57,7 +57,7 @@ export const StatsPlayerScreen = () => {
         data={completions}
         refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
         ListHeaderComponent={() => (
-          <View className="m-4 gap-3">
+          <View className="mx-6 my-4 gap-3">
             <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
               <View className="flex flex-row items-center gap-4">
                 <Image

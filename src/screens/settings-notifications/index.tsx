@@ -207,138 +207,144 @@ export const NotificationsScreen = () => {
             />
           )}
         </form.Subscribe>
-        <ScrollView contentInsetAdjustmentBehavior="automatic" className="px-4" contentContainerClassName="gap-4 pb-4">
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          className="px-6"
+          contentContainerClassName="gap-6 pb-4 pt-3"
+        >
           {/* PACE NOTIFICATIONS */}
-          <View>
-            <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">Pace Notifications</Text>
+          <View className="gap-3">
+            <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">Pace Notifications</Text>
             <Text className="text-md text-black dark:text-[#ECEDEE]">
               Configure preferences to receive notifications for speedruns happening live.
             </Text>
-          </View>
-          <View>
-            <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
-              <form.Field name="v1_16_1_enabled">
-                {(field) => {
-                  const isEnabled = field.state.value === 1;
-                  return (
-                    <>
-                      <View className="flex flex-row items-center">
-                        <Text className="flex flex-1 text-2xl font-semibold text-black dark:text-[#ECEDEE]">
-                          1.16.1
-                        </Text>
-                        <Switch
-                          {...Platform.select({
-                            android: {
-                              thumbColor: "#FFFFFF",
-                              trackColor: { true: "#00FF00", false: "#AAAAAA" },
-                            },
-                          })}
-                          value={isEnabled}
-                          onValueChange={(value) => field.handleChange(value ? 1 : 0)}
-                        />
-                      </View>
-                      {isEnabled && (
-                        <View className="gap-2">
-                          {NOTIFICATION_SETTINGS.map((setting) => {
-                            const options = generateDropdownOptions(setting.minMs, setting.maxMs);
-                            const allOptions = [...options, OFF_OPTION_VALUE];
-
-                            return (
-                              <form.Field key={setting.key} name={setting.key as keyof NotificationFormData}>
-                                {(timingField) => {
-                                  const currentValue = timingField.state.value;
-                                  return (
-                                    <View>
-                                      <View className="flex flex-row items-center justify-between">
-                                        <Text className="text-lg font-semibold text-black dark:text-[#ECEDEE]">
-                                          {setting.label}
-                                        </Text>
-                                        <ContextMenu
-                                          trigger={
-                                            <View className="flex flex-row items-center gap-1">
-                                              <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
-                                                {formatTimeDisplay(currentValue)}
-                                              </Text>
-                                              <SymbolView
-                                                name={{
-                                                  ios: "chevron.up.chevron.down",
-                                                  android: "unfold_more",
-                                                  web: "unfold_more",
-                                                }}
-                                                tintColor={tintColor}
-                                                size={16}
-                                              />
-                                            </View>
-                                          }
-                                          options={allOptions.map((value) => ({
-                                            value,
-                                            label: formatTimeDisplay(value),
-                                          }))}
-                                          selectedValue={currentValue}
-                                          onSelect={timingField.handleChange}
-                                        />
-                                      </View>
-                                    </View>
-                                  );
-                                }}
-                              </form.Field>
-                            );
-                          })}
+            <View className="gap-4">
+              <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
+                <form.Field name="v1_16_1_enabled">
+                  {(field) => {
+                    const isEnabled = field.state.value === 1;
+                    return (
+                      <>
+                        <View className="flex flex-row items-center">
+                          <Text className="flex flex-1 text-2xl font-semibold text-black dark:text-[#ECEDEE]">
+                            1.16.1
+                          </Text>
+                          <Switch
+                            {...Platform.select({
+                              android: {
+                                thumbColor: "#FFFFFF",
+                                trackColor: { true: "#00FF00", false: "#AAAAAA" },
+                              },
+                            })}
+                            value={isEnabled}
+                            onValueChange={(value) => field.handleChange(value ? 1 : 0)}
+                          />
                         </View>
-                      )}
-                    </>
+                        {isEnabled && (
+                          <View className="gap-2">
+                            {NOTIFICATION_SETTINGS.map((setting) => {
+                              const options = generateDropdownOptions(setting.minMs, setting.maxMs);
+                              const allOptions = [...options, OFF_OPTION_VALUE];
+
+                              return (
+                                <form.Field key={setting.key} name={setting.key as keyof NotificationFormData}>
+                                  {(timingField) => {
+                                    const currentValue = timingField.state.value;
+                                    return (
+                                      <View>
+                                        <View className="flex flex-row items-center justify-between">
+                                          <Text className="text-lg font-semibold text-black dark:text-[#ECEDEE]">
+                                            {setting.label}
+                                          </Text>
+                                          <ContextMenu
+                                            trigger={
+                                              <View className="flex flex-row items-center gap-1">
+                                                <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">
+                                                  {formatTimeDisplay(currentValue)}
+                                                </Text>
+                                                <SymbolView
+                                                  name={{
+                                                    ios: "chevron.up.chevron.down",
+                                                    android: "unfold_more",
+                                                    web: "unfold_more",
+                                                  }}
+                                                  tintColor={tintColor}
+                                                  size={16}
+                                                />
+                                              </View>
+                                            }
+                                            options={allOptions.map((value) => ({
+                                              value,
+                                              label: formatTimeDisplay(value),
+                                            }))}
+                                            selectedValue={currentValue}
+                                            onSelect={timingField.handleChange}
+                                          />
+                                        </View>
+                                      </View>
+                                    );
+                                  }}
+                                </form.Field>
+                              );
+                            })}
+                          </View>
+                        )}
+                      </>
+                    );
+                  }}
+                </form.Field>
+              </View>
+              <Pressable
+                onPress={() => {
+                  // Show a native alert to confirm reset
+                  Alert.alert(
+                    "Reset to Default",
+                    "Are you sure you want to reset all pace notification settings to their default values?",
+                    [
+                      { text: "Cancel", style: "cancel" },
+                      {
+                        text: "Reset",
+                        style: "destructive",
+                        onPress: async () => {
+                          const hardcodedDefaults = getHardcodedDefaults();
+                          form.reset(hardcodedDefaults);
+                          await form.handleSubmit();
+                        },
+                      },
+                    ]
                   );
                 }}
-              </form.Field>
+              >
+                <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
+                  <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">Reset to Default</Text>
+                </View>
+              </Pressable>
             </View>
           </View>
-          <Pressable
-            onPress={() => {
-              // Show a native alert to confirm reset
-              Alert.alert(
-                "Reset to Default",
-                "Are you sure you want to reset all pace notification settings to their default values?",
-                [
-                  { text: "Cancel", style: "cancel" },
-                  {
-                    text: "Reset",
-                    style: "destructive",
-                    onPress: async () => {
-                      const hardcodedDefaults = getHardcodedDefaults();
-                      form.reset(hardcodedDefaults);
-                      await form.handleSubmit();
-                    },
-                  },
-                ]
-              );
-            }}
-          >
-            <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
-              <Text className="text-xl font-semibold text-black dark:text-[#ECEDEE]">Reset to Default</Text>
-            </View>
-          </Pressable>
 
           {/* RUNNER NOTIFICATIONS LINK */}
-          <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">Speedrunner Notifications</Text>
-          <Text className="text-md text-black dark:text-[#ECEDEE]">
-            Configure preferences to receive notifications for a specific speedrunner, including their offline
-            speedruns.
-          </Text>
-          <Pressable
-            onPress={() => router.push("/settings/runners")}
-            className="flex flex-row items-center gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
-          >
-            <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
-              Manage Speedrunners
+          <View className="gap-3">
+            <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">Speedrunner Notifications</Text>
+            <Text className="text-md text-black dark:text-[#ECEDEE]">
+              Configure preferences to receive notifications for a specific speedrunner, including their offline
+              speedruns.
             </Text>
-            <SymbolView
-              name={{ ios: "chevron.right", android: "chevron_right", web: "chevron_right" }}
-              size={24}
-              tintColor={tintColor}
-            />
-          </Pressable>
-          <View>
-            <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">About</Text>
+            <Pressable
+              onPress={() => router.push("/settings/runners")}
+              className="flex flex-row items-center gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
+            >
+              <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
+                Manage Speedrunners
+              </Text>
+              <SymbolView
+                name={{ ios: "chevron.right", android: "chevron_right", web: "chevron_right" }}
+                size={24}
+                tintColor={tintColor}
+              />
+            </Pressable>
+          </View>
+          <View className="gap-3">
+            <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">About</Text>
             <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
               <Text className="text-md text-black dark:text-[#ECEDEE]">
                 Notifications are available for version 1.16.1 of the game.

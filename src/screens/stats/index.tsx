@@ -104,7 +104,7 @@ export const StatsScreen = () => {
           className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
           keyExtractor={(item) => item.id}
           keyboardDismissMode="on-drag"
-          contentContainerClassName="px-4 py-3"
+          contentContainerClassName="px-6 py-3"
           contentContainerStyle={{ gap: 32 }}
           showsVerticalScrollIndicator={false}
           contentInsetAdjustmentBehavior="automatic"
@@ -116,7 +116,7 @@ export const StatsScreen = () => {
           className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
           keyExtractor={(item, index) => `${item.uuid}-${index}`}
           keyboardDismissMode="on-drag"
-          contentContainerClassName="px-4 py-3"
+          contentContainerClassName="px-6 py-3"
           contentContainerStyle={{ gap: 32 }}
           showsVerticalScrollIndicator={false}
           contentInsetAdjustmentBehavior="automatic"

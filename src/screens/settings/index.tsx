@@ -24,10 +24,14 @@ export const SettingsScreen = () => {
 
   return (
     <View collapsable={false} className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]">
-      <ScrollView contentInsetAdjustmentBehavior="automatic" className="px-4" contentContainerClassName="gap-4">
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        className="px-6"
+        contentContainerClassName="gap-6 pb-4 pt-3"
+      >
         {/* APPEARANCE SETTINGS */}
-        <View>
-          <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">Appearance</Text>
+        <View className="gap-3">
+          <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">Appearance</Text>
           <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
             <View className="flex flex-row items-center">
               <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">System</Text>
@@ -65,9 +69,9 @@ export const SettingsScreen = () => {
           </View>
         </View>
         {/* ACCESSIBILITY SETTINGS */}
-        <View>
-          <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">Accessibility</Text>
-          <View className="gap-2 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
+        <View className="gap-3">
+          <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">Accessibility</Text>
+          <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
             <View className="flex flex-row items-center">
               <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">Tab Bar Haptics</Text>
               <Checkbox value={haptics} onValueChange={setHaptics} color={checkboxColor} />
@@ -92,7 +96,7 @@ export const SettingsScreen = () => {
               <Pressable
                 disabled={!isNotificationsSettingsAvailable}
                 onPress={() => router.push("/settings/notifications")}
-                className="gap-2 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
+                className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
               >
                 <View className="flex flex-row items-center">
                   <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
@@ -115,8 +119,8 @@ export const SettingsScreen = () => {
           </View>
         )}
         {/* ABOUT SECTION */}
-        <View>
-          <Text className="py-3 text-2xl font-bold text-black dark:text-[#ECEDEE]">About</Text>
+        <View className="gap-3">
+          <Text className="text-2xl font-bold text-black dark:text-[#ECEDEE]">About</Text>
           <View className="gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]">
             <Text className="text-md flex flex-1 text-black dark:text-[#ECEDEE]">
               PaceMan.gg is a community-driven application to serve as a real-time speedrun pace tracker. This

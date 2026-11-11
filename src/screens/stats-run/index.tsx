@@ -61,7 +61,7 @@ export const StatsRunScreen = () => {
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}
         data={splits}
-        contentContainerClassName="m-4"
+        contentContainerClassName="mx-6 my-4"
         ListHeaderComponent={() => (
           <>
             {/* PLAYER AVATAR + NAME + TWITCH BUTTON */}

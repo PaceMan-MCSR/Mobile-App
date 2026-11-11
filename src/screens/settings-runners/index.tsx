@@ -139,8 +139,7 @@ export const RunnersScreen = () => {
           className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
           keyExtractor={(item) => item.id}
           keyboardDismissMode="on-drag"
-          contentContainerClassName="px-4 py-3"
-          contentContainerStyle={{ gap: 16 }}
+          contentContainerClassName="gap-4 px-6 pb-4 pt-3"
           showsVerticalScrollIndicator={false}
           contentInsetAdjustmentBehavior="automatic"
           renderItem={({ item }) => {
@@ -182,8 +181,7 @@ export const RunnersScreen = () => {
         className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
         keyExtractor={(item) => item.id}
         keyboardDismissMode="on-drag"
-        contentContainerClassName="px-4 py-3"
-        contentContainerStyle={{ gap: 16 }}
+        contentContainerClassName="gap-4 px-6 pb-4 pt-3"
         showsVerticalScrollIndicator={false}
         contentInsetAdjustmentBehavior="automatic"
         renderItem={({ item }) => {

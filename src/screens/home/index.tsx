@@ -76,7 +76,7 @@ export const HomeScreen = () => {
         <LegendList
           className="flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
           contentInsetAdjustmentBehavior="automatic"
-          contentContainerClassName="p-4 flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
+          contentContainerClassName="px-6 py-4 flex flex-1 bg-[#F2F2F2] dark:bg-[#111827]"
           contentContainerStyle={{ gap: 16 }}
           data={liveruns}
           keyExtractor={(item: Pace) => item.worldId}
