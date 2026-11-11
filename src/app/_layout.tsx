@@ -74,6 +74,7 @@ export default function RootLayout() {
                 />
                 <Stack.Screen name="stats/player/[id]" />
                 <Stack.Screen name="stats/run/[worldId]" />
+                <Stack.Screen name="settings" options={{ headerShown: false }} />
                 <Stack.Screen name="+not-found" />
               </Stack>
               <NotificationsToastComponent />

@@ -325,7 +325,7 @@ export const NotificationsScreen = () => {
             speedruns.
           </Text>
           <Pressable
-            onPress={() => router.push("/(tabs)/settings/runners")}
+            onPress={() => router.push("/settings/runners")}
             className="flex flex-row items-center gap-4 rounded-xl bg-[#DBDEE3] p-4 dark:bg-[#1F2937]"
           >
             <Text className="flex flex-1 text-xl font-semibold text-black dark:text-[#ECEDEE]">
