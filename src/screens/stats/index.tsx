@@ -1,6 +1,7 @@
 import PlayerCard from "@/components/player-card";
 import { useAllUsersData } from "@/hooks/api/use-all-users-data";
 import { useStatsData } from "@/hooks/api/use-stats-data";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { statsCategoryToName, statsDaysToName, statsTypeToName } from "@/lib/utils/frontend-converters";
 import ErrorScreen from "@/screens/+error";
 import LoadingScreen from "@/screens/+loading";
@@ -10,11 +11,12 @@ import MenuIcon from "@expo/material-symbols/menu.xml";
 import { LegendList } from "@legendapp/list/react-native";
 import { Stack } from "expo-router";
 import { useMemo, useState } from "react";
-import { RefreshControl, Text, View } from "react-native";
+import { Platform, RefreshControl, Text, View } from "react-native";
 
-const statsFilterIcon = process.env.EXPO_OS === "ios" ? "line.3.horizontal" : MenuIcon;
+const statsFilterIcon = Platform.OS === "ios" ? "line.3.horizontal" : MenuIcon;
 
 export const StatsScreen = () => {
+  const { tintColor, backgroundColor, tabBarIndicatorColor } = useColorsForUI();
   const [searchQuery, setSearchQuery] = useState("");
   const [params, setParams] = useState<{
     days: DaysType;
@@ -63,7 +65,12 @@ export const StatsScreen = () => {
           },
         }}
       />
-      <Stack.Toolbar placement="right">
+      <Stack.Toolbar
+        placement="right"
+        tintColor={tintColor}
+        backgroundColor={backgroundColor}
+        selectedContainerColor={tabBarIndicatorColor}
+      >
         <Stack.Toolbar.Menu icon={statsFilterIcon} accessibilityLabel="Stats filters">
           <Stack.Toolbar.Menu title="Sort By">
             {SORT_BY_FILTERS.map(({ key, label }) => (

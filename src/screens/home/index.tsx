@@ -1,16 +1,22 @@
 import PaceBottomSheet from "@/components/pace-bottom-sheet";
 import { useLiverunsData } from "@/hooks/api/use-liveruns-data";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { Pace } from "@/lib/types/Pace";
 import { useSelectedPace } from "@/providers/selected-pace";
 import ErrorScreen from "@/screens/+error";
 import LoadingScreen from "@/screens/+loading";
 import PaceCard from "@/screens/home/components/pace-card";
+import MenuIcon from "@expo/material-symbols/menu.xml";
 import { LegendList } from "@legendapp/list/react-native";
 import { Stack } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
+import { Platform } from "react-native";
 import { GAME_VERSIONS } from "./constants/game-versions";
 
+const homeFilterIcon = Platform.OS === "ios" ? "line.3.horizontal" : MenuIcon;
+
 export const HomeScreen = () => {
+  const { tintColor, backgroundColor, tabBarIndicatorColor } = useColorsForUI();
   const [params, setParams] = useState({
     gameVersion: "1.16.1",
     liveOnly: false,
@@ -47,8 +53,13 @@ export const HomeScreen = () => {
   return (
     <>
       {/* HEADER */}
-      <Stack.Toolbar placement="right">
-        <Stack.Toolbar.Menu icon={"line.3.horizontal"} accessibilityLabel="Home filters">
+      <Stack.Toolbar
+        placement="right"
+        tintColor={tintColor}
+        backgroundColor={backgroundColor}
+        selectedContainerColor={tabBarIndicatorColor}
+      >
+        <Stack.Toolbar.Menu icon={homeFilterIcon} accessibilityLabel="Home filters">
           <Stack.Toolbar.Menu title="Select Version">
             {GAME_VERSIONS.map((filter) => (
               <Stack.Toolbar.MenuAction

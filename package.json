@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@dev-plugins/react-native-mmkv": "^0.4.0",
@@ -36,7 +37,7 @@
     "expo-linking": "~58.0.13",
     "expo-navigation-bar": "~58.0.4",
     "expo-notifications": "~58.1.5",
-    "expo-router": "~58.0.23",
+    "expo-router": "~58.0.31",
     "expo-secure-store": "~58.0.2",
     "expo-splash-screen": "~58.0.10",
     "expo-status-bar": "~58.0.3",
@@ -64,6 +65,7 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~58.0.4",
     "expo-atlas": "^0.5.0",
+    "patch-package": "^8.0.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "~6.0.3"

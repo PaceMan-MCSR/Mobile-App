@@ -1,18 +1,23 @@
 /* eslint-disable react-hooks/purity */
 import PlayerCard from "@/components/player-card";
 import { useLeaderboardData } from "@/hooks/api/use-leaderboard-data";
+import { useColorsForUI } from "@/hooks/use-colors-for-ui";
 import { LeaderboardEntry, TrophyEntry } from "@/lib/types/Leaderboard";
 import ErrorScreen from "@/screens/+error";
 import LoadingScreen from "@/screens/+loading";
 import { LEADERBOARDS, TROPHIES } from "@/screens/leaderboard/constants/leaderboards";
+import MenuIcon from "@expo/material-symbols/menu.xml";
 import { LegendList } from "@legendapp/list/react-native";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { RefreshControl, Text, View } from "react-native";
+import { Platform, RefreshControl, Text, View } from "react-native";
+
+const leaderboardFilterIcon = Platform.OS === "ios" ? "line.3.horizontal" : MenuIcon;
 
 const LEADERBOARD_FILTERS = Array.from([...LEADERBOARDS.keys(), ...TROPHIES.keys()]);
 
 export const LeaderboardScreen = () => {
+  const { tintColor, backgroundColor, tabBarIndicatorColor } = useColorsForUI();
   const { id } = useLocalSearchParams<{ id: string }>();
   const leaderboardId = id ?? "monthly";
   const router = useRouter();
@@ -43,8 +48,13 @@ export const LeaderboardScreen = () => {
   return (
     <>
       {/* HEADER */}
-      <Stack.Toolbar placement="right">
-        <Stack.Toolbar.Menu icon={"line.3.horizontal"} accessibilityLabel="Leaderboard filters">
+      <Stack.Toolbar
+        placement="right"
+        tintColor={tintColor}
+        backgroundColor={backgroundColor}
+        selectedContainerColor={tabBarIndicatorColor}
+      >
+        <Stack.Toolbar.Menu icon={leaderboardFilterIcon} accessibilityLabel="Leaderboard filters">
           {Array.from(LEADERBOARDS).map(([key, label]) => (
             <Stack.Toolbar.MenuAction key={key} isOn={leaderboardId === key} onPress={() => handleSelect(key)}>
               {label}
