@@ -1,0 +1,110 @@
+diff --git a/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarClient.d.ts b/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarClient.d.ts
+index 33d1b08..d8fee55 100644
+--- a/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarClient.d.ts
++++ b/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarClient.d.ts
+@@ -66,6 +66,13 @@ export interface StackToolbarProps {
+      * @platform android
+      */
+     buttonContainerColor?: ColorValue;
++    /**
++     * Container color of a selected menu item (`Stack.Toolbar.MenuAction` with `isOn`).
++     * Its text and check icon use `tintColor`. Added by a local patch.
++     *
++     * @platform android
++     */
++    selectedContainerColor?: ColorValue;
+ }
+ /**
+  * The component used to configure the stack toolbar.
+diff --git a/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarClient.js b/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarClient.js
+index eeea8ae..777bed5 100644
+--- a/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarClient.js
++++ b/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarClient.js
+@@ -88,7 +88,7 @@ const StackToolbarBottom = ({ children, disableImePadding, tintColor, background
+         })
+     });
+ };
+-const StackToolbarHeader = ({ children, placement, asChild, disableImePadding, tintColor, backgroundColor, buttonContainerColor })=>{
++const StackToolbarHeader = ({ children, placement, asChild, disableImePadding, tintColor, backgroundColor, buttonContainerColor, selectedContainerColor })=>{
+     if (placement !== 'left' && placement !== 'right') {
+         throw new Error(`Invalid placement "${placement}" for Stack.Toolbar. Expected "left" or "right".`);
+     }
+@@ -100,7 +100,8 @@ const StackToolbarHeader = ({ children, placement, asChild, disableImePadding, t
+             disableImePadding,
+             tintColor,
+             backgroundColor,
+-            buttonContainerColor
++            buttonContainerColor,
++            selectedContainerColor
+         }), [
+         children,
+         placement,
+@@ -108,7 +109,8 @@ const StackToolbarHeader = ({ children, placement, asChild, disableImePadding, t
+         disableImePadding,
+         tintColor,
+         backgroundColor,
+-        buttonContainerColor
++        buttonContainerColor,
++        selectedContainerColor
+     ]);
+     (0, _compositionoptions.useCompositionOption)(options);
+     return null;
+@@ -122,7 +124,8 @@ function appendStackToolbarPropsToOptions(options, props) {
+     const colors = {
+         tintColor: props.tintColor,
+         backgroundColor: props.backgroundColor,
+-        buttonContainerColor: props.buttonContainerColor
++        buttonContainerColor: props.buttonContainerColor,
++        selectedContainerColor: props.selectedContainerColor
+     };
+     if (asChild) {
+         const wrappedChildren = /*#__PURE__*/ (0, _jsxruntime().jsx)(_context.ToolbarColorContext.Provider, {
+diff --git a/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarMenu/native.android.js b/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarMenu/native.android.js
+index 83b488e..83f5c31 100644
+--- a/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarMenu/native.android.js
++++ b/node_modules/expo-router/build/layouts/stack-utils/toolbar/StackToolbarMenu/native.android.js
+@@ -310,7 +310,13 @@ const NativeToolbarMenuAction = (props)=>{
+                 // Compose gives an unselected or disabled item the default group color. Match the group
+                 // color instead.
+                 containerColor: backgroundColor,
+-                disabledContainerColor: backgroundColor
++                disabledContainerColor: backgroundColor,
++                // Patched: a toolbar `selectedContainerColor` replaces the Material You selected colors.
++                ...toolbarColors.selectedContainerColor !== undefined ? {
++                    selectedContainerColor: toolbarColors.selectedContainerColor,
++                    selectedTextColor: tintColor,
++                    selectedLeadingIconColor: tintColor
++                } : {}
+             },
+             children: [
+                 /*#__PURE__*/ (0, _jsxruntime().jsx)(SelectableDropdownMenuItem.Text, {
+diff --git a/node_modules/expo-router/build/layouts/stack-utils/toolbar/context.d.ts b/node_modules/expo-router/build/layouts/stack-utils/toolbar/context.d.ts
+index 6cafbe5..e7b27ac 100644
+--- a/node_modules/expo-router/build/layouts/stack-utils/toolbar/context.d.ts
++++ b/node_modules/expo-router/build/layouts/stack-utils/toolbar/context.d.ts
+@@ -11,6 +11,7 @@ export interface ToolbarColors {
+     tintColor?: ColorValue;
+     backgroundColor?: ColorValue;
+     buttonContainerColor?: ColorValue;
++    selectedContainerColor?: ColorValue;
+ }
+ /**
+  * Context for toolbar-level colors that cascade to child components (Button, Menu, etc.).
+diff --git a/node_modules/expo-router/build/layouts/stack-utils/toolbar/processHeaderItemsForPlatform.android.js b/node_modules/expo-router/build/layouts/stack-utils/toolbar/processHeaderItemsForPlatform.android.js
+index f48b4f8..788183a 100644
+--- a/node_modules/expo-router/build/layouts/stack-utils/toolbar/processHeaderItemsForPlatform.android.js
++++ b/node_modules/expo-router/build/layouts/stack-utils/toolbar/processHeaderItemsForPlatform.android.js
+@@ -53,10 +53,12 @@ function HeaderToolbarHostBase({ children, placement, colors, headerProps }) {
+     const stableColors = (0, _react().useMemo)(()=>({
+             tintColor: colors?.tintColor ?? headerProps?.tintColor,
+             backgroundColor: colors?.backgroundColor ?? headerProps?.backgroundColor,
+-            buttonContainerColor: colors?.buttonContainerColor
++            buttonContainerColor: colors?.buttonContainerColor,
++            selectedContainerColor: colors?.selectedContainerColor
+         }), [
+         colors?.backgroundColor,
+         colors?.buttonContainerColor,
++        colors?.selectedContainerColor,
+         colors?.tintColor,
+         headerProps?.tintColor,
+         headerProps?.backgroundColor

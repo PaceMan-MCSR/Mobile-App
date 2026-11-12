@@ -76,13 +76,12 @@ export default {
       "expo-notifications",
       "expo-secure-store",
       "expo-web-browser",
-      "react-native-bottom-tabs",
       [
         "expo-build-properties",
         {
           ios: {
             useFrameworks: "static",
-            deploymentTarget: "15.1",
+            deploymentTarget: "16.4",
           },
         },
       ],
